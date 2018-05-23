@@ -8,7 +8,7 @@ import './Message.css'
 
 const Message = (props: any) => {
     return (
-        <li>
+        <li className='clearfix'>
             <div className={['message', props.selfMessage ? 'self' : ''].join(' ')}>
                 {props.content}
             </div>

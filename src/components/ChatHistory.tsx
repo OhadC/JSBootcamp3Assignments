@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Message from './Message'
+import Message from './Message/Message'
 
 const ChatHistory = (props: any) => {
     const messagesElements = props.messages.map((message: any) =>

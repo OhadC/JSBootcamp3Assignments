@@ -12,6 +12,12 @@ body {
   background: #C5DDEB
 }
 
+.clearfix:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
 #root {
   height: 100%;
 }

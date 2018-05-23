@@ -1,29 +1,26 @@
 .message {
     color: white;
-    padding: 18px 20px;
-    line-height: 26px;
-    font-size: 16px;
+    padding: 1.5rem;
+    line-height: 1.5em;
     border-radius: 7px;
-    margin-bottom: 30px;
-    width: 90%;
+    margin: 1rem 1.5rem;
+    max-width: 50rem;
     position: relative;
     background: #94C2ED;
     float: left;
 }
 .message:after {
-    bottom: 100%;
+    top: 10%;
+    right: 100%;
     border: solid transparent;
-    content: " ";
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #86BB71;
     border-width: 10px;
     margin-left: -10px;
-
-    border-bottom-color: #94C2ED;
-    left: 7%;
+    border-right-color: #94C2ED;
+    content: '';
 }
 
 .message.self {
@@ -31,8 +28,10 @@
     float: right;
 }
 .message.self:after {
-    border-bottom-color: #86BB71;
-    left: 93%;
-    content: ''
+    left: 100%;
+    margin-left: 0;
+    margin-right: -10px;
+    border-right: none;
+    border-left-color: #86BB71;
 }
 

@@ -30,6 +30,10 @@ class Board extends React.Component<any, any> {
                     id: "3",
                     name: "one",
                     content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
+                }, {
+                    id: "4",
+                    name: "one",
+                    content: "Lorem ipsum"
                 },
             ]
             res(mockMessages)
