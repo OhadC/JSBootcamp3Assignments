@@ -45,7 +45,8 @@ class Tree extends React.Component<ITreeProps, {}> {
 
 const TreeStyle: object = {
     background: '#444753',
-    color: 'white'
+    color: 'white',
+    overflowY: 'auto'
 }
 
 export default Tree

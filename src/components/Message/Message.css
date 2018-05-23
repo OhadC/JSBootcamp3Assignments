@@ -3,20 +3,17 @@
     padding: 1.5rem;
     line-height: 1.5em;
     border-radius: 7px;
-    margin: 1rem 1.5rem;
+    margin: 1rem;
     max-width: 50rem;
     position: relative;
     background: #94C2ED;
     float: left;
 }
 .message:after {
-    top: 10%;
+    top: 1rem;
     right: 100%;
     border: solid transparent;
-    height: 0;
-    width: 0;
     position: absolute;
-    pointer-events: none;
     border-width: 10px;
     margin-left: -10px;
     border-right-color: #94C2ED;
@@ -31,7 +28,6 @@
     left: 100%;
     margin-left: 0;
     margin-right: -10px;
-    border-right: none;
+    border-right: transparent;
     border-left-color: #86BB71;
 }
-

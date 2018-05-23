@@ -8,10 +8,18 @@ const ChatHistory = (props: any) => {
     )
 
     return (
-        <ul style={{ ...props.style, listStyle: 'none', margin: '0', padding: '1em' }}>
+        <ul style={{ ...props.style, ...chatHistoryStyle }}>
             {messagesElements}
         </ul>
     )
+}
+
+const chatHistoryStyle: object = { 
+    listStyle: 'none', 
+    margin: '0', 
+    padding: '1em', 
+    overflowY: 'auto',
+    // background: 'url("https://www.toptal.com/designers/subtlepatterns/patterns/gaming-pattern.png")',
 }
 
 export default ChatHistory

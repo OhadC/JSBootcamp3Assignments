@@ -1,5 +1,7 @@
+import Events from '../common/Events'
+
 interface IState {
-    
+
 }
 
 interface IStateStore {
@@ -7,18 +9,26 @@ interface IStateStore {
 
     get(key: string): any | null
     set(key: string, val: any): void
+    
+    on(name: string, listener: Function): void
+    off(name: string, listener: Function): void
+    emit(name: string, args: any[]): void
 }
 
 class StateStore implements IStateStore {
     state: IState = {}
+    events = Events()
 
     get(key: string) {
         return this.state[key] || null
     }
-
     set(key: string, val: any) {
         this.state[key] = val
     }
+
+    on: (name: string, listener: Function) => void = this.events.on
+    off: (name: string, listener: Function) => void = this.events.off
+    emit: (name: string, args: any[]) => void = this.events.emit
 
     static instance: IStateStore
 

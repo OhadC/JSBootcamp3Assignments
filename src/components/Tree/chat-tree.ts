@@ -152,12 +152,10 @@ function ChatTree(element: IItemHTMLElement) {
         // itemsArray = null
         activeElement = null
     }
-    function on(name: string, listener: Function) {
-        events.on(name, listener)
-    }
-    function off(name: string, listener: Function) {
-        events.off(name, listener)
-    }
+
+    const on: (name: string, listener: Function) => void = events.on
+    const off: (name: string, listener: Function) => void = events.off
+
     return {
         load,
         clear,
