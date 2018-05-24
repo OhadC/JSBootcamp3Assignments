@@ -1,12 +1,12 @@
 import * as React from 'react'
 
-import Chat from './containers/Chat/Chat';
+import Main from './containers/Main/Main';
 
 class App extends React.Component {
 
     render() {
         return (
-            <Chat />
+            <Main />
         )
     }
 }

@@ -6,7 +6,7 @@ import Tree from "./components/Tree"
 import Board from "../Board/Board"
 // import Modal from "../components/Modal"
 
-class Chat extends React.Component<{}, any> {
+class Main extends React.Component<{}, any> {
     state = {
         activeItem: null
     }
@@ -18,32 +18,33 @@ class Chat extends React.Component<{}, any> {
 
     public render() {
         return (
-            <div style={chatStyle}>
+            <main style={styles.main}>
                 {/* <Modal /> */}
                 {/* <Header /> */}
-                <main style={mainStyle}>
+                <div style={styles.chat}>
                     <Tree style={{ width: "25%" }} activeChanged={this.setActiveItem} />
                     <Board style={{ width: "75%" }} />
-                </main>
+                </div>
                 {/* <Footer /> */}
-            </div>
+            </main>
         )
     }
 }
 
-const chatStyle: React.CSSProperties = {
-    height: "100%",
-    background: "#F2F5F8",
-    borderRadius: "5px",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column"
+const styles: { [key: string]: React.CSSProperties } = {
+    main: {
+        height: "100%",
+        background: "#F2F5F8",
+        borderRadius: "5px",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column"
+    },
+    chat: {
+        flex: "1",
+        display: "flex",
+        flexDirection: "row"
+    }
 }
 
-const mainStyle: React.CSSProperties = {
-    flex: "1",
-    display: "flex",
-    flexDirection: "row"
-}
-
-export default Chat
+export default Main
