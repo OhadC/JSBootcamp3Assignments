@@ -1,11 +1,4 @@
-import Events from "../common/Events"
-
-// 
-// components select from stateStore,
-// state emmited to specific store (messages / tree)
-// 
-// 
-
+import Events from '../common/Events'
 
 interface IState {
 

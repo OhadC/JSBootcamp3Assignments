@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Message from './Message/Message'
+import Message from './Message'
 
 const ChatHistory = (props: any) => {
     const messagesElements = props.messages.map((message: any) =>
@@ -14,10 +14,10 @@ const ChatHistory = (props: any) => {
     )
 }
 
-const chatHistoryStyle: object = { 
-    listStyle: 'none', 
-    margin: '0', 
-    padding: '1em', 
+const chatHistoryStyle: React.CSSProperties = {
+    listStyle: 'none',
+    margin: '0',
+    padding: '1em',
     overflowY: 'auto',
     // background: 'url("https://www.toptal.com/designers/subtlepatterns/patterns/gaming-pattern.png")',
 }

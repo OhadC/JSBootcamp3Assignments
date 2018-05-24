@@ -1,4 +1,4 @@
-import Events from '../../common/Events'
+import Events from "../../../common/Events";
 
 interface ITreeItem {
     type: string

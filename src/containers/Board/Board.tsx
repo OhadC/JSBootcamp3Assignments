@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import ChatHistory from '../components/ChatHistory'
-import MessageInput from './MessageInput'
+import ChatHistory from './components/ChatHistory'
+import MessageInput from './components/MessageInput'
 
 class Board extends React.Component<any, any> {
     state = {
@@ -42,10 +42,10 @@ class Board extends React.Component<any, any> {
 
     render() {
         return (
-            <div style={{ ...this.props.style, ...boardStyle }}>
+            <section style={{ ...this.props.style, ...boardStyle }}>
                 <ChatHistory style={{ flex: '1' }} messages={this.state.messages || []} user='one' />
                 <MessageInput />
-            </div>
+            </section>
         )
     }
 }

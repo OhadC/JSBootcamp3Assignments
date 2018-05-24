@@ -9,9 +9,9 @@ import './Message.css'
 const Message = (props: any) => {
     return (
         <li className='clearfix'>
-            <div className={['message', props.selfMessage ? 'self' : ''].join(' ')}>
+            <p className={['message', props.selfMessage ? 'self' : ''].join(' ')}>
                 {props.content}
-            </div>
+            </p>
         </li>
     )
 }
