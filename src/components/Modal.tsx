@@ -1,9 +1,14 @@
 import * as React from "react"
 
-const Modal = (props: { children: any | any[] }) => {
+interface IModalProps {
+    children: React.ReactNode,
+    style?: React.CSSProperties
+}
+
+const Modal = (props: IModalProps) => {
     return (
         <div style={blackScreenStyle}>
-            <div style={modalStyle}>
+            <div style={{...modalStyle, ...(props.style || {})}}>
                 {props.children}
             </div>
         </div>

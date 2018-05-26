@@ -43,7 +43,7 @@ class Tree extends React.Component<ITreeProps, {}> {
     render() {
         return (
             <section style={{ ...this.props.style, ...TreeStyle }}  ref={this.sectionRef}>
-                <ul className="Tree" ref={this.treeDivRef} tabIndex={0} />
+                <ul className="Tree" ref={this.treeDivRef} style={{height: '100%'}} tabIndex={0} />
             </section>
         )
     }
