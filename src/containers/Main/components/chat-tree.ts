@@ -1,6 +1,7 @@
 import Events from "../../../common/Events";
 
 interface ITreeItem {
+    // id: string
     type: string
     name: string
     items?: ITreeItem[]

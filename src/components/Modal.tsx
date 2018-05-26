@@ -1,10 +1,10 @@
 import * as React from "react"
 
-const Modal = (props: any) => {
+const Modal = (props: { children: any | any[] }) => {
     return (
         <div style={blackScreenStyle}>
             <div style={modalStyle}>
-                asd
+                {props.children}
             </div>
         </div>
     )

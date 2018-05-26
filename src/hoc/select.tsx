@@ -2,15 +2,15 @@ import * as React from 'react'
 
 import { StateStore, IStateStore } from '../state/StateStore'
 
-interface IConnectProps { 
+interface ISelectProps { 
+    WrappedComponent: any
     select: string, 
-    children: (data: any) => {} 
 }
 
-class Connect extends React.Component<IConnectProps, object> {
+class Select extends React.Component<ISelectProps, object> {
     store: IStateStore
 
-    constructor(props: IConnectProps) {
+    constructor(props: ISelectProps) {
         super(props)
         this.store = StateStore.getInstance()
         this.state = {}
@@ -31,9 +31,9 @@ class Connect extends React.Component<IConnectProps, object> {
 
     render() {
         return (
-            this.props.children({})
+            <this.props.WrappedComponent />
         )
     }
 }
 
-export default Connect
+export default Select

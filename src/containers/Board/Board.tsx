@@ -3,51 +3,13 @@ import * as React from 'react'
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
 
-class Board extends React.Component<any, any> {
-    state = {
-        messages: null
-    }
-
-    componentWillMount() {
-        this.fetchMessages()
-            .then((messages: any[]) => {
-                this.setState({ messages })
-            })
-    }
-
-    fetchMessages() {
-        return new Promise((res, rej) => {
-            const mockMessages = [
-                {
-                    id: "1",
-                    user: "one",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "2",
-                    user: "two",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "3",
-                    name: "one",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "4",
-                    name: "one",
-                    content: "Lorem ipsum"
-                },
-            ]
-            res(mockMessages)
-        })
-    }
-
-    render() {
-        return (
-            <section style={{ ...this.props.style, ...boardStyle }}>
-                <ChatHistory style={{ flex: '1' }} messages={this.state.messages || []} user='one' />
-                <MessageInput />
-            </section>
-        )
-    }
+const Board = (props: any) => {
+    return (
+        <section style={{ ...props.style, ...boardStyle }}>
+            <ChatHistory style={{ flex: '1' }} user='one' />
+            <MessageInput />
+        </section>
+    )
 }
 
 const boardStyle = {

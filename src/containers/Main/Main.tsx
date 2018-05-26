@@ -4,7 +4,7 @@ import * as React from "react"
 // import Footer from '../components/Footer'
 import Tree from "./components/Tree"
 import Board from "../Board/Board"
-// import Modal from "../components/Modal"
+// import LogIn from "../LogIn"
 
 class Main extends React.Component<{}, any> {
     state = {
@@ -19,7 +19,7 @@ class Main extends React.Component<{}, any> {
     public render() {
         return (
             <main style={styles.main}>
-                {/* <Modal /> */}
+                {/* <LogIn /> */}
                 {/* <Header /> */}
                 <div style={styles.chat}>
                     <Tree style={{ width: "25%" }} activeChanged={this.setActiveItem} />
