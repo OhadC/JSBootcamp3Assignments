@@ -1,12 +1,12 @@
 import Events from "../common/Events"
-import { IMessage } from "../models/message";
 
-interface IMessagesState {
-    [key: string]: IMessage
+interface IAuthState {
+    user: any
+    isAuthenticated: boolean
 }
 
-interface IMessagesStore {
-    state: IMessagesState
+interface IAuthStore {
+    state: IAuthState
 
     get(key: string): any | null
     set(key: string, val: any): void
@@ -16,8 +16,11 @@ interface IMessagesStore {
     emit(name: string, args: object[]): void
 }
 
-class MessagesStore implements IMessagesStore {
-    state: IMessagesState = {}
+class AuthStore implements IAuthStore {
+    state: IAuthState = {
+        user: null,
+        isAuthenticated: false
+    }
     events = Events()
 
     get(key: string) {
@@ -31,15 +34,15 @@ class MessagesStore implements IMessagesStore {
     off: (name: string, listener: Function) => void = this.events.off
     emit: (name: string, args: object[]) => void = this.events.emit
 
-    static instance: IMessagesStore
+    static instance: IAuthStore
 
     static getInstance() {
-        if (!MessagesStore.instance) {
-            MessagesStore.instance = new MessagesStore()
+        if (!AuthStore.instance) {
+            AuthStore.instance = new AuthStore()
         }
 
-        return MessagesStore.instance
+        return AuthStore.instance
     }
 }
 
-export { MessagesStore, IMessagesStore, IMessagesState }
+export { AuthStore, IAuthStore, IAuthState }

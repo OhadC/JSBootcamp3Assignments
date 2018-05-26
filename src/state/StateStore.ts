@@ -1,4 +1,6 @@
 import Events from "../common/Events"
+import { IMessagesState } from "./MessagesStore";
+import { IAuthState } from "./AuthStore";
 
 // 
 // components select from stateStore,
@@ -6,13 +8,14 @@ import Events from "../common/Events"
 // 
 // 
 
-
-interface IState {
-
+interface IStateStoreState {
+    messages: IMessagesState
+    tree: any
+    auth: IAuthState
 }
 
 interface IStateStore {
-    state: IState
+    state: IStateStoreState
 
     get(key: string): any | null
     set(key: string, val: any): void
@@ -23,7 +26,14 @@ interface IStateStore {
 }
 
 class StateStore implements IStateStore {
-    state: IState = {}
+    state: IStateStoreState = {
+        messages: {},
+        tree: {},
+        auth: {
+            user: null,
+            isAuthenticated: false,
+        }
+    }
     events = Events()
 
     get(key: string) {

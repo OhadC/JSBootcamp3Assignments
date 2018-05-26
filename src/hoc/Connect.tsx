@@ -4,16 +4,18 @@ import { StateStore, IStateStore } from '../state/StateStore'
 
 interface IConnectProps { 
     select: string, 
-    children: (data: any) => {} 
+    children: (data: any) => React.ReactNode
 }
 
-class Connect extends React.Component<IConnectProps, object> {
+class Connect extends React.Component<IConnectProps, {data: any}> {
     store: IStateStore
 
     constructor(props: IConnectProps) {
         super(props)
         this.store = StateStore.getInstance()
-        this.state = {}
+        this.state = {
+            data: null
+        }
     }
 
     componentDidMount() {
@@ -25,13 +27,13 @@ class Connect extends React.Component<IConnectProps, object> {
         this.store.off(this.props.select, this.updateState)
     }
 
-    updateState = (updatedState: object) => {
-        this.setState(updatedState)
+    updateState = (updatedState: any) => {
+        this.setState({data: updatedState})
     }
 
     render() {
         return (
-            this.props.children({})
+            this.props.children(this.state.data)
         )
     }
 }

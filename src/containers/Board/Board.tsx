@@ -8,9 +8,6 @@ interface IBoardState {
 }
 
 class Board extends React.Component<any, IBoardState> {
-    state = {
-        messages: []
-    }
     private messagesEnd: React.RefObject<any>
 
     constructor(props: any) {

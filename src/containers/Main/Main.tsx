@@ -4,7 +4,7 @@ import * as React from "react"
 // import Footer from '../../components/Footer'
 import Tree from "./components/Tree"
 import Board from "../Board/Board"
-import LogIn from "../LogIn"
+import Login from "../Login"
 
 class Main extends React.Component<{}, any> {
     state = {
@@ -16,10 +16,14 @@ class Main extends React.Component<{}, any> {
         console.log(activeItem)
     }
 
+    loginHandle = (username: string, password: string) => {
+        console.log(username, password)
+    }
+
     public render() {
         return (
             <main style={styles.main}>
-                <LogIn />
+                <Login submit={this.loginHandle} />
                 {/* <Header /> */}
                 <div style={styles.chat}>
                     <Tree style={{ width: "25%" }} activeChanged={this.setActiveItem} />

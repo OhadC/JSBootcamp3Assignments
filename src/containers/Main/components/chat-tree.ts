@@ -1,11 +1,5 @@
 import Events from "../../../common/Events";
-
-interface ITreeItem {
-    // id: string
-    type: string
-    name: string
-    items?: ITreeItem[]
-}
+import { ITreeItem } from "../../../models/tree-item";
 
 interface IItemHTMLElement extends HTMLElement {
     item: ITreeItem
