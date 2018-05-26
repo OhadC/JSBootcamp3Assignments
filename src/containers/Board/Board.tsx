@@ -4,7 +4,7 @@ import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
 
 interface IBoardState {
-    messages: any[]
+    messages: any[]     // TODO: should be IMessage[]
 }
 
 class Board extends React.Component<any, IBoardState> {

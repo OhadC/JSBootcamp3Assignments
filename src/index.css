@@ -25,3 +25,18 @@ body {
 #root {
   height: 100%;
 }
+
+input {
+  border: 1px solid #ced4da;
+  border-radius: 7px;
+  padding: 0.5rem 0.75rem;
+  background-color: white;
+  outline: none
+}
+
+button {
+  border: 1px solid #ced4da;
+  border-radius: 7px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}

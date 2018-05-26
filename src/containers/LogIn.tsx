@@ -40,30 +40,18 @@ const styles: { [key: string]: React.CSSProperties } = {
         minWidth: '25em'
     },
     p: {
-        "margin": "0 0 0.5em 0",
+        margin: "0 0 0.5em 0",
     },
     label: {
-        "display": "inline-block",
-        "marginBottom": ".5rem"
+        display: "inline-block",
+        marginBottom: ".5rem"
     },
     input: {
-        "display": "block",
-        "width": "100%",
-        "padding": ".375rem .75rem",
-        "fontSize": "1rem",
-        "lineHeight": "1.5",
-        "color": "#495057",
-        "backgroundColor": "#fff",
-        "backgroundClip": "padding-box",
-        "border": "1px solid #ced4da",
-        "borderRadius": ".25rem"
+        display: "block",
+        width: "100%",
+        outline: 'none'
     },
     button: {
-        borderRadius: '7px',
-        padding: '0.75em 1em',
-        cursor: 'pointer',
-        border: '0',
-        borderLeft: 'none',
         background: '#86BB71',
         color: 'white'
     },

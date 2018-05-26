@@ -47,20 +47,15 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: 'row'
     },
     input: {
-        borderRadius: '7px 0 0 7px',
-        padding: '0.75em',
+        borderTopRightRadius: '0',
+        borderBottomRightRadius: '0',
         flex: '1',
-        backgroundColor: '#fff',
-        backgroundClip: 'padding-box',
         border: '0',
-        outline: 'none'
     },
     button: {
-        borderRadius: '0 7px 7px 0',
-        padding: '0.75em 1em',
-        cursor: 'pointer',
+        borderTopLeftRadius: '0',
+        borderBottomLeftRadius: '0',
         border: '0',
-        borderLeft: 'none',
         background: '#86BB71',
         color: 'white'
     },
