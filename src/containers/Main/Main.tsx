@@ -16,14 +16,14 @@ class Main extends React.Component<{}, any> {
         console.log(activeItem)
     }
 
-    loginHandle = (username: string, password: string) => {
+    loginHandler = (username: string, password: string) => {
         console.log(username, password)
     }
 
     public render() {
         return (
             <main style={styles.main}>
-                <Login submit={this.loginHandle} />
+                <Login submit={this.loginHandler} />
                 {/* <Header /> */}
                 <div style={styles.chat}>
                     <Tree style={{ width: "25%" }} activeChanged={this.setActiveItem} />

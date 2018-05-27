@@ -1,8 +1,9 @@
 interface IMessage {
-    id: number
-    userId: number
+    id: string
+    groupId: string
+    userId: string
     content: string
-    date: Date
+    date: string
 }
 
 export { IMessage }

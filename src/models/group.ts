@@ -1,9 +1,18 @@
-import { User } from './user'
+import { User, IUser } from './user'
 
 interface IGroup {
     id: string
     name: string
-    users: { [key: string]: User }
+    users: { [key: string]: IUser }
+
+    getId(): string
+    getName(): string
+    getUsers(): IUser[]
+    addUser(user: IUser): boolean
+    addUsers(users: IUser[]): boolean
+    isContainUser(username: string): boolean
+    removeUser(userName: string): boolean
+    removeAllUsers(): boolean
 }
 
 class Group implements IGroup {
@@ -23,16 +32,16 @@ class Group implements IGroup {
     public getName(): string {
         return this.name
     }
-    public getUsers(): User[] {
+    public getUsers(): IUser[] {
         return Object.keys(this.users).map(key => this.users[key])
     }
 
-    public addUser(user: User): boolean {
+    public addUser(user: IUser): boolean {
         if (this.users[user.getName()]) return false
         this.users[user.getName()] = user
         return true
     }
-    public addUsers(users: User[]): boolean {
+    public addUsers(users: IUser[]): boolean {
         users.forEach(user => this.addUser(user))
         return true
     }

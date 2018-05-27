@@ -8,7 +8,7 @@ class Login extends React.Component<any, any> {
         password: ''
     }
 
-    inputChangedHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name
         const value = event.target.value
         this.setState({ [name]: value })
@@ -23,11 +23,11 @@ class Login extends React.Component<any, any> {
             <Modal style={styles.modal}>
                 <p style={styles.p}>
                     <label style={styles.label} htmlFor="username">Username</label>
-                    <input style={styles.input} type="text" name="username" value={this.state.username} onChange={this.inputChangedHandle} />
+                    <input style={styles.input} type="text" name="username" value={this.state.username} onChange={this.inputChangedHandler} />
                 </p>
                 <p>
                     <label style={styles.label} htmlFor="password">Password</label>
-                    <input style={styles.input} type="password" name="password" value={this.state.password} onChange={this.inputChangedHandle} />
+                    <input style={styles.input} type="password" name="password" value={this.state.password} onChange={this.inputChangedHandler} />
                 </p>
                 <button style={canSubmit ? styles.button : styles.buttonDisabled} disabled={!canSubmit} onClick={this.submit}>Submit</button>
             </Modal>

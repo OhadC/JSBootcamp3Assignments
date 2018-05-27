@@ -15,11 +15,11 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
         inputValue: ''
     }
 
-    inputChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ inputValue: e.target.value })
     }
 
-    addMessageHandle = () => {
+    addMessageHandler = () => {
         this.props.addMessage(this.state.inputValue)
         this.setState({ inputValue: '' })
     }
@@ -29,9 +29,9 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 
         return (
             <div style={styles.MessageInput}>
-                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandle} style={styles.input} placeholder='Type a message' />
+                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} style={styles.input} placeholder='Type a message' />
                 {/* <Button enabledStyle={styles.button} disabledStyle={styles.buttonDisabled} isDisabled={buttonDisabled} onClick={onClick} text={"send"} /> */}
-                <button style={!buttonDisabled ? styles.button : styles.buttonDisabled} disabled={buttonDisabled} onClick={this.addMessageHandle}>
+                <button style={!buttonDisabled ? styles.button : styles.buttonDisabled} disabled={buttonDisabled} onClick={this.addMessageHandler}>
                     Send
                 </button>
             </div>

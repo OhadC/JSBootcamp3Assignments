@@ -22,7 +22,7 @@ class Tree extends React.Component<ITreeProps, {}> {
     componentDidMount() {
         this.sectionRef.current.removeChild(this.treeDivRef.current)
         const chatTree = ChatTree(this.treeDivRef.current)
-        chatTree.on('activeElementChanged', this.activeElementChangedHandle)
+        chatTree.on('activeElementChanged', this.activeElementChangedHandler)
         this.fetchTreeItems()
             .then((data: ITreeItem[]) => {
                 chatTree.load(data)
@@ -32,11 +32,11 @@ class Tree extends React.Component<ITreeProps, {}> {
     }
 
     fetchTreeItems() {
-        return fetch('./tree.json')
+        return fetch('./mock-data/tree.json')
             .then(res => res.json())
     }
 
-    activeElementChangedHandle = (activeElement: any) => {
+    activeElementChangedHandler = (activeElement: any) => {
         this.props.activeChanged(activeElement)
     }
 

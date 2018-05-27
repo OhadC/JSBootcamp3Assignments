@@ -52,7 +52,7 @@ class Board extends React.Component<any, IBoardState> {
         })
     }
 
-    addMessageHandle = (messageContent: string) => {
+    addMessageHandler = (messageContent: string) => {
         // post message, and add the response.newMessage to this.state.messages
 
         this.setState((prevState: IBoardState) => ({
@@ -75,7 +75,7 @@ class Board extends React.Component<any, IBoardState> {
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
                 <ChatHistory style={{ flex: '1' }} messages={this.state.messages || []} user='one' messagesEnd={this.messagesEnd} />
-                <MessageInput addMessage={this.addMessageHandle} />
+                <MessageInput addMessage={this.addMessageHandler} />
             </section>
         )
     }
