@@ -1,48 +1,20 @@
-import Events from "../common/Events"
+import { AppStore } from "./StateStore";
+import { User } from "../models/user";
 
 interface IAuthState {
-    user: any
+    user: User | null
     isAuthenticated: boolean
 }
 
-interface IAuthStore {
-    state: IAuthState
-
-    get(key: string): any | null
-    set(key: string, val: any): void
-
-    on(name: string, listener: Function): void
-    off(name: string, listener: Function): void
-    emit(name: string, args: object[]): void
+let authInitialState: IAuthState = {
+    user: null,
+    isAuthenticated: false
 }
 
-class AuthStore implements IAuthStore {
-    state: IAuthState = {
-        user: null,
-        isAuthenticated: false
-    }
-    events = Events()
-
-    get(key: string) {
-        return this.state[key] || null
-    }
-    set(key: string, val: any) {
-        this.state[key] = val
-    }
-
-    on: (name: string, listener: Function) => void = this.events.on
-    off: (name: string, listener: Function) => void = this.events.off
-    emit: (name: string, args: object[]) => void = this.events.emit
-
-    static instance: IAuthStore
-
-    static getInstance() {
-        if (!AuthStore.instance) {
-            AuthStore.instance = new AuthStore()
-        }
-
-        return AuthStore.instance
+class AuthReducer {
+    f(){
+        AppStore.name
     }
 }
 
-export { AuthStore, IAuthStore, IAuthState }
+export { IAuthState, authInitialState, AuthReducer }

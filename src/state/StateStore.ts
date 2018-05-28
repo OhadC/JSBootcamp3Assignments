@@ -1,61 +1,50 @@
-import Events from "../common/Events"
-import { IMessagesState } from "./MessagesStore";
-import { IAuthState } from "./AuthStore";
+import { IMessagesState, messagesInitialState } from "../state/MessagesStore";
+import { IAuthState, authInitialState } from "./AuthStore";
+import { treeInitialState, ITreeState } from "./TreeStore";
 
-// 
-// components select from stateStore,
-// state emmited to specific store (messages / tree)
-// 
-// 
-
-interface IStateStoreState {
+interface IAppState {
     messages: IMessagesState
-    tree: any
+    tree: ITreeState
     auth: IAuthState
 }
 
-interface IStateStore {
-    state: IStateStoreState
-
-    get(key: string): any | null
-    set(key: string, val: any): void
-
-    on(name: string, listener: Function): void
-    off(name: string, listener: Function): void
-    emit(name: string, args: object[]): void
+const appState: IAppState = {
+    messages: messagesInitialState,
+    tree: treeInitialState,
+    auth: authInitialState
 }
 
-class StateStore implements IStateStore {
-    state: IStateStoreState = {
-        messages: {},
-        tree: {},
-        auth: {
-            user: null,
-            isAuthenticated: false,
+class AppStore {
+    static listeners: Function[] = []
+
+    static setState(partialState: Function | Object, callback?: Function) {
+        if (typeof partialState === 'function') {
+            AppStore.setState(partialState(appState), callback)
+        } else if (typeof partialState === 'object') {
+            console.log(partialState)
+            for (const key in partialState) {
+                if (partialState.hasOwnProperty(key) && appState.hasOwnProperty(key)) {
+                    console.log(key)
+                    appState[key] = partialState[key]
+                }
+            }
+            AppStore.onStoreChanged()
+            if (callback) callback()
         }
     }
-    events = Events()
 
-    get(key: string) {
-        return this.state[key] || null
+    static onStoreChanged() {
+        AppStore.listeners.forEach(listener => listener())
     }
-    set(key: string, val: any) {
-        this.state[key] = val
+    static subscribe(listener: Function) {
+        this.listeners.push(listener)
     }
-
-    on: (name: string, listener: Function) => void = this.events.on
-    off: (name: string, listener: Function) => void = this.events.off
-    emit: (name: string, args: object[]) => void = this.events.emit
-
-    static instance: IStateStore
-
-    static getInstance() {
-        if (!StateStore.instance) {
-            StateStore.instance = new StateStore()
+    static unsubscribe(listener: Function) {
+        const index = AppStore.listeners.indexOf(listener);
+        if (index !== -1) {
+            AppStore.listeners.splice(index, 1)
         }
-
-        return StateStore.instance
     }
 }
 
-export { StateStore, IStateStore }
+export { appState, AppStore }

@@ -5,10 +5,19 @@ import * as React from "react"
 import Tree from "./components/Tree"
 import Board from "../Board/Board"
 import Login from "../Login"
+import { AppStore } from "../../state/StateStore";
 
 class Main extends React.Component<{}, any> {
     state = {
         activeItem: null
+    }
+
+    componentDidMount() {
+        AppStore.subscribe(this.updateApp)
+    }
+
+    updateApp = () => {
+        this.forceUpdate()
     }
 
     setActiveItem = (activeItem: any) => {

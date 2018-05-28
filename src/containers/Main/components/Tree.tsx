@@ -1,7 +1,9 @@
 import * as React from 'react'
 
-import { ChatTree, ITreeItem } from './chat-tree'
+import { ChatTree } from './chat-tree'
 import './Tree.css'
+import { TreeReducer } from '../../../state/TreeStore';
+import { appState } from '../../../state/StateStore';
 
 interface ITreeProps {
     style: object,
@@ -23,17 +25,11 @@ class Tree extends React.Component<ITreeProps, {}> {
         this.sectionRef.current.removeChild(this.treeDivRef.current)
         const chatTree = ChatTree(this.treeDivRef.current)
         chatTree.on('activeElementChanged', this.activeElementChangedHandler)
-        this.fetchTreeItems()
-            .then((data: ITreeItem[]) => {
-                chatTree.load(data)
-                this.sectionRef.current.appendChild(this.treeDivRef.current)
-                this.treeDivRef.current.focus()
-            })
-    }
-
-    fetchTreeItems() {
-        return fetch('./mock-data/tree.json')
-            .then(res => res.json())
+        TreeReducer.fetchTree(() => {
+            chatTree.load(appState.tree)
+            this.sectionRef.current.appendChild(this.treeDivRef.current)
+            this.treeDivRef.current.focus()
+        })
     }
 
     activeElementChangedHandler = (activeElement: any) => {
