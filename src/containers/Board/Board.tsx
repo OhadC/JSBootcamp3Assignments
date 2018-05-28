@@ -2,79 +2,22 @@ import * as React from 'react'
 
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
+import { MessagesReducer } from '../../state/MessagesStore';
+import { appState } from '../../state/StateStore';
 
-interface IBoardState {
-    messages: any[]     // TODO: should be IMessage[]
-}
-
-class Board extends React.Component<any, IBoardState> {
-    private messagesEnd: React.RefObject<any>
-
-    constructor(props: any) {
-        super(props)
-
-        this.messagesEnd = React.createRef()
-
-        this.state = {
-            messages: []
-        }
-    }
-
+class Board extends React.Component<any, {}> {
     componentWillMount() {
-        this.fetchMessages()
-            .then((messages: any[]) => {
-                this.setState({ messages }, this.scrollToBottom)
-            })
-    }
-
-    fetchMessages = () => {
-        return new Promise((res, rej) => {
-            const mockMessages = [
-                {
-                    id: "1",
-                    user: "one",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "2",
-                    user: "two",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "3",
-                    name: "one",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus asperiores eligendi, nesciunt consequatur inventore ducimus neque iusto adipisci deleniti debitis cumque enim atque veniam modi illo facilis consequuntur quas. Velit!"
-                }, {
-                    id: "4",
-                    name: "one",
-                    content: "Lorem ipsum"
-                },
-            ]
-            res(mockMessages || [])
-        })
+        MessagesReducer.changeLocation()
     }
 
     addMessageHandler = (messageContent: string) => {
-        // post message, and add the response.newMessage to this.state.messages
-
-        this.setState((prevState: IBoardState) => ({
-            messages: [
-                ...prevState.messages,
-                {
-                    id: "a",
-                    user: "one",
-                    content: messageContent
-                }
-            ]
-        }), this.scrollToBottom)
-    }
-
-    scrollToBottom = () => {
-        this.messagesEnd.current.scrollIntoView()
+        MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
     }
 
     render() {
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
-                <ChatHistory style={{ flex: '1' }} messages={this.state.messages || []} user='one' messagesEnd={this.messagesEnd} />
+                <ChatHistory style={{ flex: '1' }} messages={appState.messages || []} userId='1' />
                 <MessageInput addMessage={this.addMessageHandler} />
             </section>
         )

@@ -1,4 +1,4 @@
-import { AppStore } from "./StateStore";
+import { AppStore, IAppState } from "./StateStore";
 import { IMessage } from "../models/message";
 
 interface IMessagesState {
@@ -9,12 +9,48 @@ let messagesInitialState: IMessagesState = {
 }
 
 class MessagesReducer {
-    changeLocation() { //TODO: newLocation: string
-        fetch('./mock-data/messages.json')
+    static changeLocation(callback?: Function) { //TODO: newLocation: string
+        fetch('./mock-data/message.json')
             .then((res: Response) => res.json())
             .then((messages: IMessagesState) => {
-                AppStore.setState({ messages })
+                AppStore.setState({ messages }, callback)
             })
+    }
+
+    static addMessage(messageContent: string, callback?: Function) {
+        AppStore.setState((prevState: IAppState) => {
+            const newMessage: IMessage = {
+                id: Math.random() + "",
+                groupId: '1',
+                userId: '1',
+                content: messageContent,
+                date: (new Date()).toISOString()
+            }
+            return {
+                messages: {
+                    ...prevState.messages,
+                    [newMessage.id]: newMessage
+                }
+            }
+        }, callback)
+    }
+
+    static echoMessage(messageContent: string) {    // temporary function. no need for refactoring.
+        AppStore.setState((prevState: IAppState) => {
+            const newMessage: IMessage = {
+                id: Math.random() + "",
+                groupId: '1',
+                userId: '2',
+                content: messageContent,
+                date: (new Date()).toISOString()
+            }
+            return {
+                messages: {
+                    ...prevState.messages,
+                    [newMessage.id]: newMessage
+                }
+            }
+        })
     }
 }
 

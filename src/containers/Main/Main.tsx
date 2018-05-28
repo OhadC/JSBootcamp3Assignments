@@ -20,11 +20,6 @@ class Main extends React.Component<{}, any> {
         this.forceUpdate()
     }
 
-    setActiveItem = (activeItem: any) => {
-        // this.setState({ activeItem })
-        console.log(activeItem)
-    }
-
     loginHandler = (username: string, password: string) => {
         console.log(username, password)
     }
@@ -35,7 +30,7 @@ class Main extends React.Component<{}, any> {
                 <Login submit={this.loginHandler} />
                 {/* <Header /> */}
                 <div style={styles.chat}>
-                    <Tree style={{ width: "25%" }} activeChanged={this.setActiveItem} />
+                    <Tree style={{ width: "25%" }} />
                     <Board style={{ width: "75%" }} />
                 </div>
                 {/* <Footer /> */}

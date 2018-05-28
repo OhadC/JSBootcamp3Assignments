@@ -14,7 +14,6 @@ class TreeReducer {
                 AppStore.setState({ tree }, callback)
             })
     }
-
 }
 
 export { ITreeState, treeInitialState, TreeReducer }

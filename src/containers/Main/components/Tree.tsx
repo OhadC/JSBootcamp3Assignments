@@ -6,8 +6,7 @@ import { TreeReducer } from '../../../state/TreeStore';
 import { appState } from '../../../state/StateStore';
 
 interface ITreeProps {
-    style: object,
-    activeChanged: Function
+    style: object
 }
 
 class Tree extends React.Component<ITreeProps, {}> {
@@ -33,7 +32,8 @@ class Tree extends React.Component<ITreeProps, {}> {
     }
 
     activeElementChangedHandler = (activeElement: any) => {
-        this.props.activeChanged(activeElement)
+        console.log(activeElement)
+        // this.props.activeChanged(activeElement)
     }
 
     render() {

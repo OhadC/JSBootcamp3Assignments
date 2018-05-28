@@ -21,13 +21,12 @@ class AppStore {
         if (typeof partialState === 'function') {
             AppStore.setState(partialState(appState), callback)
         } else if (typeof partialState === 'object') {
-            console.log(partialState)
             for (const key in partialState) {
                 if (partialState.hasOwnProperty(key) && appState.hasOwnProperty(key)) {
-                    console.log(key)
                     appState[key] = partialState[key]
                 }
             }
+            console.log('AppState changed', appState)
             AppStore.onStoreChanged()
             if (callback) callback()
         }
@@ -47,4 +46,4 @@ class AppStore {
     }
 }
 
-export { appState, AppStore }
+export { IAppState, appState, AppStore }
