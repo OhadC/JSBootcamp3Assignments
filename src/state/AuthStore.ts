@@ -1,8 +1,8 @@
-import { AppStore } from "./StateStore";
-import { User } from "../models/user";
+import { AppStore } from "./StateStore"
+import { IUser } from "../models/user"
 
 interface IAuthState {
-    user: User | null
+    user: IUser | null
     isAuthenticated: boolean
 }
 
@@ -12,8 +12,18 @@ let authInitialState: IAuthState = {
 }
 
 class AuthReducer {
-    f(){
-        AppStore.name
+    static login(username: string, password: string, callback?: Function) {
+        AppStore.setState({
+            auth: {
+                user: {
+                    id: '1',
+                    name: username,
+                    password: password,
+                    age: 1
+                },
+                isAuthenticated: true
+            }
+        })
     }
 }
 

@@ -19,7 +19,8 @@ class AppStore {
 
     static setState(partialState: Function | Object, callback?: Function) {
         if (typeof partialState === 'function') {
-            AppStore.setState(partialState(appState), callback)
+            const newPartialState = partialState(appState)
+            AppStore.setState(newPartialState, callback)
         } else if (typeof partialState === 'object') {
             for (const key in partialState) {
                 if (partialState.hasOwnProperty(key) && appState.hasOwnProperty(key)) {

@@ -15,7 +15,6 @@ class ChatHistory extends React.Component<any, any> {
     }
 
     scrollToBottom = () => {
-        console.log('scrollToBottom')
         this.messagesEnd.current.scrollIntoView()
     }
 

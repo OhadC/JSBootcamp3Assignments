@@ -2,10 +2,6 @@ import * as React from 'react'
 
 import './Message.css'
 
-// interface IMessageProps {
-
-// }
-
 const Message = (props: any) => {
     return (
         <li className='clearfix'>
