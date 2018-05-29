@@ -17,8 +17,6 @@ class ChatHistory extends React.Component<any, any> {
             this.scrollToBottom()
     }
     getSnapshotBeforeUpdate() {
-        // $0.scrollHeight - $0.offsetHeight -$0.scrollTop
-        // $1.offsetHeight + $1.scrollTop + 16 - $0.offsetTop
         const messagesListElement = this.messagesList.current
         const scrollButtomOfset: number =
             messagesListElement.scrollHeight - messagesListElement.offsetHeight - messagesListElement.scrollTop

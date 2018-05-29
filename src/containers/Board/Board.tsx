@@ -11,7 +11,7 @@ class Board extends React.Component<any, {}> {
     }
 
     componentDidUpdate() {
-        if (!appState.messages.length) {
+        if (!Object.keys(appState.messages).length) {
             MessagesReducer.changeLocation()
         }
     }

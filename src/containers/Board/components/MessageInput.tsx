@@ -20,7 +20,6 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
     }
     handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         event.stopPropagation()
-        console.log(event.key)
         if (event.key == 'Enter' && !event.shiftKey) {
             this.addMessageHandler()
         }

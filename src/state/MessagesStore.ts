@@ -20,6 +20,7 @@ class MessagesReducer {
 
     static addMessage(messageContent: string, callback?: Function) {
         if(!appState.auth.isAuthenticated) return
+        if(!messageContent.length) return
         AppStore.setState((prevState: IAppState) => {
             const newMessage: IMessage = {
                 id: Math.random() + "",
