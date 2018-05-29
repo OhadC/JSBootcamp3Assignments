@@ -3,19 +3,30 @@ import * as React from 'react'
 import Message from './Message'
 
 class ChatHistory extends React.Component<any, any> {
-    private messagesEnd: React.RefObject<any>
+    private messagesList: React.RefObject<any>
+    private messagesBottom: React.RefObject<any>
 
     constructor(props: any) {
         super(props)
-        this.messagesEnd = React.createRef()
+        this.messagesList = React.createRef()
+        this.messagesBottom = React.createRef()
     }
 
-    componentDidUpdate() {
-        this.scrollToBottom()   // TODO: validation if needed
+    componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
+        if (!snapshot || !snapshot.scrollButtomOfset || snapshot.scrollButtomOfset < 50)
+            this.scrollToBottom()
+    }
+    getSnapshotBeforeUpdate() {
+        // $0.scrollHeight - $0.offsetHeight -$0.scrollTop
+        // $1.offsetHeight + $1.scrollTop + 16 - $0.offsetTop
+        const messagesListElement = this.messagesList.current
+        const scrollButtomOfset: number =
+            messagesListElement.scrollHeight - messagesListElement.offsetHeight - messagesListElement.scrollTop
+        return { scrollButtomOfset }
     }
 
     scrollToBottom = () => {
-        this.messagesEnd.current.scrollIntoView()
+        this.messagesBottom.current.scrollIntoView()
     }
 
     render() {
@@ -26,9 +37,9 @@ class ChatHistory extends React.Component<any, any> {
         )
 
         return (
-            <ul style={{ ...this.props.style, ...styles.chatHistory }}>
+            <ul style={{ ...this.props.style, ...styles.chatHistory }} ref={this.messagesList}>
                 {messagesElements}
-                <li style={{ float: "left", clear: "both" }} ref={this.messagesEnd} />
+                <li style={{ float: "left", clear: "both" }} ref={this.messagesBottom} />
             </ul>
         )
     }

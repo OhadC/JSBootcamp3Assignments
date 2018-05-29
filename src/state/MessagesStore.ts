@@ -1,4 +1,4 @@
-import { AppStore, IAppState } from "./StateStore";
+import { AppStore, IAppState, appState } from "./StateStore";
 import { IMessage } from "../models/message";
 
 interface IMessagesState {
@@ -10,6 +10,7 @@ let messagesInitialState: IMessagesState = {
 
 class MessagesReducer {
     static changeLocation(callback?: Function) { //TODO: newLocation: string
+        if(!appState.auth.isAuthenticated) return
         fetch('./mock-data/message.json')
             .then((res: Response) => res.json())
             .then((messages: IMessagesState) => {
@@ -18,6 +19,7 @@ class MessagesReducer {
     }
 
     static addMessage(messageContent: string, callback?: Function) {
+        if(!appState.auth.isAuthenticated) return
         AppStore.setState((prevState: IAppState) => {
             const newMessage: IMessage = {
                 id: Math.random() + "",

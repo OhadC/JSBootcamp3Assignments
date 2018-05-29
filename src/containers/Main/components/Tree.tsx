@@ -21,13 +21,25 @@ class Tree extends React.Component<ITreeProps, {}> {
     }
 
     componentDidMount() {
-        this.sectionRef.current.removeChild(this.treeDivRef.current)
-        const chatTree = ChatTree(this.treeDivRef.current)
-        chatTree.on('activeElementChanged', this.activeElementChangedHandler)
+        this.fetchTree()
+    }
+
+    componentDidUpdate() {
+        if(!appState.tree){
+            this.fetchTree()
+        }
+    }
+
+    fetchTree = () => {
+        const sectionElement = this.sectionRef.current
+        const treeDivElement = this.treeDivRef.current
         TreeReducer.fetchTree(() => {
+            const chatTree = ChatTree(treeDivElement)
+            chatTree.on('activeElementChanged', this.activeElementChangedHandler)
+            sectionElement.removeChild(treeDivElement)
             chatTree.load(appState.tree)
-            this.sectionRef.current.appendChild(this.treeDivRef.current)
-            this.treeDivRef.current.focus()
+            sectionElement.appendChild(treeDivElement)
+            // treeDivElement.focus()
         })
     }
 
@@ -38,8 +50,8 @@ class Tree extends React.Component<ITreeProps, {}> {
 
     render() {
         return (
-            <section style={{ ...this.props.style, ...TreeStyle }}  ref={this.sectionRef}>
-                <ul className="Tree" ref={this.treeDivRef} style={{height: '100%'}} tabIndex={0} />
+            <section style={{ ...this.props.style, ...TreeStyle }} ref={this.sectionRef}>
+                <ul className="Tree" ref={this.treeDivRef} style={{ height: '100%' }} tabIndex={0} />
             </section>
         )
     }

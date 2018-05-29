@@ -10,6 +10,12 @@ class Board extends React.Component<any, {}> {
         MessagesReducer.changeLocation()
     }
 
+    componentDidUpdate() {
+        if (!appState.messages.length) {
+            MessagesReducer.changeLocation()
+        }
+    }
+
     addMessageHandler = (messageContent: string) => {
         MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
     }

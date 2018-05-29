@@ -15,8 +15,15 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
         inputValue: ''
     }
 
-    inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ inputValue: e.target.value })
+    inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ inputValue: event.target.value })
+    }
+    handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        event.stopPropagation()
+        console.log(event.key)
+        if (event.key == 'Enter' && !event.shiftKey) {
+            this.addMessageHandler()
+        }
     }
 
     addMessageHandler = () => {
@@ -29,8 +36,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 
         return (
             <div style={styles.MessageInput}>
-                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} style={styles.input} placeholder='Type a message' />
-                {/* <Button enabledStyle={styles.button} disabledStyle={styles.buttonDisabled} isDisabled={buttonDisabled} onClick={onClick} text={"send"} /> */}
+                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyDown={this.handleKeyPress} style={styles.input} placeholder='Type a message' />
                 <button style={!buttonDisabled ? styles.button : styles.buttonDisabled} disabled={buttonDisabled} onClick={this.addMessageHandler}>
                     Send
                 </button>

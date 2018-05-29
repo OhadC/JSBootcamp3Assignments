@@ -23,7 +23,7 @@ class AuthReducer {
                 },
                 isAuthenticated: true
             }
-        })
+        }, callback)
     }
 }
 
