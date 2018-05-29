@@ -25,7 +25,7 @@ class Tree extends React.Component<ITreeProps, {}> {
     }
 
     componentDidUpdate() {
-        if(!appState.tree){
+        if(!appState.tree){     // this cousing more than one fetch - async function takes time to resolve
             this.fetchTree()
         }
     }

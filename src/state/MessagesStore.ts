@@ -1,5 +1,8 @@
+import axios, * as Axios from 'axios'
+
 import { AppStore, IAppState, appState } from "./StateStore";
 import { IMessage } from "../models/message";
+import { getCancelObj, catchError } from '../common/axios';
 
 interface IMessagesState {
     [key: string]: IMessage
@@ -8,19 +11,22 @@ interface IMessagesState {
 let messagesInitialState: IMessagesState = {
 }
 
+
+
 class MessagesReducer {
     static changeLocation(callback?: Function) { //TODO: newLocation: string
-        if(!appState.auth.isAuthenticated) return
-        fetch('./mock-data/message.json')
-            .then((res: Response) => res.json())
+        if (!appState.auth.isAuthenticated) return
+        axios('./mock-data/message.json', getCancelObj('changeLocation'))
+            .then((data: Axios.AxiosResponse<IMessagesState>) => data.data)
             .then((messages: IMessagesState) => {
                 AppStore.setState({ messages }, callback)
             })
+            .catch(catchError)
     }
 
     static addMessage(messageContent: string, callback?: Function) {
-        if(!appState.auth.isAuthenticated) return
-        if(!messageContent.length) return
+        if (!appState.auth.isAuthenticated) return
+        if (!messageContent.length) return
         AppStore.setState((prevState: IAppState) => {
             const newMessage: IMessage = {
                 id: Math.random() + "",

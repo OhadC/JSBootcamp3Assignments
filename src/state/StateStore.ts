@@ -27,7 +27,7 @@ class AppStore {
                     appState[key] = partialState[key]
                 }
             }
-            console.log('AppState changed', appState)
+            console.log('AppState changed', partialState, appState)
             AppStore.onStoreChanged()
             if (callback) callback()
         }

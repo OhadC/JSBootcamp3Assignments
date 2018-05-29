@@ -11,7 +11,7 @@ class Board extends React.Component<any, {}> {
     }
 
     componentDidUpdate() {
-        if (!Object.keys(appState.messages).length) {
+        if (!Object.keys(appState.messages).length) {   // this cousing more than one fetch - async function takes time to resolve
             MessagesReducer.changeLocation()
         }
     }
