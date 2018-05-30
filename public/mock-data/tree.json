@@ -2,10 +2,12 @@
   {
     "type": "group",
     "name": "Friends",
+    "conversationId": "1",
     "items": [
       {
         "type": "group",
         "name": "Best Friends",
+        "conversationId": "2",
         "items": [
           {
             "type": "user",

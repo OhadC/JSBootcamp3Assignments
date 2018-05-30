@@ -1,0 +1,110 @@
+{
+    "1": {
+        "id": "1",
+        "ofType": "group",
+        "messages": [
+            {
+                "id": "1",
+                "userId": "1",
+                "content": "1 1 1",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "2",
+                "userId": "3",
+                "content": "2 1 3",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "5",
+                "userId": "1",
+                "content": "1 1 1",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "6",
+                "userId": "2",
+                "content": "6 1 2",
+                "date": "2018-04-06T11:10:31Z"
+            }
+        ],
+        "participants": [
+            {
+                "id": "1",
+                "name": "user1",
+                "password": "user1",
+                "age": 1
+            },
+            {
+                "id": "2",
+                "name": "user2",
+                "password": "user2",
+                "age": 2
+            },
+            {
+                "id": "3",
+                "name": "user3",
+                "password": "user3",
+                "age": 3
+            }
+        ]
+    },
+    "2": {
+        "id": "2",
+        "ofType": "group",
+        "messages": [
+            {
+                "id": "3",
+                "userId": "1",
+                "content": "3 2 1",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "4",
+                "userId": "1",
+                "content": "4 2 1",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "9",
+                "userId": "1",
+                "content": "9 2 1",
+                "date": "2018-04-06T11:10:31Z"
+            }
+        ],
+        "participants": [
+            {
+                "id": "1",
+                "name": "user1",
+                "password": "user1",
+                "age": 1
+            },
+            {
+                "id": "2",
+                "name": "user2",
+                "password": "user2",
+                "age": 2
+            },
+            {
+                "id": "3",
+                "name": "user3",
+                "password": "user3",
+                "age": 3
+            },
+            {
+                "id": "7",
+                "groupId": "2",
+                "userId": "3",
+                "content": "7 2 3",
+                "date": "2018-04-06T11:10:31Z"
+            },
+            {
+                "id": "8",
+                "groupId": "2",
+                "userId": "2",
+                "content": "8 2 2",
+                "date": "2018-04-06T11:10:31Z"
+            }
+        ]
+    }
+}

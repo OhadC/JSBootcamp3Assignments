@@ -1,19 +1,27 @@
 import axios, * as Axios from 'axios'
 
 import * as AppStore from "./StateStore";
-import { IMessagesState } from './MessagesStore';
+import { IMessagesState, messagesInitialState } from './MessagesStore';
 import { IMessage } from "../models/message";
 import { getCancelObj, catchError } from '../common/axios';
+import { IConversation } from '../models/conversation';
 
-export const changeLocation = (type: string, id: string, callback?: Function) => {
+export const fetchMessages = (conversationId: string, callback?: Function) => {
     if (!AppStore.appState.auth.isAuthenticated) return
-    axios.get('./mock-data/message.json', getCancelObj('changeLocation'))
-        .then((data: Axios.AxiosResponse<IMessagesState>) => data.data)
+    axios.get('./mock-data/conversation.json', getCancelObj('fetchMessages'))
+        .then((data: Axios.AxiosResponse<IConversation[]>) => data.data)
+        .then((conversations: IConversation[]) => conversations[conversationId].messages)
         .then((messages: IMessagesState) => {
-            
             AppStore.setState({ messages }, callback)
         })
         .catch(catchError)
+        .catch((error: any) => {
+            if (error.toString() === "TypeError: Cannot read property 'messages' of undefined") {
+                AppStore.setState({ messages: messagesInitialState })
+            } else {
+                throw error
+            }
+        })
 }
 
 export const addMessage = (messageContent: string, callback?: Function) => {
@@ -22,7 +30,6 @@ export const addMessage = (messageContent: string, callback?: Function) => {
     AppStore.setState((prevState: AppStore.IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            groupId: '1',
             userId: '1',
             content: messageContent,
             date: (new Date()).toISOString()
@@ -40,7 +47,6 @@ export const echoMessage = (messageContent: string) => {    // temporary functio
     AppStore.setState((prevState: AppStore.IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            groupId: '1',
             userId: '2',
             content: messageContent,
             date: (new Date()).toISOString()

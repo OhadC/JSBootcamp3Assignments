@@ -13,10 +13,10 @@ export const getCancelObj = (tokenName: string) => {
     }
 }
 
-export const catchError = (thrown: any) => {
-    if (axios.isCancel(thrown)) {
-        console.log(thrown.message ? thrown.message : 'Request cancelled');
+export const catchError = (error: any) => {
+    if (axios.isCancel(error)) {
+        console.log(error.message ? error.message : 'Request cancelled');
     } else {
-        console.log('some other reason');
+        throw error
     }
 }

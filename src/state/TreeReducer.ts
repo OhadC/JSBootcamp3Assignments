@@ -25,7 +25,7 @@ export const fetchTree = (callback?: Function) => {
 
 export const setActiveItem = (item: ITreeItem, callback?: Function) => {
     const newCallback = () => {
-        MessagesReducer.changeLocation(item.type, item.id)
+        MessagesReducer.fetchMessages(item.conversationId)
         if(callback) callback
     }
     AppStore.setState((prevState: AppStore.IAppState) => {

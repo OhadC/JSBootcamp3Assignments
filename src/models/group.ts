@@ -1,6 +1,6 @@
 import { User, IUser } from './user'
 
-interface IGroup {
+export interface IGroup {
     id: string
     name: string
     users: { [key: string]: IUser }
@@ -15,7 +15,7 @@ interface IGroup {
     removeAllUsers(): boolean
 }
 
-class Group implements IGroup {
+export class Group implements IGroup {
     public id: string
     public name: string
     public users: { [key: string]: User }
@@ -58,5 +58,3 @@ class Group implements IGroup {
         return true
     }
 }
-
-export { Group, IGroup }
