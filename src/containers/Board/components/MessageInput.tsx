@@ -36,7 +36,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
         return (
             <div style={styles.MessageInput}>
                 <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyDown={this.handleKeyPress} style={styles.input} placeholder='Type a message' />
-                <button style={!buttonDisabled ? styles.button : styles.buttonDisabled} disabled={buttonDisabled} onClick={this.addMessageHandler}>
+                <button style={styles.button} disabled={buttonDisabled} onClick={this.addMessageHandler}>
                     Send
                 </button>
             </div>
@@ -46,7 +46,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 
 const styles: { [key: string]: React.CSSProperties } = {
     MessageInput: {
-        backgroundColor: '#C2C2C4',
+        backgroundColor: '#E2E5EE',
         padding: '0.75em',
         display: 'flex',
         flexDirection: 'row'
@@ -60,16 +60,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     button: {
         borderTopLeftRadius: '0',
         borderBottomLeftRadius: '0',
-        border: '0',
-        background: '#86BB71',
-        color: 'white'
-    },
-}
-styles.buttonDisabled = {
-    ...styles.button,
-    cursor: 'auto',
-    background: '#DDDDDD',
-    color: '#444753'
+    }
 }
 
 export default MessageInput

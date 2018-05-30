@@ -1,17 +1,18 @@
 .message {
-    color: white;
-    padding: 1.5rem;
+    color: #34353F;
+    padding: 0.8rem 1.3rem;
     line-height: 1.5em;
-    border-radius: 7px;
-    margin: 1rem;
+    border-radius: 1.5rem;
+    border-bottom-left-radius: 0;
+    margin: 0.5rem 1rem;
     margin-right: 3em;
     max-width: 40rem;
     position: relative;
-    background: #94C2ED;
+    background: #F2F3F5;
     float: left;
     word-break: break-all;
 }
-.message:after {
+/* .message:after {
     top: 1rem;
     right: 100%;
     border: solid transparent;
@@ -20,18 +21,38 @@
     margin-left: -10px;
     border-right-color: #94C2ED;
     content: '';
-}
+} */
 
 .message.self {
     margin-right: 1em;
     margin-left: 3em;
-    background: #86BB71;
+    color: white;
+    background: #E74753;
     float: right;
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 0;
 }
-.message.self:after {
+/* .message.self:after {
     left: 100%;
     margin-left: 0;
     margin-right: -10px;
     border-right: transparent;
     border-left-color: #86BB71;
+} */
+
+.message .username {
+    font-size: 0.8em;
+    margin: 0;
+    font-weight: 600;
+}
+
+.message .content {
+    margin: 0.3em 0;
+}
+
+.message .date {
+    font-size: 0.8em;
+    text-align: right;
+    opacity: 0.8;
+    margin: 0;
 }

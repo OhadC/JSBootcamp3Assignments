@@ -30,7 +30,7 @@ class Login extends React.Component<any, any> {
                     <label style={styles.label} htmlFor="password">Password</label>
                     <input style={styles.input} type="password" name="password" value={this.state.password} onChange={this.inputChangedHandler} />
                 </p>
-                <button style={canSubmit ? styles.button : styles.buttonDisabled} disabled={!canSubmit} onClick={this.submit}>Submit</button>
+                <button disabled={!canSubmit} onClick={this.submit}>Submit</button>
             </Modal>
         )
     }
@@ -52,16 +52,6 @@ const styles: { [key: string]: React.CSSProperties } = {
         width: "100%",
         outline: 'none'
     },
-    button: {
-        background: '#86BB71',
-        color: 'white'
-    },
-}
-styles.buttonDisabled = {
-    ...styles.button,
-    cursor: 'auto',
-    background: '#DDDDDD',
-    color: '#444753'
 }
 
 export default Login

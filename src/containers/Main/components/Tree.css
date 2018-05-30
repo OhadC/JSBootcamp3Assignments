@@ -13,7 +13,8 @@
 }
 
 .Tree li.active {
-    background-color: rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    background-color: #48C677;
 }
 
 .Tree li[group]::after {
@@ -28,6 +29,10 @@
     content: ''
 }
 
+.Tree li.active[group]::after {
+    border-left: 0.5em solid rgba(255, 255, 255, 1);
+}
+
 .Tree li[group][expanded]::after {
     right: 1em;
     top: 1.25em;
@@ -35,4 +40,8 @@
     border-right: 0.5em solid transparent;
     border-bottom: none;
     border-left: 0.5em solid transparent;
+}
+
+.Tree li.active[expanded]::after {
+    border-top: 0.5em solid rgba(255, 255, 255, 1);
 }
