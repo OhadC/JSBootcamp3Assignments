@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { ChatTree } from './chat-tree'
+import { ChatTree, IItemHTMLElement, ITreeItem } from './chat-tree'
 import './Tree.css'
-import { TreeReducer } from '../../../state/TreeStore';
 import { appState } from '../../../state/StateStore';
+import * as TreeReducer from '../../../state/TreeReducer';
 
 interface ITreeProps {
     style: object
@@ -12,40 +12,37 @@ interface ITreeProps {
 class Tree extends React.Component<ITreeProps, {}> {
     private treeDivRef: React.RefObject<any>
     private sectionRef: React.RefObject<any>
+    private loadedTree: Array<ITreeItem> | null
 
     constructor(props: ITreeProps) {
         super(props)
 
         this.sectionRef = React.createRef()
         this.treeDivRef = React.createRef()
+        this.loadedTree = null
     }
 
     componentDidMount() {
-        this.fetchTree()
+        TreeReducer.fetchTree()
     }
 
     componentDidUpdate() {
-        if(!appState.tree){     // this cousing more than one fetch - async function takes time to resolve
-            this.fetchTree()
-        }
-    }
-
-    fetchTree = () => {
-        const sectionElement = this.sectionRef.current
-        const treeDivElement = this.treeDivRef.current
-        TreeReducer.fetchTree(() => {
+        if (appState.tree.treeData !== this.loadedTree) {
+            const sectionElement = this.sectionRef.current
+            const treeDivElement = this.treeDivRef.current
+            
             const chatTree = ChatTree(treeDivElement)
             chatTree.on('activeElementChanged', this.activeElementChangedHandler)
             sectionElement.removeChild(treeDivElement)
-            chatTree.load(appState.tree)
+            chatTree.load(appState.tree.treeData)
             sectionElement.appendChild(treeDivElement)
-            // treeDivElement.focus()
-        })
+            
+            this.loadedTree = appState.tree.treeData
+        }
     }
 
-    activeElementChangedHandler = (activeElement: any) => {
-        console.log(activeElement)
-        // this.props.activeChanged(activeElement)
+    activeElementChangedHandler = (activeElement: IItemHTMLElement) => {
+        TreeReducer.setActiveItem(activeElement.item)
     }
 
     render() {

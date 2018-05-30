@@ -160,4 +160,4 @@ function ChatTree(element: IItemHTMLElement) {
     }
 }
 
-export { ChatTree, ITreeItem }
+export { ChatTree, ITreeItem, IItemHTMLElement }

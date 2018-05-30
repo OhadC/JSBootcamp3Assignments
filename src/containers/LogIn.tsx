@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import Modal from "../components/Modal"
-import { AuthReducer } from "../state/AuthStore";
+import * as AuthReducer from "../state/AuthReducer";
 
 class Login extends React.Component<any, any> {
     state = {

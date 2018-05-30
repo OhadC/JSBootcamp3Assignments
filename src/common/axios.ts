@@ -5,17 +5,17 @@ const cancelTokens: { [tokenName: string]: Axios.Canceler } = {}
 export const getCancelObj = (tokenName: string) => {
     return {
         cancelToken: new axios.CancelToken((canceler: Axios.Canceler) => {
-            if (cancelTokens['changeLocation']) {
-                cancelTokens['changeLocation']()
+            if (cancelTokens[tokenName]) {
+                cancelTokens[tokenName]('Request cancelled: ' + tokenName)
             }
-            cancelTokens['changeLocation'] = canceler
+            cancelTokens[tokenName] = canceler
         })
     }
 }
 
 export const catchError = (thrown: any) => {
     if (axios.isCancel(thrown)) {
-        console.log('request cancelled');
+        console.log(thrown.message ? thrown.message : 'Request cancelled');
     } else {
         console.log('some other reason');
     }

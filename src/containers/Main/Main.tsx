@@ -6,7 +6,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Tree from "./components/Tree"
 import Board from "../Board/Board"
 import Login from "../Login"
-import { AppStore, appState } from "../../state/StateStore";
+import * as AppStore from "../../state/StateStore";
 
 class Main extends React.Component<{}, any> {
     state = {
@@ -26,10 +26,10 @@ class Main extends React.Component<{}, any> {
     }
 
     public render() {
-        const loginRoute = (props: any) => appState.auth.isAuthenticated ?
+        const loginRoute = (props: any) => AppStore.appState.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/chat", state: { from: props.location } }} /> :
             <Login submit={this.loginHandler} />
-        const authCheck = (props: any) => !appState.auth.isAuthenticated ?
+        const authCheck = (props: any) => !AppStore.appState.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/login", state: { from: props.location } }} /> : null
 
         return (

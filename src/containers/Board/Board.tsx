@@ -2,20 +2,10 @@ import * as React from 'react'
 
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
-import { MessagesReducer } from '../../state/MessagesStore';
 import { appState } from '../../state/StateStore';
+import * as MessagesReducer from '../../state/MessagesReducer';
 
 class Board extends React.Component<any, {}> {
-    componentWillMount() {
-        MessagesReducer.changeLocation()
-    }
-
-    componentDidUpdate() {
-        if (!Object.keys(appState.messages).length) {   // this cousing more than one fetch - async function takes time to resolve
-            MessagesReducer.changeLocation()
-        }
-    }
-
     addMessageHandler = (messageContent: string) => {
         MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
     }
