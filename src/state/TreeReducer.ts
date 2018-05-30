@@ -9,8 +9,8 @@ import { ITreeItem } from '../models/tree-item'
 export const fetchTree = (callback?: Function) => {
     if (!AppStore.appState.auth.isAuthenticated) return
     axios.get('./mock-data/tree.json', getCancelObj('fetchTree'))
-        .then((data: Axios.AxiosResponse<ITreeState>) => data.data)
-        .then((treeData: ITreeState) => {
+        .then((response: Axios.AxiosResponse<ITreeState>) => {
+            const treeData: ITreeState = response.data
             AppStore.setState((prevState: AppStore.IAppState) => {
                 return {
                     tree: {
@@ -18,7 +18,7 @@ export const fetchTree = (callback?: Function) => {
                         treeData
                     }
                 }
-            })
+            }, callback)
         })
         .catch(catchError)
 }
@@ -26,7 +26,7 @@ export const fetchTree = (callback?: Function) => {
 export const setActiveItem = (item: ITreeItem, callback?: Function) => {
     const newCallback = () => {
         MessagesReducer.fetchMessages(item.conversationId)
-        if(callback) callback
+        if (callback) callback
     }
     AppStore.setState((prevState: AppStore.IAppState) => {
         return {

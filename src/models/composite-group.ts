@@ -1,44 +1,44 @@
 import { Group, IGroup } from './group'
 import { User, IUser } from './user';
 
-interface ICompositeGroup extends IGroup {
+export interface ICompositeGroup extends IGroup {
     parent: ICompositeGroup | null
     groups: { [key: string]: ICompositeGroup }
     usersCount: number
 
-    getParent(): ICompositeGroup | null
-    getGroups(): ICompositeGroup[]
-    getGroupsKeys(): string[]
-    updateUsersCount(): void
-    addUser(user: IUser): boolean
-    getGroup(key: string): ICompositeGroup | null
-    addGroup(newGroup: ICompositeGroup): boolean
-    removeGroup(key: string): boolean
-    getPath(innerPath: ICompositeGroup[]): ICompositeGroup[]
-    DFS(doToEveryGroup: Function): void
-    search(predicate: (group: ICompositeGroup) => boolean): ICompositeGroup[]
-    flattening(): void
-    toString(): string
-    removeUserFromAllGroups(username: string): void
-    preventTwoEntities(): void
+    getParent?(): ICompositeGroup | null
+    getGroups?(): ICompositeGroup[]
+    getGroupsKeys?(): string[]
+    updateUsersCount?(): void
+    addUser?(user: IUser): boolean
+    getGroup?(key: string): ICompositeGroup | null
+    addGroup?(newGroup: ICompositeGroup): boolean
+    removeGroup?(key: string): boolean
+    getPath?(innerPath: ICompositeGroup[]): ICompositeGroup[]
+    DFS?(doToEveryGroup: Function): void
+    search?(predicate: (group: ICompositeGroup) => boolean): ICompositeGroup[]
+    flattening?(): void
+    toString?(): string
+    removeUserFromAllGroups?(username: string): void
+    preventTwoEntities?(): void
 }
 
-class ICompositeGroup extends Group implements ICompositeGroup {
-    parent: ICompositeGroup | null
-    groups: { [key: string]: ICompositeGroup }
+export class CompositeGroup extends Group implements ICompositeGroup {
+    parent: CompositeGroup | null
+    groups: { [key: string]: CompositeGroup }
     usersCount: number
 
-    constructor(id: string, name: string, parent: ICompositeGroup) {
+    constructor(id: string, name: string, parent: CompositeGroup) {
         super(id, name)
         this.parent = parent || null
         this.groups = {}
         this.usersCount = 0
     }
 
-    getParent(): ICompositeGroup | null {
+    getParent(): CompositeGroup | null {
         return this.parent
     }
-    getGroups(): ICompositeGroup[] {
+    getGroups(): CompositeGroup[] {
         return Object.keys(this.groups).map(key => this.groups[key])
     }
     getGroupsKeys(): string[] {
@@ -48,7 +48,7 @@ class ICompositeGroup extends Group implements ICompositeGroup {
         return this.usersCount
     }
     updateUsersCount(): void {
-        this.usersCount = this.getGroups().reduce((sum: number, group: ICompositeGroup) => {
+        this.usersCount = this.getGroups().reduce((sum: number, group: CompositeGroup) => {
             group.updateUsersCount()
             return sum + group.getUsersCount()
         }, 0) + Object.keys(this.users).length
@@ -60,13 +60,13 @@ class ICompositeGroup extends Group implements ICompositeGroup {
         return true
     }
 
-    getGroup(key: string): ICompositeGroup | null {
+    getGroup(key: string): CompositeGroup | null {
         if (!(key in this.groups)) {
             return null
         }
         return this.groups[key]
     }
-    addGroup(newGroup: ICompositeGroup): boolean {
+    addGroup(newGroup: CompositeGroup): boolean {
         const groupName = newGroup.getName()
         if (groupName in this.groups) {
             return false
@@ -83,7 +83,7 @@ class ICompositeGroup extends Group implements ICompositeGroup {
         return true
     }
 
-    getPath(innerPath: ICompositeGroup[]): ICompositeGroup[] {
+    getPath(innerPath: CompositeGroup[]): CompositeGroup[] {
         innerPath = innerPath || []
         innerPath.unshift(this)
         if (this.parent) {
@@ -100,8 +100,8 @@ class ICompositeGroup extends Group implements ICompositeGroup {
             groups.push(currGroup.getGroups())
         }
     }
-    search(predicate: (group: ICompositeGroup) => boolean): ICompositeGroup[] {
-        const foundedGroups: ICompositeGroup[] = []
+    search(predicate: (group: CompositeGroup) => boolean): CompositeGroup[] {
+        const foundedGroups: CompositeGroup[] = []
         if (predicate(this)) {
             foundedGroups.push(this)
         }
@@ -120,7 +120,7 @@ class ICompositeGroup extends Group implements ICompositeGroup {
 
             this.removeGroup(childKey)
             this.addUsers(childUsers)
-            childGroups.forEach((group: ICompositeGroup) => this.groups[group.getName()] = group)
+            childGroups.forEach((group: CompositeGroup) => this.groups[group.getName()] = group)
 
             this.flattening()
         }
@@ -134,16 +134,16 @@ class ICompositeGroup extends Group implements ICompositeGroup {
 
     removeUserFromAllGroups(username: string): void { // TODO: should be userId
         super.removeUser(username)
-        this.getGroups().forEach((group: ICompositeGroup) => group.removeUserFromAllGroups(username))
+        this.getGroups().forEach((group: CompositeGroup) => group.removeUserFromAllGroups(username))
     }
     preventTwoEntities(): void {
         const groupsKeys = this.getGroupsKeys()
         if (groupsKeys.length) {
             const users = this.getUsers()
             if (users.length) {
-                let othersGroup: ICompositeGroup | null = this.getGroup('others')
+                let othersGroup: CompositeGroup | null = this.getGroup('others')
                 if (!othersGroup) {
-                    othersGroup = new ICompositeGroup('others', 'others', this)
+                    othersGroup = new CompositeGroup('others', 'others', this)
                     this.addGroup(othersGroup)
                 }
                 othersGroup.addUsers(users)
@@ -153,5 +153,3 @@ class ICompositeGroup extends Group implements ICompositeGroup {
         }
     }
 }
-
-module.exports = ICompositeGroup

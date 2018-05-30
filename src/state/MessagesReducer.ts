@@ -8,10 +8,11 @@ import { IConversation } from '../models/conversation';
 
 export const fetchMessages = (conversationId: string, callback?: Function) => {
     if (!AppStore.appState.auth.isAuthenticated) return
+    // AppStore.setState({ messages: messagesInitialState })
     axios.get('./mock-data/conversation.json', getCancelObj('fetchMessages'))
-        .then((data: Axios.AxiosResponse<IConversation[]>) => data.data)
-        .then((conversations: IConversation[]) => conversations[conversationId].messages)
-        .then((messages: IMessagesState) => {
+        .then((response: Axios.AxiosResponse<IConversation[]>) => {
+            const conversations: IConversation[] = response.data    // TODO: generator
+            const messages: IMessagesState = conversations[conversationId].messages
             AppStore.setState({ messages }, callback)
         })
         .catch(catchError)
@@ -19,7 +20,7 @@ export const fetchMessages = (conversationId: string, callback?: Function) => {
             if (error.toString() === "TypeError: Cannot read property 'messages' of undefined") {
                 AppStore.setState({ messages: messagesInitialState })
             } else {
-                throw error
+                console.log(error)
             }
         })
 }
@@ -30,7 +31,7 @@ export const addMessage = (messageContent: string, callback?: Function) => {
     AppStore.setState((prevState: AppStore.IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            userId: '1',
+            userId: prevState.auth.user.id,
             content: messageContent,
             date: (new Date()).toISOString()
         }

@@ -2,7 +2,6 @@ import * as React from 'react'
 
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
-import { appState } from '../../state/StateStore';
 import * as MessagesReducer from '../../state/MessagesReducer';
 
 class Board extends React.Component<any, {}> {
@@ -13,7 +12,7 @@ class Board extends React.Component<any, {}> {
     render() {
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
-                <ChatHistory style={{ flex: '1' }} messages={appState.messages || []} userId='1' />
+                <ChatHistory style={{ flex: '1' }} />
                 <MessageInput addMessage={this.addMessageHandler} />
             </section>
         )

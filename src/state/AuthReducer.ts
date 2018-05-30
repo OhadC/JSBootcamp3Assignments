@@ -1,5 +1,6 @@
 import * as AppStore from "./StateStore"
 import * as TreeReducer from "./TreeReducer"
+import { authInitialState } from "./AuthStore"
 
 export const login = (username: string, password: string, callback?: Function) => {
     const newCallback = () => {
@@ -17,5 +18,9 @@ export const login = (username: string, password: string, callback?: Function) =
             isAuthenticated: true
         }
     }, newCallback)
+}
+
+export const logout = (callback?: Function) => {
+    AppStore.setState({ auth: authInitialState }, callback)
 }
 

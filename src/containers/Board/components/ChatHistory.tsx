@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import Message from './Message'
+import { appState } from '../../../state/StateStore';
 
 class ChatHistory extends React.Component<any, any> {
     private messagesList: React.RefObject<any>
@@ -28,9 +29,11 @@ class ChatHistory extends React.Component<any, any> {
     }
 
     render() {
-        const messagesElements = Object.keys(this.props.messages).map(key => this.props.messages[key]).map(
+        const messages = appState.messages
+        const selfUserId = appState.auth.user.id
+        const messagesElements = Object.keys(messages).map(key => messages[key]).map(
             (message: any) => (
-                <Message key={message.id} content={message.content} selfMessage={this.props.userId === message.userId} />
+                <Message key={message.id} message={message} selfUserId={selfUserId} />
             )
         )
 

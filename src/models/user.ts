@@ -1,19 +1,19 @@
-interface IUser {
+export interface IUser {
     id: string
     name: string
     password: string
     age: number
 
-    getId(): string
-    getName(): string
-    getPassword(): string
-    getAge(): number
-    setPassword(password: string): void
-    setAge(age: number): void
-    toString(): string
+    getId?(): string
+    getName?(): string
+    getPassword?(): string
+    getAge?(): number
+    setPassword?(password: string): void
+    setAge?(age: number): void
+    toString?(): string
 }
 
-class User implements IUser {
+export class User implements IUser {
     public id: string
     public name: string
     public password: string
@@ -49,5 +49,3 @@ class User implements IUser {
         return this.name
     }
 }
-
-export { User, IUser }

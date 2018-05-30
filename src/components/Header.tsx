@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-const Header = (props: any) => (
+const Header = (props: any) => (    // TODO: this
     <header>
-    Header
+        Header
     </header>
 )
 export default Header

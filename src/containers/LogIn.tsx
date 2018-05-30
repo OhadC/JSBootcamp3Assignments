@@ -38,7 +38,7 @@ class Login extends React.Component<any, any> {
 
 const styles: { [key: string]: React.CSSProperties } = {
     modal: {
-        minWidth: '25em'
+        minWidth: '23em'
     },
     p: {
         margin: "0 0 0.5em 0",
