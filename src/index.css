@@ -14,7 +14,7 @@ html, body {
 
 body {
   padding: 2rem;
-  background: linear-gradient(to right, #5345CF , #584AE3)
+  background: linear-gradient(to right, rgb(104, 91, 247) , rgb(51, 150, 231))
 }
 
 .clearfix:after {

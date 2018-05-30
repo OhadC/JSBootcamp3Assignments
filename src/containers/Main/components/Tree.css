@@ -14,7 +14,7 @@
 
 .Tree li.active {
     font-weight: 600;
-    background-color: #48C677;
+    background-color: rgb(52, 207, 109);
 }
 
 .Tree li[group]::after {

@@ -55,6 +55,8 @@ class Main extends React.Component<{}, any> {
 const styles: { [key: string]: React.CSSProperties } = {
     main: {
         height: "100%",
+        maxWidth: '100rem',
+        margin: 'auto',
         background: "white",
         borderRadius: "5px",
         overflow: "hidden",
