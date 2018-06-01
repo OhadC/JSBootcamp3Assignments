@@ -1,5 +1,5 @@
-import Events from "../../../common/Events";
-import { ITreeItem } from "../../../models/tree-item";
+import Events from "../../common/Events";
+import { ITreeItem } from "../../models/tree-item";
 
 interface IItemHTMLElement extends HTMLElement {
     item: ITreeItem

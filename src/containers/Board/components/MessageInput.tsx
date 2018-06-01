@@ -35,7 +35,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 
         return (
             <div style={styles.MessageInput}>
-                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyDown={this.handleKeyPress} style={styles.input} placeholder='Type a message' />
+                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyPress={this.handleKeyPress} style={styles.input} placeholder='Type a message' />
                 <button style={styles.button} disabled={buttonDisabled} onClick={this.addMessageHandler}>
                     Send
                 </button>

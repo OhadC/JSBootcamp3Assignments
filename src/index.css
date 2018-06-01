@@ -14,28 +14,19 @@ html, body {
 
 body {
   padding: 2rem;
-  background: linear-gradient(to right, #aaaaaa , #747474)
+  background: linear-gradient(to right, #114B5F , #028090)
+}
+
+@media only screen and (max-width: 800px) {
+  body {
+    padding: 0;
+  }
 }
 
 .clearfix:after {
   content: '';
   clear: both;
   display: table;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: none; 
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(50, 50, 50, 0.4); 
-  border-radius: 5px;
-  margin: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(50, 50, 50, 0.6); 
 }
 
 #root {
@@ -55,7 +46,7 @@ button {
   border-radius: 7px;
   padding: 0.5rem 0.75rem;
   cursor: pointer;
-  background: #83e62b;
+  background: #6bc31d;
   color: white;
 }
 

@@ -3,7 +3,7 @@ import * as React from 'react'
 import Message from './Message'
 import { appState } from '../../../state/StateStore';
 
-class ChatHistory extends React.Component<any, any> {
+class ChatHistory extends React.Component<{ style: React.CSSProperties }, {}> {
     private messagesList: React.RefObject<any>
     private messagesBottom: React.RefObject<any>
 

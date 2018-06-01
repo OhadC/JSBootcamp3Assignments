@@ -31,7 +31,7 @@ export const addMessage = (messageContent: string, callback?: Function) => {
     AppStore.setState((prevState: AppStore.IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            userId: prevState.auth.user.id,
+            user: prevState.auth.user,
             content: messageContent,
             date: (new Date()).toISOString()
         }
@@ -48,7 +48,12 @@ export const echoMessage = (messageContent: string) => {    // temporary functio
     AppStore.setState((prevState: AppStore.IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            userId: '2',
+            user: {
+                "id": "2",
+                "name": "user2",
+                "password": "user2",
+                "age": 2
+            },
             content: messageContent,
             date: (new Date()).toISOString()
         }

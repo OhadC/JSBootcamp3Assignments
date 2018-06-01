@@ -4,7 +4,7 @@
     list-style: none;
     outline: none;
     user-select: none;
-    padding-top: 1rem
+    /* margin-top: 1rem */
 }
 
 .Tree li {
@@ -14,7 +14,7 @@
 
 .Tree li.active {
     font-weight: 600;
-    background-color: #78d624;
+    background-color: #6bc31d;
 }
 
 .Tree li[group]::after {

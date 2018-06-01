@@ -4,22 +4,21 @@ import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
 import * as MessagesReducer from '../../state/MessagesReducer';
 
-class Board extends React.Component<any, {}> {
-    addMessageHandler = (messageContent: string) => {
+const Board = (props: { style: React.CSSProperties }) => {
+    const addMessageHandler = (messageContent: string) => {
         MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
     }
 
-    render() {
-        return (
-            <section style={{ ...this.props.style, ...boardStyle }}>
-                <ChatHistory style={{ flex: '1' }} />
-                <MessageInput addMessage={this.addMessageHandler} />
-            </section>
-        )
-    }
+    return (
+        <section style={{ ...props.style, ...boardStyle }}>
+            <ChatHistory style={{ flex: '1' }} />
+            <MessageInput addMessage={addMessageHandler} />
+        </section>
+    )
+
 }
 
-const boardStyle = {
+const boardStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column'
 }

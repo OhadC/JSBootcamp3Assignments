@@ -3,12 +3,12 @@ import { Route, Redirect, Switch } from "react-router-dom";
 
 // import Header from '../../components/Header'
 // import Footer from '../../components/Footer'
-import Tree from "./components/Tree"
-import Board from "../Board/Board"
-import LogIn from "../LogIn"
-import * as AppStore from "../../state/StateStore";
+import Tree from "./Tree/Tree"
+import Board from "./Board/Board"
+import LogIn from "../components/LogIn"
+import * as AppStore from "../state/StateStore";
 
-class Main extends React.Component<{}, any> {
+class Main extends React.Component<{}, {}> {
     state = {
         activeItem: null
     }
