@@ -100,6 +100,16 @@ export class CompositeGroup extends Group implements ICompositeGroup {
             groups.push(currGroup.getGroups())
         }
     }
+
+    *searchIterator(predicate: (group: CompositeGroup) => boolean): any {
+        if (predicate(this)) {
+            yield this
+        }
+        for (const key in this.groups) {
+            yield* this.groups[key].searchIterator(predicate)
+        }
+    }
+
     search(predicate: (group: CompositeGroup) => boolean): CompositeGroup[] {
         const foundedGroups: CompositeGroup[] = []
         if (predicate(this)) {

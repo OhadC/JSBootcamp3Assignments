@@ -14,7 +14,7 @@
 
 .Tree li.active {
     font-weight: 600;
-    background-color: rgb(52, 207, 109);
+    background-color: #78d624;
 }
 
 .Tree li[group]::after {
@@ -30,7 +30,7 @@
 }
 
 .Tree li.active[group]::after {
-    border-left: 0.5em solid rgba(255, 255, 255, 1);
+    border-left: 0.5em solid white;
 }
 
 .Tree li[group][expanded]::after {
@@ -43,5 +43,5 @@
 }
 
 .Tree li.active[expanded]::after {
-    border-top: 0.5em solid rgba(255, 255, 255, 1);
+    border-top: 0.5em solid white;
 }

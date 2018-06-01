@@ -12,6 +12,7 @@
     float: left;
     word-break: break-all;
 }
+
 /* .message:after {
     top: 1rem;
     right: 100%;
@@ -27,11 +28,12 @@
     margin-right: 1em;
     margin-left: 3em;
     color: white;
-    background: #E74753;
+    background: #78d624;
     float: right;
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 0;
 }
+
 /* .message.self:after {
     left: 100%;
     margin-left: 0;
@@ -43,11 +45,8 @@
 .message .username {
     font-size: 0.8em;
     margin: 0;
+    margin-right: 0.5em;
     font-weight: 600;
-}
-
-.message .content {
-    margin: 0.3em 0;
 }
 
 .message .date {
@@ -55,4 +54,8 @@
     text-align: right;
     opacity: 0.8;
     margin: 0;
+}
+
+.message .content {
+    margin: 0.3em 0;
 }

@@ -30,7 +30,7 @@ const blackScreenStyle: React.CSSProperties = {
 
 const modalStyle: React.CSSProperties = {
     borderRadius: '7px',
-    background: "#F2F5F8",
+    background: "rgb(226, 229, 238)",
     padding: '2rem',
 }
 

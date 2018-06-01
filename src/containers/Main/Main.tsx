@@ -5,7 +5,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 // import Footer from '../../components/Footer'
 import Tree from "./components/Tree"
 import Board from "../Board/Board"
-import Login from "../Login"
+import LogIn from "../LogIn"
 import * as AppStore from "../../state/StateStore";
 
 class Main extends React.Component<{}, any> {
@@ -28,7 +28,7 @@ class Main extends React.Component<{}, any> {
     public render() {
         const loginRoute = (props: any) => AppStore.appState.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/chat", state: { from: props.location } }} /> :
-            <Login submit={this.loginHandler} />
+            <LogIn submit={this.loginHandler} />
         const authCheck = (props: any) => !AppStore.appState.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/login", state: { from: props.location } }} /> : null
 
@@ -38,15 +38,13 @@ class Main extends React.Component<{}, any> {
                     <Route path="/login" exact={true} render={loginRoute} />
                     <Route path="/" render={authCheck} />
                 </Switch>
-                
-                <main style={styles.main}>
-                    {/* <Header /> */}
-                    <div style={styles.chat}>
-                        <Tree style={{ width: "25%" }} />
-                        <Board style={{ width: "75%" }} />
-                    </div>
-                    {/* <Footer /> */}
+
+                {/* <Header /> */}
+                <main style={{ ...styles.main, ...styles.chat }}>
+                    <Tree style={{ width: "25%", background: '#252839', color: 'white', overflow: 'hidden' }} />
+                    <Board style={{ width: "75%", overflow: 'hidden' }} />
                 </main>
+                {/* <Footer /> */}
             </>
         )
     }

@@ -7,14 +7,14 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  color: #434651;
+  color: #252839;
   font-family: "Segoe UI", Neutrif, -apple-system, BlinkMacSystemFont, 
     Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 body {
   padding: 2rem;
-  background: linear-gradient(to right, rgb(104, 91, 247) , rgb(51, 150, 231))
+  background: linear-gradient(to right, #aaaaaa , #747474)
 }
 
 .clearfix:after {
@@ -23,23 +23,17 @@ body {
   display: table;
 }
 
-/* width */
 ::-webkit-scrollbar {
   width: 5px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
   background: none; 
 }
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgba(50, 50, 50, 0.4); 
-  border-radius: 10px;
+  border-radius: 5px;
+  margin: 5px;
 }
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(50, 50, 50, 0.6); 
 }
@@ -49,7 +43,7 @@ body {
 }
 
 input {
-  border: 1px solid #ced4da;
+  border: none;
   border-radius: 7px;
   padding: 0.5rem 0.75rem;
   background-color: white;
@@ -61,11 +55,11 @@ button {
   border-radius: 7px;
   padding: 0.5rem 0.75rem;
   cursor: pointer;
-  background: #E74753;
+  background: #83e62b;
   color: white;
 }
 
 button:disabled {
   cursor: auto;
-  background: rgb(151, 151, 151);
+  background: #909090;
 }

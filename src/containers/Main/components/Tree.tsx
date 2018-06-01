@@ -55,7 +55,7 @@ class Tree extends React.Component<ITreeProps, {}> {
 }
 
 const TreeStyle: React.CSSProperties = {
-    background: '#34353F',
+    background: '#252839',
     color: 'white',
     overflowY: 'auto'
 }

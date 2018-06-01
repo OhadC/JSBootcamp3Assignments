@@ -3,10 +3,10 @@ import * as React from "react"
 import Modal from "../components/Modal"
 import * as AuthReducer from "../state/AuthReducer";
 
-class Login extends React.Component<any, any> {
+class LogIn extends React.Component<any, any> {
     state = {
-        username: '',
-        password: ''
+        username: 'a',
+        password: 'a'
     }
 
     inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,9 @@ class Login extends React.Component<any, any> {
         this.setState({ [name]: value })
     }
 
-    submit = () => AuthReducer.login(this.state.username, this.state.password)
+    submit = () => {
+        AuthReducer.login(this.state.username, this.state.password)
+    }
 
     render() {
         const canSubmit = !!this.state.username && !!this.state.password
@@ -30,7 +32,7 @@ class Login extends React.Component<any, any> {
                     <label style={styles.label} htmlFor="password">Password</label>
                     <input style={styles.input} type="password" name="password" value={this.state.password} onChange={this.inputChangedHandler} />
                 </p>
-                <button disabled={!canSubmit} onClick={this.submit}>Submit</button>
+                <button disabled={!canSubmit} onClick={this.submit} style={{ width: "100%", textAlign: 'center', marginTop: "0.5em" }}>Submit</button>
             </Modal>
         )
     }
@@ -54,4 +56,4 @@ const styles: { [key: string]: React.CSSProperties } = {
     },
 }
 
-export default Login
+export default LogIn

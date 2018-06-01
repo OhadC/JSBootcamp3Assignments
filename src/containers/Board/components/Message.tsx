@@ -8,15 +8,16 @@ const Message = (props: any) => {
     return (    // TODO: name, date
         <li className='clearfix'>
             <div className={['message', selfMessage ? 'self' : ''].join(' ')}>
-                <p className="username">
+                <span className="username">
                     User Name
-                </p>
+                </span>
+                <span className="date">
+                    {moment(props.message.date).fromNow()}
+                </span>
                 <p className="content">
                     {props.message.content}
                 </p>
-                <p className="date">
-                    {moment(props.message.date).fromNow()}
-                </p>
+
             </div>
         </li>
     )
