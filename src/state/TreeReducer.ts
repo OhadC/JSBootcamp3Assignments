@@ -5,7 +5,7 @@ import * as MessagesReducer from './MessagesReducer'
 import { ITreeState } from './TreeStore'
 import { getCancelObj, catchError } from '../common/axios'
 import { ITreeItem } from '../models/tree-item'
-import searchIterator from '../common/searchIterator';
+import treeSearch from '../common/treeSearch';
 
 export const fetchTree = (callback?: Function) => {
     if (!AppStore.appState.auth.isAuthenticated) return
@@ -41,12 +41,11 @@ export const setActiveItem = (item: ITreeItem, callback?: Function) => {
 }
 
 export const filterData = (filterText: string, callback?: Function) => {
+
     AppStore.setState((prevState: AppStore.IAppState) => {
-        const filterdTreeData: any[] = []
-        console.info(searchIterator(prevState.tree.treeData, predicate))
-        for (const item of searchIterator(prevState.tree.treeData, predicate)) {
-            filterdTreeData.push(item)
-        }
+        const filterdTreeData = filterText === '' ?
+            prevState.tree.treeData :
+            treeSearch(prevState.tree.treeData, predicate)
         return {
             tree: {
                 ...prevState.tree,
@@ -56,6 +55,6 @@ export const filterData = (filterText: string, callback?: Function) => {
     }, callback)
 
     function predicate(item: ITreeItem) {
-        return item instanceof Object && item.name.includes(filterText)
+        return item instanceof Object && item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
     }
 }
