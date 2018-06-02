@@ -8,7 +8,7 @@ import { IConversation } from '../models/conversation';
 
 export const fetchMessages = (conversationId: string, callback?: Function) => {
     if (!AppStore.appState.auth.isAuthenticated) return
-    // AppStore.setState({ messages: messagesInitialState })
+    AppStore.setState({ messages: messagesInitialState })
     axios.get('./mock-data/conversation.json', getCancelObj('fetchMessages'))
         .then((response: Axios.AxiosResponse<IConversation[]>) => {
             const conversations: IConversation[] = response.data    // TODO: generator

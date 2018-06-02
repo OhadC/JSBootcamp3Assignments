@@ -9,10 +9,6 @@ import LogIn from "../components/LogIn"
 import * as AppStore from "../state/StateStore";
 
 class Main extends React.Component<{}, {}> {
-    state = {
-        activeItem: null
-    }
-
     componentDidMount() {
         AppStore.subscribe(this.updateApp)
     }

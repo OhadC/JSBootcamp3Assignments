@@ -14,14 +14,14 @@ class ChatHistory extends React.Component<{ style: React.CSSProperties }, {}> {
     }
 
     componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
-        if (!snapshot || !snapshot.scrollButtomOfset || snapshot.scrollButtomOfset < 50)
+        if (!snapshot || !snapshot.scrollButtomOffset || snapshot.scrollButtomOffset < 16*5)
             this.scrollToBottom()
     }
     getSnapshotBeforeUpdate() {
         const messagesListElement = this.messagesList.current
-        const scrollButtomOfset: number =
+        const scrollButtomOffset: number =
             messagesListElement.scrollHeight - messagesListElement.offsetHeight - messagesListElement.scrollTop
-        return { scrollButtomOfset }
+        return { scrollButtomOffset }
     }
 
     scrollToBottom = () => {

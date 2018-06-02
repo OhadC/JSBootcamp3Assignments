@@ -10,7 +10,8 @@
     position: relative;
     background: #F2F3F5;
     float: left;
-    word-break: break-word;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 /* .message:after {

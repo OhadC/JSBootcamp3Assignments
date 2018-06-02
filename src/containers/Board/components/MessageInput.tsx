@@ -15,27 +15,28 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
         inputValue: ''
     }
 
-    inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    inputChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({ inputValue: event.target.value })
     }
-    handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         event.stopPropagation()
         if (event.key == 'Enter' && !event.shiftKey) {
+            event.preventDefault()
             this.addMessageHandler()
         }
     }
 
     addMessageHandler = () => {
-        this.props.addMessage(this.state.inputValue)
+        this.props.addMessage(this.state.inputValue.trim())
         this.setState({ inputValue: '' })
     }
 
     render() {
         const buttonDisabled = !this.state.inputValue.length
-
+        const numOfRows = this.state.inputValue.split("\n").length
         return (
             <div style={styles.MessageInput}>
-                <input type="text" value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyPress={this.handleKeyPress} style={styles.input} placeholder='Type a message' />
+                <textarea value={this.state.inputValue} onChange={this.inputChangeHandler} onKeyPress={this.handleKeyPress} style={styles.input} placeholder='Type a message' rows={Math.min(numOfRows, 4)} />
                 <button style={styles.button} disabled={buttonDisabled} onClick={this.addMessageHandler}>
                     Send
                 </button>
@@ -47,7 +48,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 const styles: { [key: string]: React.CSSProperties } = {
     MessageInput: {
         backgroundColor: '#E2E5EE',
-        padding: '0.75em',
+        padding: '1rem',
         display: 'flex',
         flexDirection: 'row'
     },
@@ -56,6 +57,8 @@ const styles: { [key: string]: React.CSSProperties } = {
         borderBottomRightRadius: '0',
         flex: '1',
         border: '0',
+        resize: 'none',
+        // overflow: 'hidden'
     },
     button: {
         borderTopLeftRadius: '0',

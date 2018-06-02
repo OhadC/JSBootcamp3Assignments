@@ -41,7 +41,6 @@ export const setActiveItem = (item: ITreeItem, callback?: Function) => {
 }
 
 export const filterData = (filterText: string, callback?: Function) => {
-
     AppStore.setState((prevState: AppStore.IAppState) => {
         const filterdTreeData = filterText === '' ?
             prevState.tree.treeData :

@@ -1,17 +1,17 @@
-import * as MessagesReducer from "../state/MessagesStore";
-import * as TreeReducer from "./TreeStore";
-import * as AuthReducer from "./AuthStore";
+import * as MessagesStore from "../state/MessagesStore"
+import * as TreeStore from "./TreeStore"
+import * as AuthStore from "./AuthStore"
 
 export interface IAppState {
-    messages: MessagesReducer.IMessagesState
-    tree: TreeReducer.ITreeState
-    auth: AuthReducer.IAuthState
+    messages: MessagesStore.IMessagesState
+    tree: TreeStore.ITreeState
+    auth: AuthStore.IAuthState
 }
 
 export const appState: IAppState = {
-    messages: MessagesReducer.messagesInitialState,
-    tree: TreeReducer.treeInitialState,
-    auth: AuthReducer.authInitialState
+    messages: MessagesStore.messagesInitialState,
+    tree: TreeStore.treeInitialState,
+    auth: AuthStore.authInitialState
 }
 
 const listeners: Function[] = []

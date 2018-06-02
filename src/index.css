@@ -33,7 +33,7 @@ body {
   height: 100%;
 }
 
-input {
+input, textarea {
   border: none;
   border-radius: 7px;
   padding: 0.5rem 0.75rem;

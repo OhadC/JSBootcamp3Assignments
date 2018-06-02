@@ -93,7 +93,6 @@
             },
             {
                 "id": "7",
-                "groupId": "2",
                 "user": {
                     "id": "3",
                     "name": "user3",
@@ -105,7 +104,6 @@
             },
             {
                 "id": "8",
-                "groupId": "2",
                 "user": {
                     "id": "2",
                     "name": "user2",
@@ -120,6 +118,27 @@
             "1",
             "2",
             "3"
+        ]
+    },
+    "3": {
+        "id": "3",
+        "ofType": "user",
+        "messages": [
+            {
+                "id": "9",
+                "user": {
+                    "id": "4",
+                    "name": "Ori",
+                    "password": "Ori",
+                    "age": 3
+                },
+                "content": "Ori want to break my chat. \n trying new lines. \n trying a lot of long nonsense words asdasdasdasdfdasdasdasdasdasddasfghretyertyertyeyrt vcbncvbncnvbcnvbcnvbncvbc safajshgkasjfdhglkjashdfgkjlhsdgkjhsdfglkjhasgkdjhasdfgkljhagskjhdfskajghlkgjshlkjhgdfkhjg \n I hope my chat can handle that..",
+                "date": "2018-04-06T11:10:31Z"
+            }
+        ],
+        "participants": [
+            "1",
+            "4"
         ]
     }
 }
