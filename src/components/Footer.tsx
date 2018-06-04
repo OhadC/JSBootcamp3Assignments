@@ -2,7 +2,7 @@ import * as React from 'react'
 
 const Footer = (props: any) => (
     <footer>
-    Footer
+        Footer
     </footer>
 )
 export default Footer

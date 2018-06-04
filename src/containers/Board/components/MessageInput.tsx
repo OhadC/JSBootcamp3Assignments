@@ -47,7 +47,7 @@ class MessageInput extends React.Component<IMessageInputProps, IMessageInputStat
 
 const styles: { [key: string]: React.CSSProperties } = {
     MessageInput: {
-        backgroundColor: '#E2E5EE',
+        backgroundColor: '#D3DEE1',
         padding: '1rem',
         display: 'flex',
         flexDirection: 'row'

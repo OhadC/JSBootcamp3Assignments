@@ -14,14 +14,14 @@ function ChatTree(element: IItemHTMLElement) {
     let activeElement: IItemHTMLElement | null
     let events = Events()
 
-    element.onclick = (event: Event) => {
+    const onClick = (event: MouseEvent) => {
         event.stopPropagation()
         const srcElement = event.srcElement as IItemHTMLElement
         if (srcElement.localName === 'li') {
             setActiveElement(srcElement)
         }
     }
-    element.ondblclick = event => {
+    const ondblclick = (event: MouseEvent) => {
         event.stopPropagation()
         const srcElement = event.srcElement as IItemHTMLElement
         if (srcElement.localName === 'li' && isGroup(srcElement)) {
@@ -29,7 +29,7 @@ function ChatTree(element: IItemHTMLElement) {
         }
     }
 
-    element.onkeydown = event => {
+    const onkeydown = (event: KeyboardEvent) => {
         event.stopPropagation()
         if (!activeElement) return
         switch (event.key) {
@@ -139,6 +139,9 @@ function ChatTree(element: IItemHTMLElement) {
         // itemsArray = items
         items.forEach((item: ITreeItem) => addListItem(item, null))
         setActiveElement(element.firstChild)
+        element.onclick = onClick
+        element.ondblclick = ondblclick
+        element.onkeydown = onkeydown
     }
     function clear() {
         while (element.firstChild) {

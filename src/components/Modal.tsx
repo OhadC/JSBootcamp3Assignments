@@ -8,7 +8,7 @@ interface IModalProps {
 const Modal = (props: IModalProps) => {
     return (
         <div style={blackScreenStyle}>
-            <div style={{...modalStyle, ...(props.style || {})}}>
+            <div style={{ ...modalStyle, ...(props.style || {}) }}>
                 {props.children}
             </div>
         </div>
@@ -30,7 +30,7 @@ const blackScreenStyle: React.CSSProperties = {
 
 const modalStyle: React.CSSProperties = {
     borderRadius: '7px',
-    background: "rgb(226, 229, 238)",
+    background: "#E9EEF0",
     padding: '2rem',
 }
 

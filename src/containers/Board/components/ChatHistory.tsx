@@ -14,7 +14,7 @@ class ChatHistory extends React.Component<{ style: React.CSSProperties }, {}> {
     }
 
     componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
-        if (!snapshot || !snapshot.scrollButtomOffset || snapshot.scrollButtomOffset < 16*5)
+        if (!snapshot || !snapshot.scrollButtomOffset || snapshot.scrollButtomOffset < 16 * 5)
             this.scrollToBottom()
     }
     getSnapshotBeforeUpdate() {
@@ -24,7 +24,7 @@ class ChatHistory extends React.Component<{ style: React.CSSProperties }, {}> {
         return { scrollButtomOffset }
     }
 
-    scrollToBottom = () => {
+    scrollToBottom() {
         this.messagesBottom.current.scrollIntoView()
     }
 

@@ -8,22 +8,11 @@
     margin-right: 3em;
     max-width: 40rem;
     position: relative;
-    background: #F2F3F5;
+    background: #E9EEF0;
     float: left;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
-
-/* .message:after {
-    top: 1rem;
-    right: 100%;
-    border: solid transparent;
-    position: absolute;
-    border-width: 10px;
-    margin-left: -10px;
-    border-right-color: #94C2ED;
-    content: '';
-} */
 
 .message.self {
     margin-right: 1em;
@@ -34,14 +23,6 @@
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 0;
 }
-
-/* .message.self:after {
-    left: 100%;
-    margin-left: 0;
-    margin-right: -10px;
-    border-right: transparent;
-    border-left-color: #86BB71;
-} */
 
 .message .username {
     font-size: 0.8em;

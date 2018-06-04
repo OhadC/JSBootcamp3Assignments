@@ -28,18 +28,18 @@ class Tree extends React.Component<ITreeProps, {}> {
     }
 
     componentDidUpdate() {
-        const filterdTreeData = appState.tree.filterdTreeData
-        if (filterdTreeData !== this.loadedTree) {
+        const filterdData = appState.tree.filterdData
+        if (filterdData !== this.loadedTree) {
             const sectionElement = this.sectionRef.current
             const treeDivElement = this.treeDivRef.current
 
             const chatTree = ChatTree(treeDivElement)
             chatTree.on('activeElementChanged', this.activeElementChangedHandler)
             sectionElement.removeChild(treeDivElement)
-            chatTree.load(filterdTreeData)
+            chatTree.load(filterdData)
             sectionElement.appendChild(treeDivElement)
 
-            this.loadedTree = filterdTreeData
+            this.loadedTree = filterdData
         }
     }
 
