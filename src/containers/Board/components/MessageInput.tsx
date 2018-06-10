@@ -1,7 +1,5 @@
 import * as React from 'react'
 
-// import Button from '../../../components/Button';
-
 interface IMessageInputProps {
     addMessage: (messageContent: string) => void
 }

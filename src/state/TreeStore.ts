@@ -1,4 +1,4 @@
-import { ITreeItem } from "../models/tree-item"
+import { ITreeItem } from "../models"
 
 export interface ITreeState {
     activeItem: ITreeItem | null

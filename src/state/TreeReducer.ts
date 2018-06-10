@@ -1,6 +1,6 @@
 import axios, * as Axios from 'axios'
 
-import * as AppStore from "./StateStore"
+import { StateStore, IAppState } from "./StateStore"
 import * as MessagesReducer from './MessagesReducer'
 import { ITreeState } from './TreeStore'
 import { getCancelObj, catchError } from '../common/axios'
@@ -8,11 +8,11 @@ import { ITreeItem } from '../models/tree-item'
 import treeSearch from '../common/treeSearch';
 
 export const fetchTree = (callback?: Function) => {
-    if (!AppStore.appState.auth.isAuthenticated) return
+    if (!StateStore.appState.auth.isAuthenticated) return
     axios.get('./mock-data/tree.json', getCancelObj('fetchTree'))
         .then((response: Axios.AxiosResponse<ITreeState>) => {
             const data: ITreeState = response.data
-            AppStore.setState((prevState: AppStore.IAppState) => {
+            StateStore.setState((prevState: IAppState) => {
                 return {
                     tree: {
                         ...prevState.tree,
@@ -30,7 +30,7 @@ export const setActiveItem = (item: ITreeItem, callback?: Function) => {
         MessagesReducer.fetchMessages(item.conversationId)
         if (callback) callback
     }
-    AppStore.setState((prevState: AppStore.IAppState) => {
+    StateStore.setState((prevState: IAppState) => {
         return {
             tree: {
                 ...prevState.tree,
@@ -41,7 +41,7 @@ export const setActiveItem = (item: ITreeItem, callback?: Function) => {
 }
 
 export const filterData = (filterText: string, callback?: Function) => {
-    AppStore.setState((prevState: AppStore.IAppState) => {
+    StateStore.setState((prevState: IAppState) => {
         if (filterText === prevState.tree.filterText) {
             return
         }

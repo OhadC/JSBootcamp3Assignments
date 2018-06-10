@@ -1,5 +1,5 @@
 import Events from "../../common/Events";
-import { ITreeItem } from "../../models/tree-item";
+import { ITreeItem } from "../../models";
 
 interface IItemHTMLElement extends HTMLElement {
     item: ITreeItem
@@ -163,4 +163,4 @@ function ChatTree(element: IItemHTMLElement) {
     }
 }
 
-export { ChatTree, ITreeItem, IItemHTMLElement }
+export { ChatTree, IItemHTMLElement }

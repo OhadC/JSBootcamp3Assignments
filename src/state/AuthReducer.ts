@@ -1,4 +1,4 @@
-import * as AppStore from "./StateStore"
+import { StateStore } from "./StateStore"
 import * as TreeReducer from "./TreeReducer"
 import { authInitialState } from "./AuthStore"
 
@@ -7,7 +7,7 @@ export const login = (username: string, password: string, callback?: Function) =
         TreeReducer.fetchTree()
         if (callback) callback()
     }
-    AppStore.setState({
+    StateStore.setState({
         auth: {
             user: {
                 id: '1',
@@ -21,6 +21,6 @@ export const login = (username: string, password: string, callback?: Function) =
 }
 
 export const logout = (callback?: Function) => {
-    AppStore.setState({ auth: authInitialState }, callback)
+    StateStore.setState({ auth: authInitialState }, callback)
 }
 

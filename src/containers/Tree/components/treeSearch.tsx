@@ -1,32 +1,30 @@
 import * as React from 'react'
-import { filterData } from '../../../state/TreeReducer'
-import { appState } from '../../../state/StateStore'
 
-class TreeSearch extends React.Component<any, any> {
+class TreeSearch extends React.Component<{ style: React.CSSProperties, filterData: Function }, any> {
     state = {
         filter: ''
     }
 
     componentDidMount() {
-        this.setState({ filter: appState.tree.filterText })
+        this.setState({ filter: '' })
     }
 
     filterChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ filter: event.target.value })
     }
 
-    handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onSearch = (event: any) => {
         event.stopPropagation()
-        if (event.key == 'Enter') {
-            filterData(this.state.filter)
+        if (!('key' in event) || event['key'] == 'Enter') {
+            this.props.filterData(this.state.filter)
         }
     }
 
     render() {
         return (
             <div style={styles.treeSearch}>
-                <input type="text" style={styles.input} placeholder='Search' value={this.state.filter} onChange={this.filterChangedHandler} onKeyPress={this.handleKeyPress} />
-                <button style={styles.button}>
+                <input type="text" style={styles.input} placeholder='Search' value={this.state.filter} onChange={this.filterChangedHandler} onKeyPress={this.onSearch} />
+                <button style={styles.button} onClick={this.onSearch}>
                     search
                 </button>
             </div>

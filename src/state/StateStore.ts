@@ -8,39 +8,43 @@ export interface IAppState {
     auth: AuthStore.IAuthState
 }
 
-export const appState: IAppState = {
-    messages: MessagesStore.messagesInitialState,
-    tree: TreeStore.treeInitialState,
-    auth: AuthStore.authInitialState
-}
-
-const listeners: Function[] = []
-
-export const setState = (partialState: Function | Object, callback?: Function) => {
-    if (typeof partialState === 'function') {
-        const newPartialState = partialState(appState)
-        setState(newPartialState, callback)
-    } else if (typeof partialState === 'object') {
-        for (const key in partialState) {
-            if (partialState.hasOwnProperty(key) && appState.hasOwnProperty(key)) {
-                appState[key] = partialState[key]
-            }
-        }
-        console.log('AppState changed', partialState, appState)
-        onStoreChanged()
-        if (callback) callback()
+export class StateStore {
+    static appState: IAppState = {
+        messages: MessagesStore.messagesInitialState,
+        tree: TreeStore.treeInitialState,
+        auth: AuthStore.authInitialState
     }
-}
 
-const onStoreChanged = () => {
-    listeners.forEach(listener => listener())
-}
-export const subscribe = (listener: Function) => {
-    listeners.push(listener)
-}
-export const unsubscribe = (listener: Function) => {
-    const index = listeners.indexOf(listener);
-    if (index !== -1) {
-        listeners.splice(index, 1)
+    static listeners: Function[] = []
+
+    static setState = (partialState: Function | Object, callback?: Function) => {
+        if (typeof partialState === 'function') {
+            const newPartialState = partialState(StateStore.appState)
+            StateStore.setState(newPartialState, callback)
+        } else if (typeof partialState === 'object') {
+            for (const key in partialState) {
+                if (partialState.hasOwnProperty(key) && StateStore.appState.hasOwnProperty(key)) {
+                    StateStore.appState[key] = partialState[key]
+                }
+            }
+            console.log('AppState changed', partialState, StateStore.appState)
+            StateStore.onStoreChanged()
+            if (callback) callback()
+        }
+    }
+
+    static onStoreChanged = () => {
+        StateStore.listeners.forEach(listener => listener(StateStore.appState))
+    }
+
+    static subscribe = (listener: Function) => {
+        StateStore.listeners.push(listener)
+    }
+
+    static nsubscribe = (listener: Function) => {
+        const index = StateStore.listeners.indexOf(listener);
+        if (index !== -1) {
+            StateStore.listeners.splice(index, 1)
+        }
     }
 }

@@ -1,24 +1,24 @@
 import axios, * as Axios from 'axios'
 
-import * as AppStore from "./StateStore";
+import { StateStore, IAppState } from "./StateStore"
 import { IMessagesState, messagesInitialState } from './MessagesStore';
 import { IMessage } from "../models/message";
 import { getCancelObj, catchError } from '../common/axios';
 import { IConversation } from '../models/conversation';
 
 export const fetchMessages = (conversationId: string, callback?: Function) => {
-    if (!AppStore.appState.auth.isAuthenticated) return
-    AppStore.setState({ messages: messagesInitialState })
+    if (!StateStore.appState.auth.isAuthenticated) return
+    StateStore.setState({ messages: messagesInitialState })
     axios.get('./mock-data/conversation.json', getCancelObj('fetchMessages'))
         .then((response: Axios.AxiosResponse<IConversation[]>) => {
             const conversations: IConversation[] = response.data    // TODO: generator
             const messages: IMessagesState = conversations[conversationId].messages
-            AppStore.setState({ messages }, callback)
+            StateStore.setState({ messages }, callback)
         })
         .catch(catchError)
         .catch((error: any) => {
             if (error.toString() === "TypeError: Cannot read property 'messages' of undefined") {
-                AppStore.setState({ messages: messagesInitialState })
+                StateStore.setState({ messages: messagesInitialState })
             } else {
                 console.log(error)
             }
@@ -26,9 +26,9 @@ export const fetchMessages = (conversationId: string, callback?: Function) => {
 }
 
 export const addMessage = (messageContent: string, callback?: Function) => {
-    if (!AppStore.appState.auth.isAuthenticated) return
+    if (!StateStore.appState.auth.isAuthenticated) return
     if (!messageContent.length) return
-    AppStore.setState((prevState: AppStore.IAppState) => {
+    StateStore.setState((prevState: IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
             user: prevState.auth.user,
@@ -45,7 +45,7 @@ export const addMessage = (messageContent: string, callback?: Function) => {
 }
 
 export const echoMessage = (messageContent: string) => {    // temporary function. no need for refactoring.
-    AppStore.setState((prevState: AppStore.IAppState) => {
+    StateStore.setState((prevState: IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
             user: {

@@ -6,12 +6,24 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Tree from "./Tree/Tree"
 import Board from "./Board/Board"
 import LogIn from "../components/LogIn"
-import * as AppStore from "../state/StateStore";
+import {StateStore, IAppState} from "../state";
+import { authInitialState } from "../state/AuthStore";
 
-class Main extends React.Component<{}, {}> {
-    componentDidMount() {
-        AppStore.subscribe(this.updateApp)
+interface IMainState {
+    auth: any
+}
+
+class Main extends React.Component<{}, IMainState> {
+    state: IMainState = {
+        auth: authInitialState
     }
+
+    componentDidMount() {
+        this.selectState(StateStore.appState)
+        StateStore.subscribe(this.selectState)
+    }
+
+    selectState = (appState: IAppState) => this.setState({auth: appState.auth})
 
     updateApp = () => {
         this.forceUpdate()
@@ -22,10 +34,10 @@ class Main extends React.Component<{}, {}> {
     }
 
     public render() {
-        const loginRoute = (props: any) => AppStore.appState.auth.isAuthenticated ?
+        const loginRoute = (props: any) => this.state.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/chat", state: { from: props.location } }} /> :
             <LogIn submit={this.loginHandler} />
-        const authCheck = (props: any) => !AppStore.appState.auth.isAuthenticated ?
+        const authCheck = (props: any) => !this.state.auth.isAuthenticated ?
             <Redirect to={{ pathname: "/login", state: { from: props.location } }} /> : null
 
         return (
@@ -38,7 +50,7 @@ class Main extends React.Component<{}, {}> {
                 {/* <Header /> */}
                 <main style={{ ...styles.main, ...styles.chat }}>
                     <Tree style={{ width: "25%", background: '#252839', color: 'white', overflow: 'hidden' }} />
-                    <Board style={{ width: "75%", overflow: 'hidden' }} />
+                    <Board style={{ width: "75%", overflow: 'hidden' }} selfUserId={this.state.auth.user.id} />
                 </main>
                 {/* <Footer /> */}
             </>
