@@ -6,4 +6,9 @@ import * as TreeStore from "./TreeStore"
 import * as AuthStore from "./AuthStore"
 import * as AuthReducer from "./AuthReducer"
 
-export { IAppState, StateStore, MessagesStore, MessagesReducer, TreeStore, TreeReducer, AuthStore, AuthReducer }
+export {
+    IAppState, StateStore,
+    MessagesStore, MessagesReducer,
+    TreeStore, TreeReducer,
+    AuthStore, AuthReducer
+}

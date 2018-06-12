@@ -2,21 +2,20 @@ import * as React from 'react'
 
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
-import * as MessagesReducer from '../../state/MessagesReducer';
-import { StateStore, IAppState } from '../../state/StateStore';
-import { IMessagesState } from '../../state/MessagesStore';
+import * as MessagesReducer from '../../state/MessagesReducer'
+import { StateStore, IAppState } from '../../state/StateStore'
 
 class Board extends React.Component<{ style: React.CSSProperties, selfUserId: string }, any> {
-    state: {messages: IMessagesState} = {
-        messages: {}
-    }
+    constructor(props: any) {
+        super(props)
 
-    componentDidMount() {
-        this.selectState(StateStore.appState)
+        this.state = {
+            messages: StateStore.appState.messages
+        }
         StateStore.subscribe(this.selectState)
     }
 
-    selectState = (appState: IAppState) => this.setState({messages: appState.messages, user: appState.auth.user.id})
+    selectState = (appState: IAppState) => this.setState({ messages: appState.messages })
 
     addMessageHandler = (messageContent: string) => {
         MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))

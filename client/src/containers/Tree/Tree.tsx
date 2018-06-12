@@ -24,17 +24,13 @@ class Tree extends React.Component<ITreeProps, ITreeState> {
         super(props)
 
         this.state = {
-            filterdData: []
+            filterdData: StateStore.appState.tree.filterdData
         }
+        StateStore.subscribe(this.selectState)
 
         this.sectionRef = React.createRef()
         this.treeDivRef = React.createRef()
         this.loadedTree = null
-    }
-
-    componentDidMount() {
-        this.selectState(StateStore.appState)
-        StateStore.subscribe(this.selectState)
     }
 
     selectState = (appState: IAppState) => this.setState({ filterdData: appState.tree.filterdData })

@@ -6,28 +6,23 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Tree from "./Tree/Tree"
 import Board from "./Board/Board"
 import LogIn from "../components/LogIn"
-import {StateStore, IAppState} from "../state";
-import { authInitialState } from "../state/AuthStore";
+import { StateStore, IAppState } from "../state"
 
 interface IMainState {
     auth: any
 }
 
 class Main extends React.Component<{}, IMainState> {
-    state: IMainState = {
-        auth: authInitialState
-    }
+    constructor(props: {}) {
+        super(props)
 
-    componentDidMount() {
-        this.selectState(StateStore.appState)
+        this.state = {
+            auth: StateStore.appState.auth
+        }
         StateStore.subscribe(this.selectState)
     }
 
-    selectState = (appState: IAppState) => this.setState({auth: appState.auth})
-
-    updateApp = () => {
-        this.forceUpdate()
-    }
+    selectState = (appState: IAppState) => this.setState({ auth: appState.auth })
 
     loginHandler = (username: string, password: string) => {
         console.log(username, password)
