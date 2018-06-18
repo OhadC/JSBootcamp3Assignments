@@ -1,3 +1,6 @@
-import userRoutes from './user'
+import user from './user'
+import group from './group'
+import message from './message'
+import tree from './tree'
 
-export { userRoutes }
+export { user, group, message, tree }

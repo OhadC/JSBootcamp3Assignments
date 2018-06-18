@@ -1,8 +1,6 @@
 import { IMessage } from "../models/message";
 
-export interface IMessagesState {
-    [key: string]: IMessage
+export interface IMessagesState extends Array<IMessage> {
 }
 
-export const  messagesInitialState: IMessagesState = {
-}
+export const messagesInitialState: IMessagesState = []

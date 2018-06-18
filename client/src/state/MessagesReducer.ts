@@ -1,18 +1,16 @@
 import axios, * as Axios from 'axios'
 
 import { StateStore, IAppState } from "./StateStore"
-import { IMessagesState, messagesInitialState } from './MessagesStore';
-import { IMessage } from "../models/message";
-import { getCancelObj, catchError } from '../common/axios';
-import { IConversation } from '../models/conversation';
+import { IMessagesState, messagesInitialState } from './MessagesStore'
+import { IMessage } from "../models/message"
+import { getCancelObj, catchError } from '../common/axios'
 
-export const fetchMessages = (conversationId: string, callback?: Function) => {
+export const fetchMessages = (groupId: string, callback?: Function) => {
     if (!StateStore.appState.auth.isAuthenticated) return
     StateStore.setState({ messages: messagesInitialState })
-    axios.get('./mock-data/conversation.json', getCancelObj('fetchMessages'))
-        .then((response: Axios.AxiosResponse<IConversation[]>) => {
-            const conversations: IConversation[] = response.data    // TODO: generator
-            const messages: IMessagesState = conversations[conversationId].messages
+    axios.get(`http://localhost:4000/group/${groupId}/messages`, getCancelObj('fetchMessages'))
+        .then((response: Axios.AxiosResponse<IMessage[]>) => {
+            const messages: IMessagesState = response.data
             StateStore.setState({ messages }, callback)
         })
         .catch(catchError)
@@ -28,32 +26,34 @@ export const fetchMessages = (conversationId: string, callback?: Function) => {
 export const addMessage = (messageContent: string, callback?: Function) => {
     if (!StateStore.appState.auth.isAuthenticated) return
     if (!messageContent.length) return
-    StateStore.setState((prevState: IAppState) => {
-        const newMessage: IMessage = {
-            id: Math.random() + "",
-            user: prevState.auth.user,
-            content: messageContent,
-            date: (new Date()).toISOString()
-        }
-        return {
-            messages: {
-                ...prevState.messages,
-                [newMessage.id]: newMessage
-            }
-        }
-    }, callback)
+
+    const message = {
+        groupId: "StateStore.appState.tree.activeItem.groupId",
+        userId: StateStore.appState.auth.user.id,
+        content: messageContent,
+        date: (new Date()).toISOString(),
+    }
+
+    axios.post(`http://localhost:4000/message`, message)
+        .then((response: Axios.AxiosResponse<IMessage>) => {
+            StateStore.setState((prevState: IAppState) => {
+                const newMessage = response.data
+                return {
+                    messages: {
+                        ...prevState.messages,
+                        [newMessage.id]: newMessage
+                    }
+                }
+            }, callback)
+        })
 }
 
 export const echoMessage = (messageContent: string) => {    // temporary function. no need for refactoring.
     StateStore.setState((prevState: IAppState) => {
         const newMessage: IMessage = {
             id: Math.random() + "",
-            user: {
-                "id": "2",
-                "name": "user2",
-                "password": "user2",
-                "age": 2
-            },
+            groupId: "prevState.tree.activeItem.groupId",
+            userId: "string",
             content: messageContent,
             date: (new Date()).toISOString()
         }

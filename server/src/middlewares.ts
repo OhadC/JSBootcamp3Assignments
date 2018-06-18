@@ -4,6 +4,9 @@ import * as helmet from 'helmet'
 
 const app = express()
 
-app.use(cors()).use(helmet())
+app
+    .use(express.json())
+    .use(cors())
+    .use(helmet())
 
 export default app

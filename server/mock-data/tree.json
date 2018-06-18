@@ -1,36 +1,36 @@
 [
   {
-    "groupId": "0",
     "type": "group",
     "name": "Friends",
+    "id": "0",
     "items": [
       {
-        "groupId": "1",
         "type": "group",
         "name": "Best Friends",
+        "id": "1",
         "items": [
           {
-            "groupId": "2",
             "type": "user",
-            "name": "Tommy"
+            "name": "Tommy",
+            "id": "2"
           }
         ]
       },
       {
-        "groupId": "3",
         "type": "user",
-        "name": "Udi"
+        "name": "Udi",
+        "id": "3"
       }
     ]
   },
   {
-    "groupId": "4",
     "type": "user",
-    "name": "Ori"
+    "name": "Ori",
+    "id": "4"
   },
   {
-    "groupId": "5",
     "type": "user",
-    "name": "Roni"
+    "name": "Roni",
+    "id": "5"
   }
 ]

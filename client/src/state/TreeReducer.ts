@@ -27,7 +27,7 @@ export const fetchTree = (callback?: Function) => {
 
 export const setActiveItem = (item: ITreeItem, callback?: Function) => {
     const newCallback = () => {
-        MessagesReducer.fetchMessages(item.conversationId)
+        MessagesReducer.fetchMessages(item.groupId)
         if (callback) callback
     }
     StateStore.setState((prevState: IAppState) => {
