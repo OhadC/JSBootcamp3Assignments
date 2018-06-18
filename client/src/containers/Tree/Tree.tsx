@@ -1,21 +1,20 @@
 import * as React from 'react'
+import { connect } from 'react-redux';
 
 import { ChatTree, IItemHTMLElement } from './chat-tree'
 import './Tree.css'
-import * as TreeReducer from '../../state/TreeReducer';
 import TreeSearch from './components/treeSearch';
 import { ITreeItem } from '../../models'
-import { StateStore, IAppState } from '../../state';
+import * as actions from '../../store/actions'
 
 interface ITreeProps {
     style: object
+    filteredTree: ITreeItem[]
+    changeActiveGroupId: any
+    changeTreeFilter: any
 }
 
-interface ITreeState {
-    filterdData: ITreeItem[]
-}
-
-class Tree extends React.Component<ITreeProps, ITreeState> {
+class Tree extends React.Component<ITreeProps, {}> {
     private treeDivRef: React.RefObject<any>
     private sectionRef: React.RefObject<any>
     private loadedTree: Array<ITreeItem> | null
@@ -23,20 +22,13 @@ class Tree extends React.Component<ITreeProps, ITreeState> {
     constructor(props: ITreeProps) {
         super(props)
 
-        this.state = {
-            filterdData: StateStore.appState.tree.filterdData
-        }
-        StateStore.subscribe(this.selectState)
-
         this.sectionRef = React.createRef()
         this.treeDivRef = React.createRef()
         this.loadedTree = null
     }
 
-    selectState = (appState: IAppState) => this.setState({ filterdData: appState.tree.filterdData })
-
     componentDidUpdate() {
-        const filterdData = this.state.filterdData
+        const filterdData = this.props.filteredTree
         if (filterdData !== this.loadedTree) {
             const sectionElement = this.sectionRef.current
             const treeDivElement = this.treeDivRef.current
@@ -51,13 +43,10 @@ class Tree extends React.Component<ITreeProps, ITreeState> {
         }
     }
 
-    activeElementChangedHandler = (activeElement: IItemHTMLElement) => {
-        TreeReducer.setActiveItem(activeElement.item)
-    }
+    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroupId(activeElement.item.groupId)
 
-    filterDataHandler = (filterdText: string) => {
-        TreeReducer.filterData(filterdText)
-    }
+
+    filterDataHandler = (filterdText: string) => this.props.changeTreeFilter(filterdText)
 
     render() {
         return (
@@ -77,4 +66,15 @@ const TreeStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-export default Tree
+const mapStateToProps = (state: any) => {
+    return {
+        filteredTree: state.tree.filteredTree
+    }
+}
+
+const mapDispatchToProps = {
+    changeActiveGroupId: actions.setActiveGroupId,
+    changeTreeFilter: actions.setTreeFilter
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tree)

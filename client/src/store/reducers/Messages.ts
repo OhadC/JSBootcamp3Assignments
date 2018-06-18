@@ -18,7 +18,7 @@ const addMessage = (state: IMessagesState, action: any): IMessagesState => ({
     ...state,
     messages: [
         ...state.messages,
-        action.payload.message
+        action.payload.messages
     ]
 })
 

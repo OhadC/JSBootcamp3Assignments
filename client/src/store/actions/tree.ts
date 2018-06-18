@@ -2,15 +2,15 @@ import { Dispatch } from "redux";
 import axios from "axios"
 
 import { actionTypes } from "."
-import { IGroup, IUser, ITreeItem } from "../../models";
+import { IGroup, ITreeItem } from "../../models";
 import treeSearch from "../../common/treeSearch";
 
-export const setTree = (tree: any) => ({
+const setTree = (tree: any) => ({
     type: actionTypes.SET_TREE,
     payload: { tree }
 })
 
-export const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]) => ({
+const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]) => ({
     type: actionTypes.SET_FILTERED_TREE,
     payload: { filteredTree, filterText }
 })
@@ -20,13 +20,20 @@ export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
     axios.get(url)
         .then(response => {
             const groups = response.data
-            const tree = makeTree(groups, getState().auth.user)
+            const tree = makeTree(groups, getState().auth.userId)
             dispatch(setTree(tree))
         })
 }
 
 export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: Function) => {
-    const filteredTree = treeSearch(getState().tree.tree, predicate)
+    const { filterText: oldFilterText, tree: fullTree } = getState().tree
+    if(filterText === oldFilterText){
+        return
+    } else if (filterText === "") {
+        dispatch(setFilteredTree(filterText, fullTree))
+        return
+    }
+    const filteredTree = treeSearch(fullTree, predicate)
 
     dispatch(setFilteredTree(filterText, filteredTree))
 
@@ -36,7 +43,7 @@ export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getSta
     }
 }
 
-const makeTree = (groups: IGroup[], currentUser: IUser) => {
+const makeTree = (groups: IGroup[], userId: string) => {
     const treeRootGroups = groups.filter(group => group.parentId === null)
 
     const groupsMap = groups.reduce((obj, group) => {
@@ -50,11 +57,11 @@ const makeTree = (groups: IGroup[], currentUser: IUser) => {
     function groupToNode(group: any): ITreeItem {
         let groupName = group.name
         if (!groupName) {
-            groupName = group.users[0].id !== currentUser.id ? group.users[0].id : group.users[1].id
+            groupName = group.users[0].id != userId ? group.users[0].name : group.users[1].name
         }
         let groupItems = []
-        if ('groupsIds' in group) {
-            groupItems = group.groupIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
+        if ('groupsIds' in group && !!group['groupsIds']) { // TODO: groupsIds => groupIds
+            groupItems = group.groupsIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
         }
         return {
             groupId: group.id,

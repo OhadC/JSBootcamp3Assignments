@@ -1,7 +1,6 @@
 import * as React from "react"
 
 import Modal from "../components/Modal"
-import * as AuthReducer from "../state/AuthReducer";
 
 class LogIn extends React.Component<{ submit: Function }, any> {
     state = {
@@ -16,7 +15,7 @@ class LogIn extends React.Component<{ submit: Function }, any> {
     }
 
     submit = () => {
-        AuthReducer.login(this.state.username, this.state.password)
+        this.props.submit(this.state.username, this.state.password)
     }
 
     render() {

@@ -1,30 +1,25 @@
 import * as React from 'react'
+import { connect } from 'react-redux';
 
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
-import * as MessagesReducer from '../../state/MessagesReducer'
-import { StateStore, IAppState } from '../../state/StateStore'
+import { IMessage } from '../../models';
 
-class Board extends React.Component<{ style: React.CSSProperties, selfUserId: string }, any> {
-    constructor(props: any) {
-        super(props)
+interface IBoardProps {
+    style: React.CSSProperties,
+    selfUserId: string,
+    messages: IMessage[]
+}
 
-        this.state = {
-            messages: StateStore.appState.messages
-        }
-        StateStore.subscribe(this.selectState)
-    }
-
-    selectState = (appState: IAppState) => this.setState({ messages: appState.messages })
-
+class Board extends React.Component<IBoardProps, any> {
     addMessageHandler = (messageContent: string) => {
-        MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
+        // MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
     }
 
     render() {
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
-                <ChatHistory style={{ flex: '1' }} messages={this.state.messages} selfUserId={this.props.selfUserId} />
+                <ChatHistory style={{ flex: '1' }} messages={this.props.messages} selfUserId={this.props.selfUserId} />
                 <MessageInput addMessage={this.addMessageHandler} />
             </section>
         )
@@ -36,4 +31,16 @@ const boardStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-export default Board
+const mapStateToProps = (state: any) => {
+    return {
+        messages: state.messages.messages,
+        selfUserId: state.auth.userId
+    }
+}
+
+const mapDispatchToProps = {
+
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board)

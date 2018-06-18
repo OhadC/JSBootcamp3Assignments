@@ -1,6 +1,11 @@
 // Global
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'
 
+// Auth
+export const LOGIN_START = 'LOGIN_START'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGOUT = 'LOGOUT'
+
 // Messages
 export const SET_MESSAGES = 'SET_MESSAGES'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
