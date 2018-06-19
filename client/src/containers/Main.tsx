@@ -10,9 +10,12 @@ import Board from "./Board/Board"
 import LogIn from "../components/LogIn"
 
 class Main extends React.Component<any, {}> {
+
     loginHandler = (username: string, password: string) => this.props.login(username, password)
 
     public render() {
+        console.log('main renderd')
+        
         const loginRoute = (props: any) => this.props.isAuthenticated ?
             <Redirect to={{ pathname: "/chat", state: { from: props.location } }} /> :
             <LogIn submit={this.loginHandler} />

@@ -1,9 +1,6 @@
 import { compose, combineReducers, createStore, applyMiddleware } from "redux";
 
-import { globalReducer } from './store/reducers'
-import { authReducer } from './store/reducers'
-import { messagesReducer } from './store/reducers'
-import { treeReducer } from './store/reducers'
+import { globalReducer, authReducer, messagesReducer, treeReducer } from './store/reducers'
 import ReduxThunk from "redux-thunk";
 import { byActionType } from "./store/middleware";
 

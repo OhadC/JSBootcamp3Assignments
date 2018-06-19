@@ -12,6 +12,5 @@ app.use(middlewares)
 app.use('/user', routes.user)
 app.use('/group', routes.group)
 app.use('/message', routes.message)
-app.use('/tree', routes.tree)
 
 export default app

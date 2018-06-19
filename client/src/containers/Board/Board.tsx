@@ -4,17 +4,17 @@ import { connect } from 'react-redux';
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
 import { IMessage } from '../../models';
+import * as actions from '../../store/actions'
 
 interface IBoardProps {
     style: React.CSSProperties,
     selfUserId: string,
-    messages: IMessage[]
+    messages: IMessage[],
+    addMessage: any
 }
 
 class Board extends React.Component<IBoardProps, any> {
-    addMessageHandler = (messageContent: string) => {
-        // MessagesReducer.addMessage(messageContent, MessagesReducer.echoMessage.bind(null, messageContent))
-    }
+    addMessageHandler = (messageContent: string) => this.props.addMessage(messageContent)
 
     render() {
         return (
@@ -39,7 +39,7 @@ const mapStateToProps = (state: any) => {
 }
 
 const mapDispatchToProps = {
-
+    addMessage: actions.sendMessage
 }
 
 

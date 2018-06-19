@@ -38,8 +38,8 @@ export const fetchMessages = (groupId: string) => (dispatch: Dispatch) => {
 }
 
 export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
-    const { tree: { currentGroup: groupId }, auth: { user: { id: userId } } } = getState()
-    const url = `http://localhost:4000//message`
+    const { tree: { currentGroup: groupId }, auth: { id: userId } } = getState()
+    const url = `http://localhost:4000/message`
     const message = {
         groupId,
         userId,
@@ -49,9 +49,9 @@ export const sendMessage = (content: string) => (dispatch: Dispatch, getState: F
 
     axios.post(url, message)
         .then(response => {
-            dispatch(addMessage(response.data));
+            dispatch(addMessage(response.data))
         })
         .catch(error => {
-            dispatch(fetchMessagesFail(error.response.data.error));
+            dispatch(fetchMessagesFail(error.response.data.error))
         });
 }
