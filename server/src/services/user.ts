@@ -3,17 +3,16 @@ import { db, IUser } from '../models'
 const dbName = 'user'
 
 export const getAllUsers = async () => {
-    const users = await db.find(dbName)
+    const users: IUser[] = await db.find(dbName)
     return users.map(toUserWithoutPassword)
 }
 
 export const getUserById = async (id: string) => {
-    const user = await db.findOne(dbName, { id })
+    const user: IUser = await db.findOne(dbName, { id })
     return toUserWithoutPassword(user)
 }
 
 export const addUser = async (user: Object) => {
-    user['id'] = Date.now() + ""
     await db.add('user', user)
     return toUserWithoutPassword(user)
 }
@@ -27,7 +26,7 @@ export const deleteUser = async (id: string) => {
 }
 
 function toUserWithoutPassword(user) {
-    const newContact = { ...user }
+    const newContact: IUser = { ...user }
     delete newContact['password']
     return newContact
 }

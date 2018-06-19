@@ -1,15 +1,15 @@
 import { actionTypes } from "../actions"
-import { ITreeItem } from "../../models";
+import { ITreeItem, IGroup } from "../../models";
 
 export interface ITreeState {
-    activeGroupId: string
+    activeGroup: IGroup | null
     tree: ITreeItem[]
     filterText: string
     filteredTree: Array<ITreeItem>
 }
 
 const initialState: ITreeState = {
-    activeGroupId: "",
+    activeGroup: null,
     tree: [],
     filterText: '',
     filteredTree: []
@@ -17,7 +17,7 @@ const initialState: ITreeState = {
 
 const setTree = (state: ITreeState, action: any): ITreeState => ({
     ...state,
-    activeGroupId: action.payload.tree[0].groupId,
+    activeGroup: action.payload.tree[0].group,
     tree: action.payload.tree,
     filteredTree: action.payload.tree
 })

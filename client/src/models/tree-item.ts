@@ -1,5 +1,7 @@
+import { IGroup } from "./group";
+
 export interface ITreeItem {
-    groupId: string
+    group: IGroup
     type: "user" | "group"
     name: string
     items?: ITreeItem[]

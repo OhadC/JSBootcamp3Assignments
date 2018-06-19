@@ -17,7 +17,6 @@ const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]) => ({
 export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
     const userId = getState().auth.userId
     const success = (groups: any[]) => {
-        console.log(userId)
         const tree = makeTree(groups, userId)
             dispatch(setTree(tree))
     }
@@ -49,7 +48,7 @@ export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getSta
 }
 
 const makeTree = (groups: IGroup[], userId: string) => {
-    const treeRootGroups = groups.filter(group => group.parentId === null)
+    const treeRootGroups = groups.filter(group => group.isRoot)
 
     const groupsMap = groups.reduce((obj, group) => {
         obj[group.id] = group
@@ -69,7 +68,7 @@ const makeTree = (groups: IGroup[], userId: string) => {
             groupItems = group.groupsIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
         }
         return {
-            groupId: group.id,
+            group,
             type: group.isPrivate ? 'user' : 'group',
             name: groupName,
             items: groupItems

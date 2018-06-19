@@ -19,7 +19,7 @@ class DB {
         return this.db[dbName].filter(dict => this.isMatching(dict, conditions))
     }
 
-    async findOne(dbName: string, conditions: Object): Promise<Object> {
+    async findOne(dbName: string, conditions: Object): Promise<any> {
         if (!(dbName in this.db)) {
             await this.fetchDb(dbName)
         }
@@ -30,7 +30,7 @@ class DB {
         return null
     }
 
-    async add(dbName: string, dict: Object) {
+    async add(dbName: string, dict: any) {
         if (!(dbName in this.db)) {
             await this.fetchDb(dbName)
         }
@@ -39,7 +39,7 @@ class DB {
         dict['id'] = newId
         this.db[dbName].push(dict)
         await this.writeToJson(dbName)
-        return dict
+        return dict as any
     }
 
     async update(dbName: string, conditions: Object, updatedDict: Object) {

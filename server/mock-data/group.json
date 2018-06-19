@@ -2,7 +2,6 @@
     {
         "id": "0",
         "name": "Friends",
-        "parentId": null,
         "userIds": [
             "0",
             "2",
@@ -12,12 +11,12 @@
             "1",
             "3"
         ],
+        "isRoot": true,
         "isPrivate": false
     },
     {
         "id": "1",
         "name": "Best Friends",
-        "parentId": "0",
         "userIds": [
             "2",
             "3"
@@ -25,46 +24,43 @@
         "groupsIds": [
             "2"
         ],
+        "isRoot": false,
         "isPrivate": false
     },
     {
         "id": "2",
-        "name": null,
-        "parentId": "1",
         "userIds": [
             "0",
             "3"
         ],
+        "isRoot": false,
         "isPrivate": true
     },
     {
         "id": "3",
-        "name": null,
-        "parentId": "0",
         "userIds": [
             "0",
             "2"
         ],
+        "isRoot": false,
         "isPrivate": true
     },
     {
         "id": "4",
-        "name": null,
-        "parentId": null,
         "userIds": [
             "0",
             "0"
         ],
+        "isRoot": true,
         "isPrivate": true
     },
     {
         "id": "5",
-        "name": null,
-        "parentId": null,
         "userIds": [
             "0",
             "1"
         ],
+        "isRoot": true,
         "isPrivate": true
     }
 ]

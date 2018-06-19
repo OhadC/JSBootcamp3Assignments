@@ -1,16 +1,15 @@
-import { db } from '../models'
+import { db, IMessage } from '../models'
 
 const dbName = 'message'
 
-export const getAllMessages = async () => {
+export const getAllMessages = async (): Promise<IMessage[]> => {
     return db.find(dbName)
 }
 
-export const getMessagesOfGroup = async (groupId) => {
+export const getMessagesOfGroup = async (groupId): Promise<IMessage[]> => {
     return db.find(dbName, { groupId })
 }
 
 export const addMessage = async (message) => {
-    const newMessage =  await db.add(dbName, message)
-    return newMessage
+    return db.add(dbName, message)
 }

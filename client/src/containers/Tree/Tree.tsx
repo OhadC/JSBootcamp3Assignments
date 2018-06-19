@@ -11,7 +11,7 @@ import './Tree.css'
 interface ITreeProps {
     style: object
     filteredTree: ITreeItem[]
-    changeActiveGroupId: any
+    changeActiveGroup: any
     changeTreeFilter: any
 }
 
@@ -44,7 +44,7 @@ class Tree extends React.Component<ITreeProps, {}> {
         }
     }
 
-    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroupId(activeElement.item.groupId)
+    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroup(activeElement.item.group)
 
     render() {
         return (
@@ -71,7 +71,7 @@ const mapStateToProps = (state: IState) => {
 }
 
 const mapDispatchToProps = {
-    changeActiveGroupId: actions.setActiveGroupId,
+    changeActiveGroup: actions.setActiveGroup,
     changeTreeFilter: actions.setTreeFilter
 }
 

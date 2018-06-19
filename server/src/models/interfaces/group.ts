@@ -1,8 +1,11 @@
+import { IUser } from ".";
+
 export interface IGroup {
     id: string
-    name?: string | null
-    parentId?: string | null
-    userIds: string[]
-    groupIds: string[]
+    name?: string
+    userIds?: string[]
+    users?: IUser[]
+    groupIds?: string[]
+    isRoot?: boolean
     isPrivate: boolean
 }
