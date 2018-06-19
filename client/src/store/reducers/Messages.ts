@@ -1,7 +1,7 @@
 import { actionTypes } from "../actions"
 import { IMessage } from "../../models"
 
-interface IMessagesState {
+export interface IMessagesState {
     messages: IMessage[]
 }
 
@@ -18,7 +18,7 @@ const addMessage = (state: IMessagesState, action: any): IMessagesState => ({
     ...state,
     messages: [
         ...state.messages,
-        action.payload.messages
+        action.payload.message
     ]
 })
 

@@ -11,7 +11,6 @@ export const getMessagesOfGroup = async (groupId) => {
 }
 
 export const addMessage = async (message) => {
-    message['id'] = Date.now() + ""
     const newMessage =  await db.add(dbName, message)
     return newMessage
 }

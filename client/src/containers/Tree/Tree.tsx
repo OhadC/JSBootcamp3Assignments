@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 
-import { ChatTree, IItemHTMLElement } from './chat-tree'
-import './Tree.css'
-import TreeSearch from './components/treeSearch';
-import { ITreeItem } from '../../models'
 import * as actions from '../../store/actions'
+import { IState } from '../../store/reducers'
+import { ITreeItem } from '../../models'
+import { ChatTree, IItemHTMLElement } from './chat-tree'
+import TreeSearch from './components/treeSearch'
+import './Tree.css'
 
 interface ITreeProps {
     style: object
@@ -45,13 +46,10 @@ class Tree extends React.Component<ITreeProps, {}> {
 
     activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroupId(activeElement.item.groupId)
 
-
-    filterDataHandler = (filterdText: string) => this.props.changeTreeFilter(filterdText)
-
     render() {
         return (
             <section style={{ ...this.props.style, ...TreeStyle }} ref={this.sectionRef}>
-                <TreeSearch style={{ margin: '1rem', background: 'rgba(255,255,255,0.1)', color: 'white' }} filterData={this.filterDataHandler} />
+                <TreeSearch style={{ margin: '1rem', background: 'rgba(255,255,255,0.1)', color: 'white' }} filterData={this.props.changeTreeFilter} />
                 <ul className="Tree" ref={this.treeDivRef} style={{ flex: '1' }} tabIndex={0} />
             </section>
         )
@@ -66,7 +64,7 @@ const TreeStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
         filteredTree: state.tree.filteredTree
     }

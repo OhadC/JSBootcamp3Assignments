@@ -35,11 +35,11 @@ class DB {
             await this.fetchDb(dbName)
         }
 
-        const newId = Date.now() // good enouth for now. mongoDB will fix that
+        const newId = Date.now() + "" // good enouth for now. mongoDB will fix that
         dict['id'] = newId
         this.db[dbName].push(dict)
         await this.writeToJson(dbName)
-        return { dict }
+        return dict
     }
 
     async update(dbName: string, conditions: Object, updatedDict: Object) {

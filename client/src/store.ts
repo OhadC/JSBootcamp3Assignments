@@ -1,23 +1,19 @@
-import { compose, combineReducers, createStore, applyMiddleware } from "redux";
+import { compose, combineReducers, createStore, applyMiddleware } from "redux"
+import ReduxThunk from "redux-thunk"
 
-import { globalReducer, authReducer, messagesReducer, treeReducer } from './store/reducers'
-import ReduxThunk from "redux-thunk";
-import { byActionType } from "./store/middleware";
+import { reducers } from './store/reducers'
+import { byActionType, api } from "./store/middleware"
 
-const windowIfDefined = window as any;
-const composeEnhancers = windowIfDefined.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const windowAsAny = window as any
+const composeEnhancers = windowAsAny.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const rootReducer = combineReducers({
-    global: globalReducer,
-    auth: authReducer,
-    messages: messagesReducer,
-    tree: treeReducer
-})
+const rootReducer = combineReducers(reducers)
 
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(
         ReduxThunk,
-        byActionType
+        byActionType,
+        api
     )
 ))
 

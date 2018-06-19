@@ -1,9 +1,8 @@
-import { Dispatch } from "redux";
-import axios from "axios"
+import { Dispatch } from "redux"
 
 import { actionTypes } from "."
-import { IGroup, ITreeItem } from "../../models";
-import treeSearch from "../../common/treeSearch";
+import { IGroup, ITreeItem } from "../../models"
+import treeSearch from "../../common/treeSearch"
 
 const setTree = (tree: any) => ({
     type: actionTypes.SET_TREE,
@@ -16,18 +15,24 @@ const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]) => ({
 })
 
 export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
-    const url = `http://localhost:4000/group`
-    axios.get(url)
-        .then(response => {
-            const groups = response.data
-            const tree = makeTree(groups, getState().auth.userId)
+    const userId = getState().auth.userId
+    const success = (groups: any[]) => {
+        console.log(userId)
+        const tree = makeTree(groups, userId)
             dispatch(setTree(tree))
-        })
+    }
+    dispatch({
+        type: actionTypes.API,
+        payload: {
+            url: '/group',
+            success
+        }
+    })
 }
 
 export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: Function) => {
     const { filterText: oldFilterText, tree: fullTree } = getState().tree
-    if(filterText === oldFilterText){
+    if (filterText === oldFilterText) {
         return
     } else if (filterText === "") {
         dispatch(setFilteredTree(filterText, fullTree))

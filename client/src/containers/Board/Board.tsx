@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 
+import * as actions from '../../store/actions'
+import { IState } from '../../store/reducers'
+import { IMessage } from '../../models'
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
-import { IMessage } from '../../models';
-import * as actions from '../../store/actions'
 
 interface IBoardProps {
     style: React.CSSProperties,
@@ -14,13 +15,11 @@ interface IBoardProps {
 }
 
 class Board extends React.Component<IBoardProps, any> {
-    addMessageHandler = (messageContent: string) => this.props.addMessage(messageContent)
-
     render() {
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
                 <ChatHistory style={{ flex: '1' }} messages={this.props.messages} selfUserId={this.props.selfUserId} />
-                <MessageInput addMessage={this.addMessageHandler} />
+                <MessageInput addMessage={this.props.addMessage} />
             </section>
         )
     }
@@ -31,7 +30,7 @@ const boardStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
         messages: state.messages.messages,
         selfUserId: state.auth.userId

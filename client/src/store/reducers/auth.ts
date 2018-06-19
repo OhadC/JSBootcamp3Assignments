@@ -1,7 +1,7 @@
 
 import { actionTypes } from "../actions"
 
-interface IAuthState {
+export interface IAuthState {
     userId: string | null,
     token: string | null
 }

@@ -8,7 +8,7 @@ export interface ITreeState {
     filteredTree: Array<ITreeItem>
 }
 
-export const initialState: ITreeState = {
+const initialState: ITreeState = {
     activeGroupId: "",
     tree: [],
     filterText: '',

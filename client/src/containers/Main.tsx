@@ -1,24 +1,26 @@
 import * as React from "react"
-import { Route, Redirect, Switch } from "react-router-dom"
+import { Route, Redirect, Switch, withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
+const withRouterAsAny = withRouter as any
 
 // import Header from '../../components/Header'
 // import Footer from '../../components/Footer'
 import * as actions from '../store/actions'
+import { IState } from "../store/reducers"
 import Tree from "./Tree/Tree"
 import Board from "./Board/Board"
 import LogIn from "../components/LogIn"
 
-class Main extends React.Component<any, {}> {
+interface IProps {
+    isAuthenticated: boolean
+    login: any
+}
 
-    loginHandler = (username: string, password: string) => this.props.login(username, password)
-
+class Main extends React.Component<IProps, {}> {
     public render() {
-        console.log('main renderd')
-        
         const loginRoute = (props: any) => this.props.isAuthenticated ?
             <Redirect to={{ pathname: "/chat", state: { from: props.location } }} /> :
-            <LogIn submit={this.loginHandler} />
+            <LogIn submit={this.props.login} />
         const authCheck = (props: any) => !this.props.isAuthenticated ?
             <Redirect to={{ pathname: "/login", state: { from: props.location } }} /> : null
 
@@ -58,7 +60,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
         isAuthenticated: !!state.auth.token
     }
@@ -68,4 +70,4 @@ const mapDispatchToProps = {
     login: actions.login
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+export default withRouterAsAny(connect(mapStateToProps, mapDispatchToProps)(Main))

@@ -1,5 +1,4 @@
-import { Dispatch } from "redux";
-import axios from "axios"
+import { Dispatch } from "redux"
 
 import { actionTypes } from "."
 import { IMessage } from "../../models"
@@ -14,44 +13,31 @@ export const addMessage = (message: IMessage) => ({
     payload: { message }
 })
 
-export const fetchMessagesStart = () => ({
-    type: actionTypes.FETCH_MESSAGES_START
+export const fetchMessages = (groupId: string) => ({
+    type: actionTypes.API,
+    payload: {
+        url: `/group/${groupId}/messages`,
+        success: setMessages,
+        label: 'fetchMessages'
+    }
 })
-
-export const fetchMessagesFail = (error: Error) => ({
-    type: actionTypes.FETCH_MESSAGES_FAIL,
-    payload: { error }
-})
-
-export const fetchMessages = (groupId: string) => (dispatch: Dispatch) => {
-    dispatch(fetchMessagesStart())
-
-    const url = `http://localhost:4000/group/${groupId}/messages`
-
-    axios.get(url)
-        .then(response => {
-            dispatch(setMessages(response.data));
-        })
-        .catch(error => {
-            dispatch(fetchMessagesFail(error.response.data.error));
-        });
-}
 
 export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
-    const { tree: { currentGroup: groupId }, auth: { id: userId } } = getState()
-    const url = `http://localhost:4000/message`
+    const { tree: { activeGroupId: groupId }, auth: { userId } } = getState()
+    const url = `/message`
     const message = {
         groupId,
         userId,
         content,
         date: (new Date()).toISOString(),
     }
-
-    axios.post(url, message)
-        .then(response => {
-            dispatch(addMessage(response.data))
-        })
-        .catch(error => {
-            dispatch(fetchMessagesFail(error.response.data.error))
-        });
+    dispatch({
+        type: actionTypes.API,
+        payload: {
+            method: 'post',
+            url,
+            data: message,
+            success: addMessage
+        }
+    })
 }

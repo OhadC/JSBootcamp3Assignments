@@ -4,11 +4,11 @@ import { fetchTree } from "../actions";
 export const byActionType = ({ dispatch, getState }: any) => (next: Function) => (action: any) => {
     switch (action.type) {
         case (actionTypes.LOGIN_SUCCESS):
-            dispatch(fetchTree())
-            break
+            next(action)
+            return dispatch(fetchTree())
         case (actionTypes.SET_ACTIVE_GROUP):
-            dispatch(fetchMessages(action.payload.group.id))
-            break
+            next(action)
+            return dispatch(fetchMessages(action.payload.group.id))
     }
     return next(action)
 }

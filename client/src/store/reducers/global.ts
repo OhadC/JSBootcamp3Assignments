@@ -1,7 +1,7 @@
 import { IGroup, IUser } from "../../models"
 import { actionTypes } from "../actions"
 
-interface IGlobalState {
+export interface IGlobalState {
     activeGroup: IGroup | null
     user: IUser | null
 }
