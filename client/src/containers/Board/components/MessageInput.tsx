@@ -1,14 +1,14 @@
 import * as React from 'react'
 
-interface IMessageInputProps {
+interface IProps {
     addMessage: (messageContent: string) => void
 }
 
-interface IMessageInputState {
+interface IState {
     inputValue: string
 }
 
-class MessageInput extends React.Component<IMessageInputProps, IMessageInputState>{
+class MessageInput extends React.Component<IProps, IState>{
     state = {
         inputValue: ''
     }

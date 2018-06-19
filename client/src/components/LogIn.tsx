@@ -4,8 +4,8 @@ import Modal from "../components/Modal"
 
 class LogIn extends React.Component<{ submit: Function }, any> {
     state = {
-        username: 'user1',
-        password: 'user1'
+        username: 'Ori',
+        password: 'Ori'
     }
 
     inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +14,7 @@ class LogIn extends React.Component<{ submit: Function }, any> {
         this.setState({ [name]: value })
     }
 
-    submit = () => {
-        this.props.submit(this.state.username, this.state.password)
-    }
+    submit = () => this.props.submit(this.state.username, this.state.password)
 
     render() {
         const canSubmit = !!this.state.username && !!this.state.password

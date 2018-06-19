@@ -7,7 +7,7 @@
             "2",
             "3"
         ],
-        "groupsIds": [
+        "groupIds": [
             "1",
             "3"
         ],
@@ -21,7 +21,7 @@
             "2",
             "3"
         ],
-        "groupsIds": [
+        "groupIds": [
             "2"
         ],
         "isRoot": false,

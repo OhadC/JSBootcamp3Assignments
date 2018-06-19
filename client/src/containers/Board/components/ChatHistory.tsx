@@ -1,12 +1,19 @@
 import * as React from 'react'
 
 import Message from './Message'
+import { IMessage } from '../../../models';
 
-class ChatHistory extends React.Component<{ style: React.CSSProperties, messages: Object, selfUserId: string }, {}> {
+interface IProps {
+    style: React.CSSProperties
+    messages: Object
+    selfUserId: string
+}
+
+class ChatHistory extends React.Component<IProps, {}> {
     private messagesList: React.RefObject<any>
     private messagesBottom: React.RefObject<any>
 
-    constructor(props: any) {
+    constructor(props: IProps) {
         super(props)
         this.messagesList = React.createRef()
         this.messagesBottom = React.createRef()
@@ -28,9 +35,10 @@ class ChatHistory extends React.Component<{ style: React.CSSProperties, messages
     }
 
     render() {
-        const messagesElements = Object.keys(this.props.messages).map(key => this.props.messages[key]).map(
-            (message: any) => (
-                <Message key={message.id} message={message} selfUserId={this.props.selfUserId} />
+        const { messages, selfUserId } = this.props
+        const messagesElements = Object.keys(messages).map(key => messages[key]).map(
+            (message: IMessage) => (
+                <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user!} />
             )
         )
 

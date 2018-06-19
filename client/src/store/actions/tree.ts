@@ -18,7 +18,7 @@ export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
     const userId = getState().auth.userId
     const success = (groups: any[]) => {
         const tree = makeTree(groups, userId)
-            dispatch(setTree(tree))
+        dispatch(setTree(tree))
     }
     dispatch({
         type: actionTypes.API,
@@ -59,19 +59,20 @@ const makeTree = (groups: IGroup[], userId: string) => {
     return treeRootNodes
 
     function groupToNode(group: any): ITreeItem {
-        let groupName = group.name
-        if (!groupName) {
-            groupName = group.users[0].id != userId ? group.users[0].name : group.users[1].name
+        let name = !group.isPrivate ? group.name :
+            (group.users[0].id != userId ?
+                group.users[0].name : group.users[1].name)
+
+        let items = []
+        if ('groupIds' in group && !!group.groupIds) {
+            items = group.groupIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
         }
-        let groupItems = []
-        if ('groupsIds' in group && !!group['groupsIds']) { // TODO: groupsIds => groupIds
-            groupItems = group.groupsIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
-        }
+
         return {
             group,
             type: group.isPrivate ? 'user' : 'group',
-            name: groupName,
-            items: groupItems
+            name,
+            items
         }
     }
 }

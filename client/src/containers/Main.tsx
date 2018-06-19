@@ -6,7 +6,7 @@ const withRouterAsAny = withRouter as any
 // import Header from '../../components/Header'
 // import Footer from '../../components/Footer'
 import * as actions from '../store/actions'
-import { IState } from "../store/reducers"
+import { IAppState } from "../store/reducers"
 import Tree from "./Tree/Tree"
 import Board from "./Board/Board"
 import LogIn from "../components/LogIn"
@@ -60,7 +60,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IAppState) => {
     return {
         isAuthenticated: !!state.auth.token
     }

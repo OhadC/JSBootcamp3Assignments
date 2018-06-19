@@ -2,25 +2,25 @@ import * as React from 'react'
 import { connect } from 'react-redux';
 
 import * as actions from '../../store/actions'
-import { IState } from '../../store/reducers'
+import { IAppState } from '../../store/reducers'
 import { ITreeItem } from '../../models'
 import { ChatTree, IItemHTMLElement } from './chat-tree'
 import TreeSearch from './components/treeSearch'
 import './Tree.css'
 
-interface ITreeProps {
+interface IProps {
     style: object
     filteredTree: ITreeItem[]
     changeActiveGroup: any
     changeTreeFilter: any
 }
 
-class Tree extends React.Component<ITreeProps, {}> {
+class Tree extends React.Component<IProps, {}> {
     private treeDivRef: React.RefObject<any>
     private sectionRef: React.RefObject<any>
     private loadedTree: Array<ITreeItem> | null
 
-    constructor(props: ITreeProps) {
+    constructor(props: IProps) {
         super(props)
 
         this.sectionRef = React.createRef()
@@ -64,7 +64,7 @@ const TreeStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IAppState) => {
     return {
         filteredTree: state.tree.filteredTree
     }

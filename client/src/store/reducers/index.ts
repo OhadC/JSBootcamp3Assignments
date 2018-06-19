@@ -5,11 +5,11 @@ import { treeReducer, ITreeState } from './tree'
 
 const reducers = { global: globalReducer, auth: authReducer, messages: messagesReducer, tree: treeReducer }
 
-interface IState {
+interface IAppState {
     global: IGlobalState
     auth: IAuthState
     messages: IMessagesState
     tree: ITreeState
 }
 
-export { reducers, IState }
+export { reducers, IAppState }

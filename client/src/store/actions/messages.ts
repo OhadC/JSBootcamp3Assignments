@@ -23,7 +23,7 @@ export const fetchMessages = (groupId: string) => ({
 })
 
 export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
-    const { tree: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
+    const { global: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
     const url = `/message`
     const message = {
         groupId,
