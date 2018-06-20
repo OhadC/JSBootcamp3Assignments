@@ -12,8 +12,9 @@ export const getMessagesOfGroup = async (groupId): Promise<IMessage[]> => {
     return Promise.all(messages.map(populateUser))
 }
 
-export const addMessage = async (message) => {
-    return db.add(dbName, message)
+export const addMessage = async (messageIn) => {
+    const message = await db.add(dbName, messageIn)
+    return populateUser(message)
 }
 
 const populateUser = async (message: IMessage) => {

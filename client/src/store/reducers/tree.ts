@@ -28,10 +28,13 @@ const setFilteredTree = (state: ITreeState, action: any): ITreeState => ({
     filteredTree: action.payload.filteredTree,
 })
 
+const logout = (state:  ITreeState): ITreeState => initialState
+
 export const treeReducer = (state: ITreeState = initialState, action: any): ITreeState => {
     switch (action.type) {
         case (actionTypes.SET_TREE): return setTree(state, action)
         case (actionTypes.SET_FILTERED_TREE): return setFilteredTree(state, action)
+        case (actionTypes.LOGOUT): return logout(state)
         default: return state
     }
 }

@@ -1,19 +1,19 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 
 import App from './App'
-import store from './store'
+import { store, history } from './store'
 
 import 'normalize.css/normalize.css'
 import './index.css'
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
             <App />
-        </ BrowserRouter>
+        </ ConnectedRouter>
     </Provider>
     , document.getElementById('root') as HTMLElement
 )

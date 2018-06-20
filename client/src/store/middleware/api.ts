@@ -3,8 +3,8 @@ import axios, * as Axios from "axios";
 
 const baseURL = 'http://localhost:4000'
 
-const notify = (a: 'start' | 'success' | 'fail', label: string, message?: string) => {
-    const type = toUnderscore(label) + "_" + toUnderscore(a)
+const notify = (status: 'start' | 'success' | 'fail', label: string, message?: string) => {
+    const type = toUnderscore(label) + "_" + toUnderscore(status)
     const payload = message ? { message } : undefined
     return {
         type,

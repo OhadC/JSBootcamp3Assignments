@@ -1,7 +1,6 @@
-import axios from "axios"
 import { Dispatch } from "redux"
 
-import { IGroup } from "../../models"
+import { IGroup, IUser } from "../../models"
 import { actionTypes } from "."
 
 export const setActiveGroup = (group: IGroup) => ({
@@ -9,11 +8,27 @@ export const setActiveGroup = (group: IGroup) => ({
     payload: { group }
 })
 
+export const setUser = (user: IUser) => ({
+    type: actionTypes.SET_USER,
+    payload: { user }
+})
+
+export const fetchUser = (userId: string) => (dispatch: Dispatch) => {
+    dispatch({
+        type: actionTypes.API,
+        payload: {
+            url: `/user/${userId}`,
+            success: setUser
+        }
+    })
+}
+
 export const setActiveGroupId = (groupId: string) => (dispatch: Dispatch) => {
-    const url = `http://localhost:4000/group/${groupId}`
-    axios.get(url)
-        .then(response => {
-            const group = response.data
-            dispatch(setActiveGroup(group))
-        })
+    dispatch({
+        type: actionTypes.API,
+        payload: {
+            url: `/group/${groupId}`,
+            success: setActiveGroup
+        }
+    })
 }

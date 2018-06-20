@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/redux-thunk": "^2.1.0",
     "axios": "^0.18.0",
+    "connected-react-router": "^4.3.0",
     "moment": "^2.22.1",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",

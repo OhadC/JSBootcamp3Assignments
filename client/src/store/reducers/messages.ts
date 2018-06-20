@@ -27,12 +27,14 @@ const fetchMessageStart = (state: IMessagesState): IMessagesState => ({
     messages: []
 })
 
+const logout = (state: IMessagesState): IMessagesState => initialState
 
 export const messagesReducer = (state: IMessagesState = initialState, action: any): IMessagesState => {
     switch (action.type) {
         case (actionTypes.SET_MESSAGES): return setMessage(state, action)
         case (actionTypes.ADD_MESSAGE): return addMessage(state, action)
         case (actionTypes.FETCH_MESSAGES_START): return fetchMessageStart(state)
+        case (actionTypes.LOGOUT): return logout(state)
         default: return state
     }
 }

@@ -2,6 +2,7 @@ export const API = 'API'
 
 // Global
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'
+export const SET_USER = 'SET_USER'
 
 // Auth
 export const LOGIN_START = 'LOGIN_START'

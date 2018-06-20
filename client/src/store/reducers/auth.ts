@@ -17,11 +17,7 @@ const loginSuccess = (state: IAuthState, action: any): IAuthState => ({
     token: action.payload.token
 })
 
-const logout = (state: IAuthState, action: any): IAuthState => ({
-    ...state,
-    userId: null,
-    token: null
-})
+const logout = (state: IAuthState, action: any): IAuthState => initialState
 
 export const authReducer = (state: IAuthState = initialState, action: any): IAuthState => {
     switch (action.type) {

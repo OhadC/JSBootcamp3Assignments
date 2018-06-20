@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes'
 
 export { setActiveGroup, setActiveGroupId } from './global'
-export { login } from './auth'
+export { login, logout } from './auth'
 export { fetchMessages, sendMessage } from './messages'
 export { fetchTree, setTreeFilter } from './tree'
 

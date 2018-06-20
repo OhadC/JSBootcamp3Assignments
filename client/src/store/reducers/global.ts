@@ -16,9 +16,18 @@ const setActiveGroup = (state: IGlobalState, action: any): IGlobalState => ({
     activeGroup: action.payload.group
 })
 
+const setUser = (state: IGlobalState, action: any): IGlobalState => ({
+    ...state,
+    user: action.payload.user
+})
+
+const logout = (state: IGlobalState, action: any): IGlobalState => initialState
+
 export const globalReducer = (state: IGlobalState = initialState, action: any): IGlobalState => {
-    switch(action.type) {
-        case(actionTypes.SET_ACTIVE_GROUP): return setActiveGroup(state, action)
+    switch (action.type) {
+        case (actionTypes.SET_ACTIVE_GROUP): return setActiveGroup(state, action)
+        case (actionTypes.SET_USER): return setUser(state, action)
+        case (actionTypes.LOGOUT): return logout(state, action)
         default: return state
     }
 }

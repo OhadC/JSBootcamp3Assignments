@@ -1,11 +1,11 @@
 import * as React from "react"
 
-interface IModalProps {
+interface IProps {
     children: React.ReactNode,
     style?: React.CSSProperties
 }
 
-const Modal = (props: IModalProps) => {
+const Modal = (props: IProps) => {
     return (
         <div style={blackScreenStyle}>
             <div style={{ ...modalStyle, ...(props.style || {}) }}>
