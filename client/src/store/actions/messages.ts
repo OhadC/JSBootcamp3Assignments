@@ -24,7 +24,6 @@ export const fetchMessages = (groupId: string) => ({
 
 export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
     const { global: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
-    const url = `/message`
     const message = {
         groupId,
         userId,
@@ -32,12 +31,27 @@ export const sendMessage = (content: string) => (dispatch: Dispatch, getState: F
         date: (new Date()).toISOString(),
     }
     dispatch({
-        type: actionTypes.API,
-        payload: {
-            method: 'post',
-            url,
-            data: message,
-            success: addMessage
-        }
+        type: actionTypes.SEND_MESSAGE,
+        payload: { message }
     })
 }
+
+// export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
+//     const { global: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
+//     const url = `/message`
+//     const message = {
+//         groupId,
+//         userId,
+//         content,
+//         date: (new Date()).toISOString(),
+//     }
+//     dispatch({
+//         type: actionTypes.API,
+//         payload: {
+//             method: 'post',
+//             url,
+//             data: message,
+//             success: addMessage
+//         }
+//     })
+// }

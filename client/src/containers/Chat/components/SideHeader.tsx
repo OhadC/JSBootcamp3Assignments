@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const SideHeader = (props: IProps) => {
-    console.log(props.user)
     const userName = props.user ? props.user.name : "guest"
     const menu = () => {
         if (props.user) {

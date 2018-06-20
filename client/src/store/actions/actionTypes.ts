@@ -11,6 +11,7 @@ export const LOGOUT = 'LOGOUT'
 
 // Messages
 export const SET_MESSAGES = 'SET_MESSAGES'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const FETCH_MESSAGES_START = 'FETCH_MESSAGES_START'
 export const FETCH_MESSAGES_FAIL = 'FETCH_MESSAGES_FAIL'
