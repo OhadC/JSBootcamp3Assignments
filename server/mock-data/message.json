@@ -1,1 +1,86 @@
-[{"id":"0","groupId":"0","userId":"0","content":"Friends, Ori","date":"2018-04-06T11:10:31Z","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"id":"1","groupId":"0","userId":"3","content":"Friends, Tommy","date":"2018-04-06T11:10:31Z","user":{"id":"3","name":"Tommy","password":"Tommy","age":4}},{"id":"2","groupId":"0","userId":"2","content":"Friends, Roni","date":"2018-04-06T11:11:31Z","user":{"id":"2","name":"Udi","password":"Udi","age":3}},{"id":"3","groupId":"0","userId":"0","content":"Friends, Ori","date":"2018-04-06T11:12:31Z","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"id":"4","groupId":"1","userId":"0","content":"Best Friends, Ori","date":"2018-04-06T11:13:31Z","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"id":"5","groupId":"1","userId":"3","content":"Best Friends, Tommy","date":"2018-04-06T11:14:31Z","user":{"id":"3","name":"Tommy","password":"Tommy","age":4}},{"id":"6","groupId":"1","userId":"2","content":"Best Friends, Udi","date":"2018-04-06T11:15:31Z","user":{"id":"2","name":"Udi","password":"Udi","age":3}},{"id":"7","groupId":"2","userId":"0","content":"Ori<->Tommy, Ori","date":"2018-04-06T11:14:31Z","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"id":"8","groupId":"2","userId":"3","content":"Ori<->Tommy, Tommy","date":"2018-04-06T11:15:31Z","user":{"id":"3","name":"Tommy","password":"Tommy","age":4}},{"id":"9","groupId":"2","userId":"0","content":"Ori<->Tommy, Ori","date":"2018-04-06T11:16:31Z","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"1","date":"2018-06-20T13:42:15.792Z","id":"1529502135793","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"2","date":"2018-06-20T13:42:16.562Z","id":"1529502136798","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"asdfsadf","date":"2018-06-20T13:43:02.640Z","id":"1529502182642","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"asdfsadf","date":"2018-06-20T13:43:03.920Z","id":"1529502183922","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"aasd","date":"2018-06-20T13:47:01.091Z","id":"1529502421094","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"asd","date":"2018-06-20T13:47:02.750Z","id":"1529502422753","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"as","date":"2018-06-20T13:47:03.618Z","id":"1529502423644","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"da","date":"2018-06-20T13:47:03.758Z","id":"1529502423759","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"sd","date":"2018-06-20T13:47:03.913Z","id":"1529502424764","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"4","userId":"0","content":"ad","date":"2018-06-20T13:47:04.887Z","id":"1529502424886","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"5","userId":"0","content":"a","date":"2018-06-20T13:49:13.085Z","id":"1529502553087"},{"groupId":"5","userId":"0","content":"a","date":"2018-06-20T13:49:15.885Z","id":"1529502555887"},{"groupId":"5","userId":"0","content":"a","date":"2018-06-20T13:49:16.849Z","id":"1529502557546","user":{"id":"0","name":"Ori","password":"Ori","age":1}},{"groupId":"5","userId":"0","content":"a","date":"2018-06-20T13:49:17.032Z","id":"1529502557654"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:21.094Z","id":"1529502561097"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:21.363Z","id":"1529502562377"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:21.507Z","id":"1529502562390"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:21.647Z","id":"1529502562391"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:21.786Z","id":"1529502562391"},{"groupId":"5","userId":"0","content":"","date":"2018-06-20T13:49:21.896Z","id":"1529502562392"},{"groupId":"5","userId":"0","content":"s","date":"2018-06-20T13:49:22.024Z","id":"1529502562412"}]
+[
+    {
+        "id": "0",
+        "groupId": "0",
+        "userId": "0",
+        "content": "Friends, Ori",
+        "date": "2018-04-06T11:10:31Z"
+    },
+    {
+        "id": "1",
+        "groupId": "0",
+        "userId": "3",
+        "content": "Friends, Tommy",
+        "date": "2018-04-06T11:10:31Z"
+    },
+    {
+        "id": "2",
+        "groupId": "0",
+        "userId": "2",
+        "content": "Friends, Roni",
+        "date": "2018-04-06T11:11:31Z"
+    },
+    {
+        "id": "3",
+        "groupId": "0",
+        "userId": "0",
+        "content": "Friends, Ori",
+        "date": "2018-04-06T11:12:31Z"
+    },
+    {
+        "id": "4",
+        "groupId": "1",
+        "userId": "0",
+        "content": "Best Friends, Ori",
+        "date": "2018-04-06T11:13:31Z"
+    },
+    {
+        "id": "5",
+        "groupId": "1",
+        "userId": "3",
+        "content": "Best Friends, Tommy",
+        "date": "2018-04-06T11:14:31Z"
+    },
+    {
+        "id": "6",
+        "groupId": "1",
+        "userId": "2",
+        "content": "Best Friends, Udi",
+        "date": "2018-04-06T11:15:31Z"
+    },
+    {
+        "id": "7",
+        "groupId": "2",
+        "userId": "0",
+        "content": "Ori<->Tommy, Ori",
+        "date": "2018-04-06T11:14:31Z"
+    },
+    {
+        "id": "8",
+        "groupId": "2",
+        "userId": "3",
+        "content": "Ori<->Tommy, Tommy",
+        "date": "2018-04-06T11:15:31Z"
+    },
+    {
+        "id": "9",
+        "groupId": "2",
+        "userId": "0",
+        "content": "Ori<->Tommy, Ori",
+        "date": "2018-04-06T11:16:31Z"
+    },
+    {
+        "groupId": "0",
+        "userId": "0",
+        "content": "l",
+        "date": "2018-06-20T16:40:01.300Z",
+        "id": "1529512801302"
+    },
+    {
+        "groupId": "0",
+        "userId": "0",
+        "content": ";l;'",
+        "date": "2018-06-20T16:40:03.067Z",
+        "id": "1529512803068"
+    }
+]

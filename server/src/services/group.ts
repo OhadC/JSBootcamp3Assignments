@@ -1,4 +1,5 @@
 import { db, IGroup, IUser } from '../models'
+import { getUserById } from './user'
 
 const dbName = 'group'
 
@@ -19,7 +20,7 @@ export const getGroupById = async (id: string) => {
 }
 
 export const addGroup = async (group): Promise<IGroup> => {
-    return db.add('group', group)
+    return db.add(dbName, group)
 }
 
 export const updateGroup = async (id: string, updatedGroup: IGroup) => {
@@ -35,8 +36,4 @@ const populateUsers = async (group: IGroup) => {
         group.users = await Promise.all(group.userIds.map(getUserById))
     }
     return group
-
-    async function getUserById(id): Promise<IUser> {
-        return db.findOne('user', { id })
-    }
 }

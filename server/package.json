@@ -13,7 +13,7 @@
   "dependencies": {
     "@types/express-jwt": "^0.0.40",
     "@types/helmet": "0.0.38",
-    "@types/socket.io": "^1.4.34",
+    "@types/socket.io": "^1.4.36",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "concurrently": "^3.5.1",

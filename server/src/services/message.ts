@@ -1,4 +1,5 @@
-import { db, IMessage, IUser } from '../models'
+import { db, IMessage } from '../models'
+import { getUserById } from './user'
 
 const dbName = 'message'
 
@@ -20,8 +21,4 @@ export const addMessage = async (messageIn) => {
 const populateUser = async (message: IMessage) => {
     message.user = await getUserById(message.userId)
     return message
-
-    async function getUserById(id): Promise<IUser> {
-        return db.findOne('user', { id })
-    }
 }
