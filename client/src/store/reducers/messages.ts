@@ -1,4 +1,7 @@
+import { AnyAction } from "redux"
+
 import { actionTypes } from "../actions"
+import { updateObject, createReducer } from "../utility"
 import { IMessage } from "../../models"
 
 export interface IMessagesState {
@@ -9,32 +12,25 @@ const initialState: IMessagesState = {
     messages: []
 }
 
-const setMessage = (state: IMessagesState, action: any): IMessagesState => ({
-    ...state,
-    messages: action.payload.messages
-})
+const setMessage = (state: IMessagesState, action: AnyAction): IMessagesState =>
+    updateObject(state, { messages: action.payload.messages })
 
-const addMessage = (state: IMessagesState, action: any): IMessagesState => ({
-    ...state,
-    messages: [
+const addMessage = (state: IMessagesState, action: AnyAction): IMessagesState => {
+    const newMessages = [
         ...state.messages,
         action.payload.message
     ]
-})
-
-const fetchMessageStart = (state: IMessagesState): IMessagesState => ({
-    ...state,
-    messages: []
-})
-
-const logout = (state: IMessagesState): IMessagesState => initialState
-
-export const messagesReducer = (state: IMessagesState = initialState, action: any): IMessagesState => {
-    switch (action.type) {
-        case (actionTypes.SET_MESSAGES): return setMessage(state, action)
-        case (actionTypes.ADD_MESSAGE): return addMessage(state, action)
-        case (actionTypes.FETCH_MESSAGES_START): return fetchMessageStart(state)
-        case (actionTypes.LOGOUT): return logout(state)
-        default: return state
-    }
+    return updateObject(state, { messages: newMessages })
 }
+
+const fetchMessageStart = (state: IMessagesState): IMessagesState =>
+    updateObject(state, { messages: [] })
+
+const logout = (): IMessagesState => initialState
+
+export const messagesReducer = createReducer(initialState, {
+    [actionTypes.SET_MESSAGES]: setMessage,
+    [actionTypes.ADD_MESSAGE]: addMessage,
+    [actionTypes.FETCH_MESSAGES_START]: fetchMessageStart,
+    [actionTypes.LOGOUT]: logout
+})

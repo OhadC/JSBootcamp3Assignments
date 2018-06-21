@@ -8,12 +8,9 @@ interface IProps {
 }
 
 const GroupInfo = (props: IProps) => {
-    const usersList = props.group.users!.map((user: IUser, idx: number) => (
-        <span>
-            {idx > 0 ? ', ' : ''}
-            {user.name}
-        </span>
-    ))
+    const usersList = props.group.users!.reduce((prev, user: IUser, idx: number) => {
+        return prev + (idx > 0 ? ", " : "") + user.name
+    }, "")
 
     return (
         <div className="group-info">

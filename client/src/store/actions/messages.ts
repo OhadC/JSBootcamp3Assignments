@@ -1,57 +1,36 @@
-import { Dispatch } from "redux"
+import { AnyAction } from "redux"
 
-import { actionTypes } from "."
+import { actionTypes, apiRequest } from "."
 import { IMessage } from "../../models"
+import { store } from "../../store";
 
-export const setMessages = (messages: IMessage[]) => ({
+export const setMessages = (messages: IMessage[]): AnyAction => ({
     type: actionTypes.SET_MESSAGES,
     payload: { messages }
 })
 
-export const addMessage = (message: IMessage) => ({
+export const addMessage = (message: IMessage): AnyAction => ({
     type: actionTypes.ADD_MESSAGE,
     payload: { message }
 })
 
-export const fetchMessages = (groupId: string) => ({
-    type: actionTypes.API,
-    payload: {
+export const fetchMessages = (groupId: string): AnyAction =>
+    apiRequest({
         url: `/group/${groupId}/messages`,
         success: setMessages,
         label: 'fetchMessages'
-    }
-})
+    })
 
-export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
-    const { global: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
+export const sendMessage = (content: string): AnyAction => {
+    const { global: { activeGroup: { id: groupId } }, auth: { userId } }: any = store.getState()
     const message = {
         groupId,
         userId,
         content,
         date: (new Date()).toISOString(),
     }
-    dispatch({
+    return {
         type: actionTypes.SEND_MESSAGE,
         payload: { message }
-    })
+    }
 }
-
-// export const sendMessage = (content: string) => (dispatch: Dispatch, getState: Function) => {
-//     const { global: { activeGroup: { id: groupId } }, auth: { userId } } = getState()
-//     const url = `/message`
-//     const message = {
-//         groupId,
-//         userId,
-//         content,
-//         date: (new Date()).toISOString(),
-//     }
-//     dispatch({
-//         type: actionTypes.API,
-//         payload: {
-//             method: 'post',
-//             url,
-//             data: message,
-//             success: addMessage
-//         }
-//     })
-// }

@@ -3,7 +3,12 @@ import { authReducer, IAuthState } from './auth'
 import { messagesReducer, IMessagesState } from './messages'
 import { treeReducer, ITreeState } from './tree'
 
-const reducers = { global: globalReducer, auth: authReducer, messages: messagesReducer, tree: treeReducer }
+const reducers = {
+    global: globalReducer,
+    auth: authReducer,
+    messages: messagesReducer,
+    tree: treeReducer
+}
 
 interface IAppState {
     global: IGlobalState

@@ -1,5 +1,8 @@
+import { AnyAction } from "redux"
+
 import { IGroup, IUser } from "../../models"
 import { actionTypes } from "../actions"
+import { updateObject, createReducer } from "../utility"
 
 export interface IGlobalState {
     activeGroup: IGroup | null
@@ -11,23 +14,16 @@ const initialState: IGlobalState = {
     user: null
 }
 
-const setActiveGroup = (state: IGlobalState, action: any): IGlobalState => ({
-    ...state,
-    activeGroup: action.payload.group
+const setActiveGroup = (state: IGlobalState, action: AnyAction): IGlobalState =>
+    updateObject(state, { activeGroup: action.payload.group })
+
+const setUser = (state: IGlobalState, action: AnyAction): IGlobalState =>
+    updateObject(state, { user: action.payload.user })
+
+const logout = (): IGlobalState => initialState
+
+export const globalReducer = createReducer(initialState, {
+    [actionTypes.SET_ACTIVE_GROUP]: setActiveGroup,
+    [actionTypes.SET_USER]: setUser,
+    [actionTypes.LOGOUT]: logout
 })
-
-const setUser = (state: IGlobalState, action: any): IGlobalState => ({
-    ...state,
-    user: action.payload.user
-})
-
-const logout = (state: IGlobalState, action: any): IGlobalState => initialState
-
-export const globalReducer = (state: IGlobalState = initialState, action: any): IGlobalState => {
-    switch (action.type) {
-        case (actionTypes.SET_ACTIVE_GROUP): return setActiveGroup(state, action)
-        case (actionTypes.SET_USER): return setUser(state, action)
-        case (actionTypes.LOGOUT): return logout(state, action)
-        default: return state
-    }
-}

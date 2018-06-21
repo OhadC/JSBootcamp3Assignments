@@ -1,16 +1,16 @@
-import { Dispatch } from "redux"
+import { Dispatch, AnyAction } from "redux"
 import { actionTypes } from ".";
 
-export const loginStart = () => ({
+export const loginStart = (): AnyAction => ({
     type: actionTypes.LOGIN_START
 })
 
-export const loginSuccess = (userId: string, token: string) => ({
+export const loginSuccess = (userId: string, token: string): AnyAction => ({
     type: actionTypes.LOGIN_SUCCESS,
     payload: { userId, token }
 })
 
-export const logout = () => ({
+export const logout = (): AnyAction => ({
     type: actionTypes.LOGOUT,
 })
 

@@ -1,4 +1,5 @@
-export const API = 'API'
+// API
+export const API_REQUEST = 'API_REQUEST'
 
 // Global
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'

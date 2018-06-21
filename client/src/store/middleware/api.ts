@@ -17,7 +17,7 @@ const notify = (status: 'start' | 'success' | 'fail', label: string, message?: s
 }
 
 export const api = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
-    if (action.type !== actionTypes.API) {
+    if (action.type !== actionTypes.API_REQUEST) {
         return next(action)
     }
     const { url, method, data, success, label } = action.payload

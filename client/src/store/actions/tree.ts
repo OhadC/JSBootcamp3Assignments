@@ -1,15 +1,16 @@
-import { Dispatch } from "redux"
+import { Dispatch, AnyAction } from "redux"
 
-import { actionTypes } from "."
+import { actionTypes, apiRequest } from "."
 import { IGroup, ITreeItem } from "../../models"
 import treeSearch from "../../common/treeSearch"
+import { IAppState } from "../reducers";
 
-const setTree = (tree: any) => ({
+const setTree = (tree: any): AnyAction => ({
     type: actionTypes.SET_TREE,
     payload: { tree }
 })
 
-const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]) => ({
+const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]): AnyAction => ({
     type: actionTypes.SET_FILTERED_TREE,
     payload: { filteredTree, filterText }
 })
@@ -20,16 +21,14 @@ export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
         const tree = makeTree(groups, userId)
         dispatch(setTree(tree))
     }
-    dispatch({
-        type: actionTypes.API,
-        payload: {
-            url: '/group',
-            success
-        }
-    })
+    dispatch(apiRequest({
+        url: '/group',
+        success
+    }))
 }
 
-export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: Function) => {
+
+export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {
     const { filterText: oldFilterText, tree: fullTree } = getState().tree
     if (filterText === oldFilterText) {
         return

@@ -1,5 +1,7 @@
+import { AnyAction } from "redux"
 
 import { actionTypes } from "../actions"
+import { updateObject, createReducer } from "../utility"
 
 export interface IAuthState {
     userId: string | null,
@@ -11,18 +13,17 @@ const initialState: IAuthState = {
     token: null
 }
 
-const loginSuccess = (state: IAuthState, action: any): IAuthState => ({
-    ...state,
-    userId: action.payload.userId,
-    token: action.payload.token
-})
-
-const logout = (state: IAuthState, action: any): IAuthState => initialState
-
-export const authReducer = (state: IAuthState = initialState, action: any): IAuthState => {
-    switch (action.type) {
-        case (actionTypes.LOGIN_SUCCESS): return loginSuccess(state, action)
-        case (actionTypes.LOGOUT): return logout(state, action)
-        default: return state
+const loginSuccess = (state: IAuthState, action: AnyAction): IAuthState => {
+    const newValues = {
+        userId: action.payload.userId,
+        token: action.payload.token
     }
+    return updateObject(state, newValues)
 }
+
+const logout = (state: IAuthState, action: AnyAction): IAuthState => initialState
+
+export const authReducer = createReducer(initialState, {
+    [actionTypes.LOGIN_SUCCESS]: loginSuccess,
+    [actionTypes.LOGOUT]: logout
+})
