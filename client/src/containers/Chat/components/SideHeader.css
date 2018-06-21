@@ -1,17 +1,15 @@
 .side-header {
     padding: 1rem;
     background-color: #191b27;
+    color: white;
 }
 
 .side-header h2 {
     margin: 0;
 }
 
-.side-header nav {
-    color: rgba(255, 255, 255, 0.7);
-}
-
 .side-header ul {
+    color: rgba(255, 255, 255, 0.7);
     list-style: none;
     outline: none;
     padding: 0;
