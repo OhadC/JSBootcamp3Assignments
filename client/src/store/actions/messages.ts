@@ -17,7 +17,6 @@ export const addMessage = (message: IClientMessage): AnyAction => ({
 export const fetchMessages = (groupId: string): AnyAction =>
     apiRequest({
         url: `/group/${groupId}/messages`,
-        success: setMessages,
         label: 'fetchMessages'
     })
 

@@ -18,6 +18,7 @@ export const login = async (name: string, plaintextPassword: string) => {
         const token = await jwtSignAsync(user, jwtSecret)
         return { user, token }
     }
+    throw Error('Invalid name or password')
 }
 
 export const join = async (name: string, plaintextPassword: string) => {

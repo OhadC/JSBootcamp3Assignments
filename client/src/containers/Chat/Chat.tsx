@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Route, withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
-const withRouterAsAny = withRouter as any
 
 import * as actions from '../../store/actions'
 import { IAppState } from "../../store/reducers"
@@ -68,4 +67,4 @@ const mapDispatchToProps = {
     logout: actions.logout
 }
 
-export default withRouterAsAny(connect(mapStateToProps, mapDispatchToProps)(Chat))
+export default (withRouter as any)(connect(mapStateToProps, mapDispatchToProps)(Chat))

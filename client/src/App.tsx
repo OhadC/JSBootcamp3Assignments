@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route, Redirect, withRouter } from 'react-router'
-const withRouterAsAny = withRouter as any
 
 import Chat from './containers/Chat/Chat'
 import { IAppState } from './store/reducers'
@@ -53,4 +52,4 @@ const mapStateToProps = (state: IAppState) => {
     }
 }
 
-export default withRouterAsAny(connect(mapStateToProps)(App))
+export default (withRouter as any)(connect(mapStateToProps)(App))

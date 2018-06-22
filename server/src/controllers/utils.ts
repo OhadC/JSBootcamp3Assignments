@@ -9,16 +9,10 @@ export const requestHandler = (weraped) => {
                 data
             })
         } catch (error) {
-            const { resCode, message } = error
-            res.status(resCode).json({
+            res.status(500).json({
                 status: "error",
-                message
+                message: error.toString()
             })
         }
     }
 }
-
-requestHandler(
-    (req: Request) => {
-    }
-)

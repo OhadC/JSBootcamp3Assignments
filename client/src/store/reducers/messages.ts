@@ -13,7 +13,7 @@ const initialState: IMessagesState = {
 }
 
 const setMessage = (state: IMessagesState, action: AnyAction): IMessagesState =>
-    updateObject(state, { messages: action.payload.messages })
+    updateObject(state, { messages: action.payload })
 
 const addMessage = (state: IMessagesState, action: AnyAction): IMessagesState => {
     const newMessages = [
@@ -29,7 +29,7 @@ const fetchMessageStart = (state: IMessagesState): IMessagesState =>
 const logout = (): IMessagesState => initialState
 
 export const messagesReducer = createReducer(initialState, {
-    [actionTypes.SET_MESSAGES]: setMessage,
+    [actionTypes.FETCH_MESSAGES_SUCCESS]: setMessage,
     [actionTypes.ADD_MESSAGE]: addMessage,
     [actionTypes.FETCH_MESSAGES_START]: fetchMessageStart,
     [actionTypes.LOGOUT]: logout

@@ -35,10 +35,11 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
     axios(config)
         .then((response: Axios.AxiosResponse<any>) => response.data)
         .then(({ data }: any) => {
-            success && dispatch(success(data))
+            success && success(data)
             label && dispatch(notify('success', label, data))
         })
-        .catch(error => {
-            label && dispatch(notify('fail', label, error.message)) // TODO: no label
+        .catch(({ response: {data: {message}} }: any) => {
+            console.log(message)
+            label && dispatch(notify('fail', label, message)) // TODO: no label
         })
 }
