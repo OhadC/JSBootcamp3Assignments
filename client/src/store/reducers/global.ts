@@ -17,13 +17,14 @@ const initialState: IGlobalState = {
 const setActiveGroup = (state: IGlobalState, action: AnyAction): IGlobalState =>
     updateObject(state, { activeGroup: action.payload.group })
 
-const setUser = (state: IGlobalState, action: AnyAction): IGlobalState =>
-    updateObject(state, { user: action.payload.user })
+    const loginSuccess = (state: IGlobalState, action: AnyAction): IGlobalState => {
+        return updateObject(state, {user: action.payload.user})
+    }
 
 const logout = (): IGlobalState => initialState
 
 export const globalReducer = createReducer(initialState, {
     [actionTypes.SET_ACTIVE_GROUP]: setActiveGroup,
-    [actionTypes.SET_USER]: setUser,
+    [actionTypes.LOGIN_SUCCESS]: loginSuccess,
     [actionTypes.LOGOUT]: logout
 })

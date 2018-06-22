@@ -1,44 +1,50 @@
 import { Request, Response } from 'express'
 
 import { groupService, messageService } from '../services'
+import { requestHandler } from './utils'
 
-export const getAllGroups = async (req: Request, res: Response) => {
-    const Groups = await groupService.getAllGroups()
-    res.json(Groups)
-}
+export const getAllGroups = requestHandler(
+    groupService.getAllGroups
+)
 
-export const getGroupById = async (req: Request, res: Response) => {
-    const groupId = req.params.id
-    const group = await groupService.getGroupById(groupId)
-    res.json(group)
-}
+export const getGroupById = requestHandler(
+    (req: Request) => {
+        const groupId = req.params.id
+        return groupService.getGroupById(groupId)
+    }
+)
 
-export const getAllGroupsByUserId = async (req: Request, res: Response) => {
-    const userId = req.params.id
-    const groups = await groupService.getAllGroupsByUserId(userId)
-    res.json(groups)
-}
+export const getAllGroupsByUserId = requestHandler(
+    (req: Request) => {
+        const userId = req.params.id
+        return groupService.getAllGroupsByUserId(userId)
+    }
+)
 
-export const getMessagesById = async (req: Request, res: Response) => {
-    const groupId = req.params.id
-    const messages = await messageService.getMessagesOfGroup(groupId)
-    res.json(messages)
-}
+export const getMessagesById = requestHandler(
+    (req: Request) => {
+        const groupId = req.params.id
+        return messageService.getMessagesOfGroup(groupId)
+    }
+)
 
-export const addGroup = async (req: Request, res: Response) => {
-    const group = await groupService.addGroup(req.body)
-    res.json(group)
-}
+export const addGroup = requestHandler(
+    (req: Request) => {
+        return groupService.addGroup(req.body)
+    }
+)
 
-export const updateGroup = async (req: Request, res: Response) => {
-    const groupId = req.params.id
-    const newFields = req.body
-    const group = await groupService.updateGroup(groupId, newFields)
-    res.json(group)
-}
+export const updateGroup = requestHandler(
+    (req: Request) => {
+        const groupId = req.params.id
+        const newFields = req.body
+        return groupService.updateGroup(groupId, newFields)
+    }
+)
 
-export const deleteGroup = async (req: Request, res: Response) => {
-    const groupId = req.params.id
-    const result = await groupService.deleteGroup(groupId)
-    res.json(result)
-}
+export const deleteGroup = requestHandler(
+    (req: Request) => {
+        const groupId = req.params.id
+        return groupService.deleteGroup(groupId)
+    }
+)

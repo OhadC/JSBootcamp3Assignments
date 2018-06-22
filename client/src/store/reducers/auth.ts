@@ -15,7 +15,7 @@ const initialState: IAuthState = {
 
 const loginSuccess = (state: IAuthState, action: AnyAction): IAuthState => {
     const newValues = {
-        userId: action.payload.userId,
+        userId: action.payload.user.id,
         token: action.payload.token
     }
     return updateObject(state, newValues)

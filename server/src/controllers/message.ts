@@ -1,19 +1,21 @@
 import { Request, Response } from 'express'
 
 import { messageService } from '../services'
+import { requestHandler } from './utils'
 
-export const getAllMessages = async (req: Request, res: Response) => {
-    const messages = await messageService.getAllMessages()
-    res.json(messages)
-}
+export const getAllMessages = requestHandler(
+    messageService.getAllMessages
+)
 
-export const getMessagesById = async (req: Request, res: Response) => {
-    const messageId = req.params.id
-    const message = await messageService.getMessagesOfGroup(messageId)
-    res.json(message)
-}
+export const getMessagesById = requestHandler(
+    (req: Request) => {
+        const messageId = req.params.id
+        return messageService.getMessagesOfGroup(messageId)
+    }
+)
 
-export const addMessage = async (req: Request, res: Response) => {
-    const message = await messageService.addMessage(req.body)
-    res.json(message)
-}
+export const addMessage = requestHandler(
+    (req: Request) => {
+        return messageService.addMessage(req.body)
+    }
+)

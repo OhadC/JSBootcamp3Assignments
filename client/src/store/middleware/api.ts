@@ -1,11 +1,13 @@
-import { actionTypes } from "../actions";
-import axios, * as Axios from "axios";
+import axios, * as Axios from "axios"
+import { AnyAction } from "redux"
+
+import { actionTypes } from "../actions"
 
 const baseURL = 'http://localhost:4000'
 
-const notify = (status: 'start' | 'success' | 'fail', label: string, message?: string) => {
+const notify = (status: 'start' | 'success' | 'fail', label: string, data?: any) => {
     const type = toUnderscore(label) + "_" + toUnderscore(status)
-    const payload = message ? { message } : undefined
+    const payload = data
     return {
         type,
         payload
@@ -16,7 +18,7 @@ const notify = (status: 'start' | 'success' | 'fail', label: string, message?: s
     }
 }
 
-export const api = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
+export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyAction) => {
     if (action.type !== actionTypes.API_REQUEST) {
         return next(action)
     }
@@ -32,11 +34,11 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: any)
     label && dispatch(notify('start', label))
     axios(config)
         .then((response: Axios.AxiosResponse<any>) => response.data)
-        .then(data => {
-            dispatch(success(data))
-            label && dispatch(notify('success', label))
+        .then(({ data }: any) => {
+            success && dispatch(success(data))
+            label && dispatch(notify('success', label, data))
         })
         .catch(error => {
-            label && dispatch(notify('fail', label, error.message))
+            label && dispatch(notify('fail', label, error.message)) // TODO: no label
         })
 }

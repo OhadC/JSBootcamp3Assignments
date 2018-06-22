@@ -13,10 +13,10 @@ const saltRounds = 10
 const jwtSecret = fs.readFileSync('./jwtSecret.pub')
 
 export const login = async (name: string, plaintextPassword: string) => {
-    console.log(await getHashedPassword(plaintextPassword))
     if (await userService.validateUser(name, plaintextPassword)) {
         const user = await userService.getUserByName(name)
-        return jwtSignAsync(user, jwtSecret)
+        const token = await jwtSignAsync(user, jwtSecret)
+        return { user, token }
     }
 }
 

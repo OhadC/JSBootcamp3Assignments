@@ -8,8 +8,8 @@ import { IAppState } from "../../store/reducers"
 import Tree from "./../Tree/Tree"
 import Board from "./../Board/Board"
 import LogIn from "../../components/LogIn"
-import { IClientUser } from "../../models";
-import SideHeader from "./components/SideHeader";
+import { IClientUser } from "../../models"
+import SideHeader from "./components/SideHeader"
 
 interface IProps {
     isAuthenticated: boolean
