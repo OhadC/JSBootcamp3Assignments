@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Message from './Message'
-import { IMessage } from '../../../models';
+import { IClientMessage } from '../../../models';
 
 interface IProps {
     style: React.CSSProperties
@@ -37,8 +37,8 @@ class ChatHistory extends React.Component<IProps, {}> {
     render() {
         const { messages, selfUserId } = this.props
         const messagesElements = Object.keys(messages).map(key => messages[key]).map(
-            (message: IMessage) => (
-                <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user!} />
+            (message: IClientMessage) => (
+                <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
             )
         )
 

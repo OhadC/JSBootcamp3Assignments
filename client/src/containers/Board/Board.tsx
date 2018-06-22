@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 
 import * as actions from '../../store/actions'
 import { IAppState } from '../../store/reducers'
-import { IMessage, IGroup } from '../../models'
+import { IClientGroup, IClientMessage } from '../../models'
 import ChatHistory from './components/ChatHistory'
 import MessageInput from './components/MessageInput'
 import GroupInfo from './components/GroupInfo'
 
 interface IProps {
     style: React.CSSProperties
-    group: IGroup
+    group: IClientGroup
     selfUserId: string
-    messages: IMessage[]
+    messages: IClientMessage[]
     addMessage: any
 }
 

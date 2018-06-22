@@ -2,7 +2,7 @@ import { Server } from 'http'
 import * as socketIo from 'socket.io'
 
 import { messageService } from './services'
-import { IMessage } from './models';
+import { IClientMessage } from './models';
 
 const socketApp = (httpServer: Server) => {
     const io = socketIo(httpServer)
@@ -12,7 +12,7 @@ const socketApp = (httpServer: Server) => {
     }
 
     const onMessage = async (message) => {
-        const fromDbMessage: IMessage = await messageService.addMessage(message)
+        const fromDbMessage: IClientMessage = await messageService.addMessage(message)
         io.emit('message', fromDbMessage)
     }
 

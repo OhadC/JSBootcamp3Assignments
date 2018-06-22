@@ -1,11 +1,11 @@
 import * as React from "react"
 
-import { IUser } from "../../../models"
+import { IClientUser } from "../../../models"
 import { Link } from "react-router-dom"
 import './SideHeader.css'
 
 interface IProps {
-    user: IUser | null
+    user: IClientUser | null
     onLogout: any
 }
 

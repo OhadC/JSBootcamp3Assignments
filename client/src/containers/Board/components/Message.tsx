@@ -2,10 +2,10 @@ import * as React from 'react'
 import * as moment from 'moment'
 
 import './Message.css'
-import { IMessage } from '../../../models/message';
-import { IUser } from '../../../models';
+import { IClientMessage } from '../../../models/message';
+import { IClientUser } from '../../../models';
 
-const Message = (props: { message: IMessage, selfMessage: boolean, user: IUser }) => {
+const Message = (props: { message: IClientMessage, selfMessage: boolean, user: IClientUser }) => {
     return (
         <li className='clearfix'>
             <div className={['message', props.selfMessage ? 'self' : ''].join(' ')}>

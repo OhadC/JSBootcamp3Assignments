@@ -1,15 +1,15 @@
 import { AnyAction } from "redux"
 
 import { actionTypes, apiRequest } from "."
-import { IMessage } from "../../models"
+import { IClientMessage } from "../../models"
 import { store } from "../../store";
 
-export const setMessages = (messages: IMessage[]): AnyAction => ({
+export const setMessages = (messages: IClientMessage[]): AnyAction => ({
     type: actionTypes.SET_MESSAGES,
     payload: { messages }
 })
 
-export const addMessage = (message: IMessage): AnyAction => ({
+export const addMessage = (message: IClientMessage): AnyAction => ({
     type: actionTypes.ADD_MESSAGE,
     payload: { message }
 })

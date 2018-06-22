@@ -2,10 +2,10 @@ import { AnyAction } from "redux"
 
 import { actionTypes } from "../actions"
 import { updateObject, createReducer } from "../utility"
-import { IMessage } from "../../models"
+import { IClientMessage } from "../../models"
 
 export interface IMessagesState {
-    messages: IMessage[]
+    messages: IClientMessage[]
 }
 
 const initialState: IMessagesState = {

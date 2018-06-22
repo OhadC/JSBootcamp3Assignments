@@ -19,12 +19,6 @@ export const getAllGroupsById = async (req: Request, res: Response) => {
     res.send(groups)
 }
 
-export const addUser = async (req: Request, res: Response) => {
-    const user = req.body
-    const newUser = await userService.addUser(user)
-    res.send(newUser)
-}
-
 export const updateUser = async (req: Request, res: Response) => {
     const userId = req.params.id
     const newFields = req.body

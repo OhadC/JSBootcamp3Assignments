@@ -1,24 +1,24 @@
-import { db, IMessage } from '../models'
+import { db, IClientMessage, IServerMessage } from '../models'
 import { getUserById } from './user'
 
 const dbName = 'message'
 
-export const getAllMessages = async (): Promise<IMessage[]> => {
-    const messages: IMessage[] = await db.find(dbName)
+export const getAllMessages = async () => {
+    const messages: IServerMessage[] = await db.find(dbName)
     return Promise.all(messages.map(populateUser))
 }
 
-export const getMessagesOfGroup = async (groupId): Promise<IMessage[]> => {
-    const messages: IMessage[] = await db.find(dbName, { groupId })
+export const getMessagesOfGroup = async (groupId) => {
+    const messages: IServerMessage[] = await db.find(dbName, { groupId })
     return Promise.all(messages.map(populateUser))
 }
 
 export const addMessage = async (messageIn) => {
-    const message = await db.add(dbName, messageIn)
+    const message: IServerMessage = await db.add(dbName, messageIn)
     return populateUser(message)
 }
 
-const populateUser = async (message: IMessage) => {
+const populateUser = async (message: any): Promise<IClientMessage> => {
     message.user = await getUserById(message.userId)
     return message
 }

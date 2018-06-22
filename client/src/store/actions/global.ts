@@ -1,14 +1,14 @@
 import { AnyAction } from "redux"
 
-import { IGroup, IUser } from "../../models"
+import { IClientGroup, IClientUser } from "../../models"
 import { actionTypes, apiRequest } from "."
 
-export const setActiveGroup = (group: IGroup): AnyAction => ({
+export const setActiveGroup = (group: IClientGroup): AnyAction => ({
     type: actionTypes.SET_ACTIVE_GROUP,
     payload: { group }
 })
 
-export const setUser = (user: IUser): AnyAction => ({
+export const setUser = (user: IClientUser): AnyAction => ({
     type: actionTypes.SET_USER,
     payload: { user }
 })

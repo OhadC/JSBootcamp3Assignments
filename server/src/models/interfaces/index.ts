@@ -1,3 +1,3 @@
-export { IUser } from "./user"
-export { IMessage } from "./message"
-export { IGroup } from "./group"
+export * from "./user"
+export * from "./message"
+export * from "./group"

@@ -1,7 +1,7 @@
 import { Dispatch, AnyAction } from "redux"
 
 import { actionTypes, apiRequest } from "."
-import { IGroup, ITreeItem } from "../../models"
+import { IClientGroup, ITreeItem } from "../../models"
 import treeSearch from "../../common/treeSearch"
 import { IAppState } from "../reducers";
 
@@ -45,7 +45,7 @@ export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getSta
     }
 }
 
-const makeTree = (groups: IGroup[], userId: string) => {
+const makeTree = (groups: IClientGroup[], userId: string) => {
     const treeRootGroups = groups.filter(group => group.isRoot)
 
     const groupsMap = groups.reduce((obj, group) => {

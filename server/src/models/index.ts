@@ -1,4 +1,4 @@
-export { IUser, IGroup, IMessage } from './interfaces'
+export * from './interfaces'
 
 import db from './db'
 export { db }

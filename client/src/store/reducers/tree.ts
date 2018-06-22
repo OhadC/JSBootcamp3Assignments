@@ -1,9 +1,9 @@
 import { actionTypes } from "../actions"
-import { ITreeItem, IGroup } from "../../models"
+import { ITreeItem, IClientGroup } from "../../models"
 import { updateObject, createReducer } from "../utility"
 
 export interface ITreeState {
-    activeGroup: IGroup | null
+    activeGroup: IClientGroup | null
     tree: ITreeItem[]
     filterText: string
     filteredTree: Array<ITreeItem>

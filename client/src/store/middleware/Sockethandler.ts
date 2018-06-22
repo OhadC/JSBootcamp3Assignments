@@ -2,7 +2,7 @@ import * as io from 'socket.io-client'
 import { AnyAction } from 'redux'
 
 import { actionTypes } from "../actions"
-import { IMessage } from '../../models'
+import { IClientMessage } from '../../models'
 import { addMessage } from '../actions/messages'
 
 const socketUrl = 'http://localhost:4000'
@@ -29,7 +29,7 @@ export const Sockethandler = ({ dispatch, getState }: any) => (next: any) => (ac
         default: next(action)
     }
 
-    function onNewMessage(message: IMessage) {
+    function onNewMessage(message: IClientMessage) {
         const { global: { activeGroup } } = getState()
         if (activeGroup && activeGroup.id === message.groupId)
             dispatch(addMessage(message))

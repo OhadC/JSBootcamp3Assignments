@@ -2,25 +2,25 @@
     {
         "id": "0",
         "name": "Ori",
-        "password": "Ori",
+        "password": "$2b$10$hgcThm7B4.mOsQcEODLb.eQ7skMoBNSegEsjwqMNZC5PzTDoPwQKu",
         "age": 1
     },
     {
         "id": "1",
         "name": "Roni",
-        "password": "Roni",
+        "password": "$2b$10$GcrJHf8MH6.6ZSnGOr5yoOAt4aFngYgXpKZ9BGkQa0qGi5JE2oqAS",
         "age": 2
     },
     {
         "id": "2",
         "name": "Udi",
-        "password": "Udi",
+        "password": "$2b$10$6mJJn3RvC8Z9K/rBHzMxT.zs8iNdu4heFuGYuOy3bC7B1rDJENQbK",
         "age": 3
     },
     {
         "id": "3",
-        "name": "Tommy",
-        "password": "Tommy",
+        "name": "$2b$10$XGJkmOuWhs8FcZ.pWRLed.sAzr/VgYYbsIT84ydRHlr3d6D.6nl8K",
+        "password": "$2b$10$XGJkmOuWhs8FcZ.pWRLed.sAzr/VgYYbsIT84ydRHlr3d6D.6nl8K",
         "age": 4
     }
 ]

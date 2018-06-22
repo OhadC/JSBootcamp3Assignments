@@ -1,12 +1,12 @@
 import { AnyAction } from "redux"
 
-import { IGroup, IUser } from "../../models"
+import { IClientGroup, IClientUser } from "../../models"
 import { actionTypes } from "../actions"
 import { updateObject, createReducer } from "../utility"
 
 export interface IGlobalState {
-    activeGroup: IGroup | null
-    user: IUser | null
+    activeGroup: IClientGroup | null
+    user: IClientUser | null
 }
 
 const initialState: IGlobalState = {
