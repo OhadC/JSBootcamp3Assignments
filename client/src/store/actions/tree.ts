@@ -27,7 +27,6 @@ export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
     }))
 }
 
-
 export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {
     const { filterText: oldFilterText, tree: fullTree } = getState().tree
     if (filterText === oldFilterText) {
