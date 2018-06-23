@@ -1,5 +1,5 @@
 import { db, IUser, IServerUser, IClientUser } from '../models'
-import { authService } from '.';
+import { authService } from '.'
 
 const dbName = 'user'
 

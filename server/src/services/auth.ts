@@ -1,21 +1,18 @@
 import * as jsonwebtoken from 'jsonwebtoken'
 import * as bcrypt from 'bcrypt'
-import * as fs from 'fs'
 import * as util from 'util'
 
-import { db } from '../models';
-import { userService } from '.';
+import { userService } from '.'
+import { jwtSecret } from '..'
 
-const jwtSignAsync = util.promisify(jsonwebtoken.sign)
-// const writeFileAsync = util.promisify(fs.writeFile)
+const jwtSignAsync = util.promisify(jsonwebtoken.sign) as any
 
 const saltRounds = 10
-const jwtSecret = fs.readFileSync('./jwtSecret.pub')
 
 export const login = async (name: string, plaintextPassword: string) => {
     if (await userService.validateUser(name, plaintextPassword)) {
         const user = await userService.getUserByName(name)
-        const token = await jwtSignAsync(user, jwtSecret)
+        const token = await jwtSignAsync(user, jwtSecret, {expiresIn: '1h'})
         return { user, token }
     }
     throw Error('Invalid name or password')

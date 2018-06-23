@@ -22,13 +22,17 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
     if (action.type !== actionTypes.API_REQUEST) {
         return next(action)
     }
+    const { auth: { token } } = getState()
     const { url, method, data, success, label } = action.payload
 
     const config: Axios.AxiosRequestConfig = {
         method: method ? method : 'get',
         baseURL,
         url,
-        data
+        data,
+        headers: token ? {
+            authorization: `Bearer ${token}`
+        } : undefined
     }
 
     label && dispatch(notify('start', label))
@@ -38,7 +42,7 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
             success && success(data)
             label && dispatch(notify('success', label, data))
         })
-        .catch(({ response: {data: {message}} }: any) => {
+        .catch(({ response: { data: { message } } }: any) => {
             console.log(message)
             label && dispatch(notify('fail', label, message)) // TODO: no label
         })

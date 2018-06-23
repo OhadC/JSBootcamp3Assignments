@@ -13,3 +13,7 @@ export const setActiveGroupId = (groupId: string): AnyAction =>
         url: `/group/${groupId}`,
         success: setActiveGroup
     })
+
+export const socketLoginSuccess = (): AnyAction => ({
+    type: actionTypes.SOCKET_LOGIN_SUCCESS
+})

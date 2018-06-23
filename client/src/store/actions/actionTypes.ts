@@ -3,6 +3,7 @@ export const API_REQUEST = 'API_REQUEST'
 
 // Global
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'
+export const SOCKET_LOGIN_SUCCESS = 'SOCKET_LOGIN_SUCCESS'
 
 // Auth
 export const LOGIN_START = 'LOGIN_START'

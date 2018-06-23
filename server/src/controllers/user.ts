@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 
 import { userService, groupService } from '../services'
 
+// TODO: to requestHandler
+
 export const getAllUsers = async (req: Request, res: Response) => {
     const users = await userService.getAllUsers()
     res.json(users)
