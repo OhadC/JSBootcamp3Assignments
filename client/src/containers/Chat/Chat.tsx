@@ -19,7 +19,7 @@ interface IProps {
 
 class Chat extends React.Component<IProps, {}> {
     public render() {
-        const login = (props: any) => <LogIn submit={this.props.login} />
+        const login = () => <LogIn submit={this.props.login} />
 
         return (
             <>
@@ -28,7 +28,7 @@ class Chat extends React.Component<IProps, {}> {
                 <main style={styles.chat}>
                     <section style={styles.leftSection} >
                         <SideHeader user={this.props.user} onLogout={this.props.logout} />
-                        <Tree style={{}} />
+                        <Tree style={{flex: 1}} />
                     </section>
                     <Board style={styles.rightSection} />
                 </main>
@@ -47,7 +47,9 @@ const styles: { [key: string]: React.CSSProperties } = {
         width: "25%",
         background: '#252839',
         color: 'white',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column'
     },
     rightSection: {
         width: "75%",
@@ -55,12 +57,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     }
 }
 
-const mapStateToProps = (state: IAppState) => {
-    return {
+const mapStateToProps = (state: IAppState) => ({
         user: state.global.user,
         isAuthenticated: !!state.auth.token
-    }
-}
+})
 
 const mapDispatchToProps = {
     login: actions.login,

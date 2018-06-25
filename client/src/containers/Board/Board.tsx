@@ -34,17 +34,14 @@ const boardStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-const mapStateToProps = (state: IAppState) => {
-    return {
+const mapStateToProps = (state: IAppState) => ({
         messages: state.messages.messages,
         selfUserId: state.auth.userId,
         group: state.global.activeGroup
-    }
-}
+})
 
 const mapDispatchToProps = {
     addMessage: actions.sendMessage
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board)

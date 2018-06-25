@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 
 import { authService } from '../services'
-import { requestHandler } from './utils'
+import { requestHandlerFactory } from './utils'
 
-export const login = requestHandler(
+export const login = requestHandlerFactory(
     async (req: Request) => {
         const name = req.body.name
         const password = req.body.password
@@ -11,7 +11,7 @@ export const login = requestHandler(
     }
 )
 
-export const join = async (req: Request, res: Response) => {
+export const join = async (req: Request, res: Response) => {    // TODO: this
     const name = req.body.name
     const password = req.body.password
     res.json()

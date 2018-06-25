@@ -46,10 +46,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     }
 }
 
-const mapStateToProps = (state: IAppState) => {
-    return {
+const mapStateToProps = (state: IAppState) => ({
         isAuthenticated: !!state.auth.token
-    }
-}
+})
 
 export default (withRouter as any)(connect(mapStateToProps)(App))

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 
-export const requestHandler = (weraped) => {
+export const requestHandlerFactory = (wrapped: (req?: Request) => any | Promise<any>) => {
     return async (req: Request, res: Response) => {
         try {
-            const data = await weraped(req)
+            const data = await wrapped(req)
             res.json({
                 status: "success",
                 data

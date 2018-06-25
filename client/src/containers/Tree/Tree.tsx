@@ -64,11 +64,9 @@ const TreeStyle: React.CSSProperties = {
     flexDirection: 'column'
 }
 
-const mapStateToProps = (state: IAppState) => {
-    return {
+const mapStateToProps = (state: IAppState) => ({
         filteredTree: state.tree.filteredTree
-    }
-}
+})
 
 const mapDispatchToProps = {
     changeActiveGroup: actions.setActiveGroup,
