@@ -18,40 +18,47 @@ interface IProps {
 class Tree extends React.Component<IProps, {}> {
     private treeDivRef: React.RefObject<any>
     private sectionRef: React.RefObject<any>
-    // private activeElement: IItemHTMLElement | null
+    private loadedTree: Array<ITreeItem> | null
+    private chatTree: any
 
     constructor(props: IProps) {
         super(props)
 
         this.sectionRef = React.createRef()
         this.treeDivRef = React.createRef()
-
-        // this.activeElement = null
+        this.loadedTree = null
     }
 
-    componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
-        const prevFilteredTree = prevProps.filteredTree
-        const filteredTree = this.props.filteredTree
-        if (filteredTree && (!prevFilteredTree || prevFilteredTree !== filteredTree )) {
-            const sectionElement = this.sectionRef.current
-            const treeDivElement = this.treeDivRef.current
-
-            const chatTree = ChatTree(treeDivElement)
-            chatTree.on('activeElementChanged', this.activeElementChangedHandler)
-            sectionElement.removeChild(treeDivElement)
-            chatTree.load(filteredTree)
-            sectionElement.appendChild(treeDivElement)
+    componentDidMount() {
+        this.loadTree(this.props.filteredTree)
+    }
+    componentDidUpdate() {
+        const { filteredTree } = this.props
+        if (filteredTree !== this.loadedTree) {
+            this.updateTree(filteredTree)
+            this.loadedTree = filteredTree
         }
     }
 
-    activeElementChangedHandler = (activeElement: IItemHTMLElement) => {
-        // this.activeElement = activeElement
-        this.props.changeActiveGroup(activeElement.item.group)
+    loadTree(treeObject: ITreeItem[]) {
+        const sectionElement = this.sectionRef.current
+        const treeDivElement = this.treeDivRef.current
+        this.chatTree = ChatTree(treeDivElement)
+        this.chatTree.on('activeElementChanged', this.activeElementChangedHandler)
+        sectionElement.removeChild(treeDivElement)
+        this.chatTree.load(treeObject)
+        sectionElement.appendChild(treeDivElement)
     }
 
-    addTreeItem = (newItem: ITreeItem) => {
-
+    updateTree(treeObject: ITreeItem[]) {
+        const sectionElement = this.sectionRef.current
+        const treeDivElement = this.treeDivRef.current
+        sectionElement.removeChild(treeDivElement)
+        this.chatTree.updateTree(treeObject)
+        sectionElement.appendChild(treeDivElement)
     }
+
+    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroup(activeElement.item.group)
 
     render() {
         return (

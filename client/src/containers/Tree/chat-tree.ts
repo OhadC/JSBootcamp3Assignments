@@ -9,8 +9,8 @@ interface IItemHTMLElement extends HTMLElement {
     nextSibling: IItemHTMLElement | null
 }
 
-function ChatTree(element: IItemHTMLElement) {
-    // let itemsArray: IItem[] | null
+function ChatTree(rootElement: IItemHTMLElement) {
+    // let loadedItems: ITreeItem[] = []
     let activeElement: IItemHTMLElement | null
     let events = Events()
 
@@ -47,7 +47,7 @@ function ChatTree(element: IItemHTMLElement) {
                     foldGroup(activeElement)
                 } else {
                     const parentGroup = getGroupOfElement(activeElement)
-                    setActiveElement(parentGroup || element.firstChild)
+                    setActiveElement(parentGroup || rootElement.firstChild)
                 }
                 break
             case 'Enter':
@@ -87,7 +87,8 @@ function ChatTree(element: IItemHTMLElement) {
                 foldGroup(currElement)
             } else {
                 const nextElement = currElement.nextSibling
-                element.removeChild(currElement)
+                currElement.item.HTMLElement = undefined
+                rootElement.removeChild(currElement)
                 currElement = nextElement
             }
         }
@@ -109,7 +110,9 @@ function ChatTree(element: IItemHTMLElement) {
         li.item = item
         li.parentItem = parent
 
-        element.insertBefore(li, addBefore || null)
+        item.HTMLElement = li
+
+        rootElement.insertBefore(li, addBefore || null)
     }
 
     function isGroup(elem: IItemHTMLElement) {
@@ -136,19 +139,29 @@ function ChatTree(element: IItemHTMLElement) {
 
     function load(items: ITreeItem[]) {
         clear()
-        // itemsArray = items
+
         items.forEach((item: ITreeItem) => addListItem(item, null))
-        setActiveElement(element.firstChild)
-        element.onclick = onClick
-        element.ondblclick = ondblclick
-        element.onkeydown = onkeydown
+        setActiveElement(rootElement.firstChild)
+        rootElement.onclick = onClick
+        rootElement.ondblclick = ondblclick
+        rootElement.onkeydown = onkeydown
+
+        // loadedItems = items
     }
     function clear() {
-        while (element.firstChild) {
-            element.removeChild(element.firstChild)
+        while (rootElement.firstChild) {
+            rootElement.removeChild(rootElement.firstChild)
         }
-        // itemsArray = null
+        // loadedItems = []
         activeElement = null
+    }
+    function addItem(newItem: ITreeItem, groupToAddTo: ITreeItem) {
+        groupToAddTo.items ? groupToAddTo.items.push(newItem) : groupToAddTo.items = [newItem]
+
+        if (groupToAddTo.HTMLElement && isGroupExpanded(groupToAddTo.HTMLElement)) {
+            const groupLevel = +(groupToAddTo.HTMLElement)
+            addListItem(newItem, groupToAddTo, groupLevel + 1, groupToAddTo.HTMLElement.nextSibling)
+        }
     }
 
     const on: (name: string, listener: Function) => void = events.on
@@ -157,7 +170,8 @@ function ChatTree(element: IItemHTMLElement) {
     return {
         load,
         clear,
-        element,
+        addItem,
+        rootElement,
         on,
         off
     }

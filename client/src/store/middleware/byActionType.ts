@@ -13,7 +13,7 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
             next(action)
             dispatch(fetchMessages(action.payload.group.id))
             break
-            
+
         default: next(action)
     }
 }
