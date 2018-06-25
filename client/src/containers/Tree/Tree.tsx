@@ -18,29 +18,24 @@ interface IProps {
 class Tree extends React.Component<IProps, {}> {
     private treeDivRef: React.RefObject<any>
     private sectionRef: React.RefObject<any>
-    private loadedTree: Array<ITreeItem> | null
 
     constructor(props: IProps) {
         super(props)
 
         this.sectionRef = React.createRef()
         this.treeDivRef = React.createRef()
-        this.loadedTree = null
     }
 
-    componentDidUpdate() {
-        const filterdData = this.props.filteredTree
-        if (filterdData !== this.loadedTree) {
+    componentDidUpdate(prevProps: IProps, prevState: {}, snapshot: any) {
+        if (prevProps.filteredTree !== this.props.filteredTree) {
             const sectionElement = this.sectionRef.current
             const treeDivElement = this.treeDivRef.current
 
             const chatTree = ChatTree(treeDivElement)
             chatTree.on('activeElementChanged', this.activeElementChangedHandler)
             sectionElement.removeChild(treeDivElement)
-            chatTree.load(filterdData)
+            chatTree.load(this.props.filteredTree, ['0', '1'], '2')
             sectionElement.appendChild(treeDivElement)
-
-            this.loadedTree = filterdData
         }
     }
 

@@ -37,6 +37,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '1rem',
         display: 'flex',
         flexDirection: 'row',
+        flex: 'none'
     },
     input: {
         borderTopRightRadius: '0',

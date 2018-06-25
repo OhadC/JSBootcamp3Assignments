@@ -10,9 +10,10 @@ interface IItemHTMLElement extends HTMLElement {
 }
 
 function ChatTree(element: IItemHTMLElement) {
-    // let itemsArray: IItem[] | null
     let activeElement: IItemHTMLElement | null
+    let activeElementId: string | null
     let events = Events()
+    let expandedGroups: string[] = []
 
     const onClick = (event: MouseEvent) => {
         event.stopPropagation()
@@ -61,6 +62,7 @@ function ChatTree(element: IItemHTMLElement) {
         activeElement && activeElement.classList.remove("active")
         toActiveElement.classList.add("active")
         activeElement = toActiveElement
+        activeElementId = toActiveElement.item.group.id
         events.emit('activeElementChanged', [activeElement])
     }
 
@@ -77,7 +79,7 @@ function ChatTree(element: IItemHTMLElement) {
         const groupLevel = +(groupElement.dataset.level || 0)
         const addListItemsBefore = groupElement.nextSibling
         groupItem.items && groupItem.items.forEach((item: ITreeItem, index: number) => addListItem(item, groupItem, groupLevel + 1, addListItemsBefore))
-        setGroupExpanded(groupElement, true)
+        setGroupExpanded(groupElement, true, groupItem)
     }
     function foldGroup(groupElement: IItemHTMLElement) {
         if (!isGroupExpanded(groupElement)) return
@@ -110,6 +112,9 @@ function ChatTree(element: IItemHTMLElement) {
         li.parentItem = parent
 
         element.insertBefore(li, addBefore || null)
+
+        if(activeElementId === item.group.id) setActiveElement(li)
+        if (expandedGroups.indexOf(item.group.id) !== -1) expandGroup(li)
     }
 
     function isGroup(elem: IItemHTMLElement) {
@@ -118,8 +123,22 @@ function ChatTree(element: IItemHTMLElement) {
     function isGroupExpanded(groupElem: IItemHTMLElement) {
         return groupElem.hasAttribute('expanded')
     }
-    function setGroupExpanded(groupElem: IItemHTMLElement, isExpanded: boolean) {
-        isExpanded ? groupElem.setAttribute('expanded', '') : groupElem.removeAttribute('expanded')
+    function setGroupExpanded(groupElem: IItemHTMLElement, isExpanded: boolean, groupItem?: ITreeItem) {
+        const groupId: string = (groupItem || groupElem.item).group.id
+        if (isExpanded) {
+            groupElem.setAttribute('expanded', '')
+            if (expandedGroups.indexOf(groupId) === -1) {
+                expandedGroups.push(groupId)
+                events.emit('groupExpanded', [groupId])
+            }
+        } else {
+            groupElem.removeAttribute('expanded')
+            const indexToRemove = expandedGroups.indexOf(groupId)
+            if (indexToRemove !== -1) {
+                expandedGroups.splice(indexToRemove, 1)
+                events.emit('groupFolded', [groupId])
+            }
+        }
     }
     function isGroupOf(groupElem: IItemHTMLElement, childElem: IItemHTMLElement) {
         return groupElem.item === childElem.parentItem
@@ -134,14 +153,17 @@ function ChatTree(element: IItemHTMLElement) {
         return null
     }
 
-    function load(items: ITreeItem[]) {
+    function load(items: ITreeItem[], groupsToExpand: string[] = [], activeItemId?: string) {
+        expandedGroups = groupsToExpand
+        activeElementId = activeItemId || null
         clear()
-        // itemsArray = items
         items.forEach((item: ITreeItem) => addListItem(item, null))
-        setActiveElement(element.firstChild)
-        element.onclick = onClick
-        element.ondblclick = ondblclick
-        element.onkeydown = onkeydown
+
+        if (!activeElement) setActiveElement(element.firstChild)
+
+        element.addEventListener("click", onClick)
+        element.addEventListener("dblclick", ondblclick)
+        element.addEventListener("keydown", onkeydown)
     }
     function clear() {
         while (element.firstChild) {
