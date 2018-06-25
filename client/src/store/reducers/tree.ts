@@ -1,9 +1,10 @@
 import { actionTypes } from "../actions"
 import { IClientGroup, IClientGroupObject } from "../../models"
 import { updateObject, createReducer } from "../utility"
+import { AnyAction } from "redux";
 
 export interface ITreeState {
-    activeGroup: IClientGroup | null
+    activeGroupId: string
     allGroups: IClientGroupObject
     filterText: string
     filteredGroups: IClientGroupObject,
@@ -11,14 +12,14 @@ export interface ITreeState {
 }
 
 const initialState: ITreeState = {
-    activeGroup: null,
-    allGroups: {},
+    activeGroupId: "0",
+    allGroups: {},      // only this!
     filterText: '',
     filteredGroups: {},
     shownGroups: []     // organized
 }
 
-const setGroups = (state: ITreeState, action: any): ITreeState => {
+const setGroups = (state: ITreeState, action: AnyAction): ITreeState => {
     const allGroups: IClientGroupObject = action.payload.groups
     const newValues = {
         allGroups,
@@ -27,7 +28,11 @@ const setGroups = (state: ITreeState, action: any): ITreeState => {
     return updateObject(state, newValues)
 }
 
-const setFilteredGroups = (state: ITreeState, action: any): ITreeState => {
+const setShownGroups = (state: ITreeState, action: AnyAction): ITreeState => {
+    return updateObject(state, { shownGroups: action.payload.shownGroups })
+}
+
+const setFilteredGroups = (state: ITreeState, action: AnyAction): ITreeState => {
     const newValues = {
         filterText: action.payload.filterText,
         filteredGroups: action.payload.filteredGroups,
@@ -35,10 +40,15 @@ const setFilteredGroups = (state: ITreeState, action: any): ITreeState => {
     return updateObject(state, newValues)
 }
 
+const setActiveGroupId = (state: ITreeState, action: AnyAction): ITreeState =>
+    updateObject(state, { activeGroupId: action.payload.groupId })
+
 const logout = (): ITreeState => initialState
 
 export const treeReducer = createReducer(initialState, {
     [actionTypes.SET_GROUPS]: setGroups,
+    [actionTypes.SET_SHOWN_GROUPS]: setShownGroups,
     [actionTypes.SET_FILTERED_GROUPS]: setFilteredGroups,
+    [actionTypes.SET_ACTIVE_GROUP_ID]: setActiveGroupId,
     [actionTypes.LOGOUT]: logout
 })

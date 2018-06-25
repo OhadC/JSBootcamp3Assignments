@@ -12,26 +12,37 @@ interface IProps {
     style: object
     allGroups: IClientGroupObject
     shownGroups: IClientGroup[]
+    activeGroupId: string
     changeActiveGroup: any
     changeTreeFilter: any
+    keyEventOnTree: any
 }
 
 class Tree extends React.Component<IProps, {}> {
+
     groupToTree = (group: IClientGroup, level: number) => {
-        const ans = [<TreeItem key={group.id} group={group} level={level} groups={this.props.allGroups} />]
+        const ans = [<TreeItem key={group.id} group={group} level={level} isActive={this.props.activeGroupId === group.id} onClick={this.props.changeActiveGroup} />]
         if (group.isExpanded && group.groupIds) {
             group.groupIds.forEach((groupId: string) => ans.push(...this.groupToTree(this.props.allGroups[groupId], level + 1)))
         }
         return ans
     }
 
+    onKeyDown = (e: React.KeyboardEvent<any>) => {
+        const handledKeysEvents: any = ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'Enter']
+        if (handledKeysEvents.includes(e.key)) {
+            this.props.keyEventOnTree(e.key)
+        }
+    }
+
     render() {
-        const treeItems = this.props.shownGroups.map((group: IClientGroup) => this.groupToTree(group, 0))
+        const treeItems = this.props.shownGroups.map((group: IClientGroup) =>
+            <TreeItem key={group.id} group={group} isActive={this.props.activeGroupId === group.id} onClick={this.props.changeActiveGroup} />)
 
         return (
             <section style={{ ...this.props.style, ...styles.tree }}>
                 <TreeSearch style={styles.treeSearch} filterData={this.props.changeTreeFilter} />
-                <ul className="Tree" style={{ flex: '1' }} tabIndex={0} >
+                <ul className="Tree" style={styles.ul} tabIndex={0} onKeyDown={this.onKeyDown} >
                     {treeItems}
                 </ul>
             </section>
@@ -51,17 +62,23 @@ const styles: { [key: string]: React.CSSProperties } = {
         margin: '1rem',
         background: 'rgba(255,255,255,0.1)',
         color: 'white'
+    },
+    ul: {
+        flex: '1',
+
     }
 }
 
 const mapStateToProps = (state: IAppState) => ({
     allGroups: state.tree.allGroups,
-    shownGroups: state.tree.shownGroups
+    shownGroups: state.tree.shownGroups,
+    activeGroupId: state.tree.activeGroupId
 })
 
 const mapDispatchToProps = {
-    changeActiveGroup: actions.setActiveGroup,
-    changeTreeFilter: actions.setGroupsFilter
+    changeActiveGroup: actions.setActiveGroupId,
+    changeTreeFilter: actions.setGroupsFilter,
+    keyEventOnTree: actions.keyEventOnTree
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tree)

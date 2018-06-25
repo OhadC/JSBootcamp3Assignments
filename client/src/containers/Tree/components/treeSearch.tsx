@@ -14,7 +14,6 @@ class TreeSearch extends React.Component<{ style: React.CSSProperties, filterDat
     }
 
     onSearch = (event: any) => {
-        event.stopPropagation()
         if (!('key' in event) || event['key'] == 'Enter') {
             this.props.filterData(this.state.filter)
         }

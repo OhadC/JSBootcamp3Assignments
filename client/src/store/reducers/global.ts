@@ -14,8 +14,8 @@ const initialState: IGlobalState = {
     user: null
 }
 
-const setActiveGroup = (state: IGlobalState, action: AnyAction): IGlobalState =>
-    updateObject(state, { activeGroup: action.payload.group })
+// const setActiveGroup = (state: IGlobalState, action: AnyAction): IGlobalState =>
+//     updateObject(state, { activeGroup: action.payload.group })
 
     const loginSuccess = (state: IGlobalState, action: AnyAction): IGlobalState => {
         return updateObject(state, {user: action.payload.user})
@@ -24,7 +24,7 @@ const setActiveGroup = (state: IGlobalState, action: AnyAction): IGlobalState =>
 const logout = (): IGlobalState => initialState
 
 export const globalReducer = createReducer(initialState, {
-    [actionTypes.SET_ACTIVE_GROUP]: setActiveGroup,
+    // [actionTypes.SET_ACTIVE_GROUP]: setActiveGroup,
     [actionTypes.LOGIN_SUCCESS]: loginSuccess,
     [actionTypes.LOGOUT]: logout
 })
