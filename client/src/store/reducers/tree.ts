@@ -1,42 +1,44 @@
 import { actionTypes } from "../actions"
-import { ITreeItem, IClientGroup } from "../../models"
+import { IClientGroup, IClientGroupObject } from "../../models"
 import { updateObject, createReducer } from "../utility"
 
 export interface ITreeState {
     activeGroup: IClientGroup | null
-    tree: ITreeItem[]
+    allGroups: IClientGroupObject
     filterText: string
-    filteredTree: Array<ITreeItem>
+    filteredGroups: IClientGroupObject,
+    shownGroups: IClientGroup[]
 }
 
 const initialState: ITreeState = {
     activeGroup: null,
-    tree: [],
+    allGroups: {},
     filterText: '',
-    filteredTree: []
+    filteredGroups: {},
+    shownGroups: []     // organized
 }
 
-const setTree = (state: ITreeState, action: any): ITreeState => {
+const setGroups = (state: ITreeState, action: any): ITreeState => {
+    const allGroups: IClientGroupObject = action.payload.groups
     const newValues = {
-        activeGroup: action.payload.tree[0].group,
-        tree: action.payload.tree,
-        filteredTree: action.payload.tree
+        allGroups,
+        filteredGroups: allGroups
     }
     return updateObject(state, newValues)
 }
 
-const setFilteredTree = (state: ITreeState, action: any): ITreeState => {
+const setFilteredGroups = (state: ITreeState, action: any): ITreeState => {
     const newValues = {
         filterText: action.payload.filterText,
-        filteredTree: action.payload.filteredTree,
+        filteredGroups: action.payload.filteredGroups,
     }
     return updateObject(state, newValues)
 }
 
-const logout = (state: ITreeState): ITreeState => initialState
+const logout = (): ITreeState => initialState
 
 export const treeReducer = createReducer(initialState, {
-    [actionTypes.SET_TREE]: setTree,
-    [actionTypes.SET_FILTERED_TREE]: setFilteredTree,
+    [actionTypes.SET_GROUPS]: setGroups,
+    [actionTypes.SET_FILTERED_GROUPS]: setFilteredGroups,
     [actionTypes.LOGOUT]: logout
 })

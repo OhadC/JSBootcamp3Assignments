@@ -1,76 +1,38 @@
 import { Dispatch, AnyAction } from "redux"
 
 import { actionTypes, apiRequest } from "."
-import { IClientGroup, ITreeItem } from "../../models"
-import treeSearch from "../../common/treeSearch"
+import { IClientGroupObject } from "../../models"
 import { IAppState } from "../reducers";
 
-const setTree = (tree: any): AnyAction => ({
-    type: actionTypes.SET_TREE,
-    payload: { tree }
+export const setGroups = (groups: IClientGroupObject): AnyAction => ({
+    type: actionTypes.SET_GROUPS,
+    payload: { groups }
 })
 
-const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]): AnyAction => ({
-    type: actionTypes.SET_FILTERED_TREE,
-    payload: { filteredTree, filterText }
+const setFilteredGroups = (filterText: string, filteredGroups: IClientGroupObject): AnyAction => ({
+    type: actionTypes.SET_FILTERED_GROUPS,
+    payload: { filteredGroups, filterText }
 })
 
-export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
-    const userId = getState().auth.userId
-    const success = (groups: any[]) => {
-        const tree = makeTree(groups, userId)
-        dispatch(setTree(tree))
-    }
-    dispatch(apiRequest({
+export const fetchGroups = () =>
+    apiRequest({
         url: '/group',
-        success
-    }))
-}
+        label: "fetchGroups"
+    })
 
-export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {
-    const { filterText: oldFilterText, tree: fullTree } = getState().tree
+export const setGroupsFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {
+    const { filterText: oldFilterText, allGroups } = getState().tree
     if (filterText === oldFilterText) {
         return
     } else if (filterText === "") {
-        dispatch(setFilteredTree(filterText, fullTree))
+        dispatch(setFilteredGroups(filterText, allGroups))
         return
     }
-    const filteredTree = treeSearch(fullTree, predicate)
+    const filteredGroups = allGroups
 
-    dispatch(setFilteredTree(filterText, filteredTree))
+    dispatch(setFilteredGroups(filterText, filteredGroups))
 
-    function predicate(item: ITreeItem) {
-        return item instanceof Object && item.name &&
-            item.name.toLowerCase().includes(filterText.toLowerCase())
-    }
-}
-
-const makeTree = (groups: IClientGroup[], userId: string) => {
-    const treeRootGroups = groups.filter(group => group.isRoot)
-
-    const groupsMap = groups.reduce((obj, group) => {
-        obj[group.id] = group
-        return obj
-    }, {})
-
-    const treeRootNodes = treeRootGroups.map(groupToNode)
-    return treeRootNodes
-
-    function groupToNode(group: any): ITreeItem {
-        let name = !group.isPrivate ? group.name :
-            (group.users[0].id != userId ?
-                group.users[0].name : group.users[1].name)
-
-        let items = []
-        if ('groupIds' in group && !!group.groupIds) {
-            items = group.groupIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
-        }
-
-        return {
-            group,
-            type: group.isPrivate ? 'user' : 'group',
-            name,
-            items
-        }
-    }
+    // function predicate(group: IGroup) {
+    //     return group.name && group.name.toLowerCase().includes(filterText.toLowerCase())
+    // }
 }

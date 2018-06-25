@@ -28,5 +28,12 @@ export interface IClientGroup extends IGroup {
     users: IClientUser[]
     groupIds?: string[]
     isRoot: boolean
-    isPrivate: boolean
+    isPrivate: boolean,
+
+    isExpanded?: boolean,
+    level?: number
+}
+
+export interface IClientGroupObject {
+    [key: string]: IClientGroup
 }

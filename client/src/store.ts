@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history'
 import { reducers } from './store/reducers'
 import { byActionType, api } from './store/middleware'
 import { Sockethandler } from "./store/middleware/Sockethandler"
+import { treeMiddleware } from "./store/middleware/tree";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -18,6 +19,7 @@ export const store = createStore(connectRouter(history)(rootReducer), composeEnh
         routerMiddleware(history),
         ReduxThunk,
         byActionType,
+        treeMiddleware,
         Sockethandler,
         api
     )

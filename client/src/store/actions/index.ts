@@ -1,9 +1,8 @@
 import * as actionTypes from './actionTypes'
 export { actionTypes }
 
-export { apiRequest } from './api'
-export { setActiveGroup, setActiveGroupId } from './global'
-export { login, logout } from './auth'
-export { fetchMessages, sendMessage } from './messages'
-export { fetchTree, setTreeFilter } from './tree'
-
+export * from './api'
+export * from './global'
+export * from './auth'
+export * from './messages'
+export * from './tree'
