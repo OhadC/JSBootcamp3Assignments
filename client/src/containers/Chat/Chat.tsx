@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import * as actions from '../../store/actions'
 import { IAppState } from "../../store/reducers"
-import GroupsTree from "../Tree/GroupsTree"
+import Tree from "../Tree/Tree"
 import Board from "./../Board/Board"
 import LogIn from "../../components/LogIn"
 import { IClientUser } from "../../models"
@@ -28,7 +28,7 @@ class Chat extends React.Component<IProps, {}> {
                 <main style={styles.chat}>
                     <section style={styles.leftSection} >
                         <SideHeader user={this.props.user} onLogout={this.props.logout} />
-                        <GroupsTree />
+                        <Tree />
                     </section>
                     <Board style={styles.rightSection} />
                 </main>

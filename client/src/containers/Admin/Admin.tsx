@@ -8,11 +8,12 @@ import { IAppState } from "../../store/reducers"
 import { IClientUser } from "../../models"
 import SmallAdminPanel from "./components/SmallAdminPanel"
 import AdminPanel from "./components/AdminPanel"
-import GroupsTree from "../Tree/GroupsTree"
+import Tree from "../Tree/Tree"
 
 interface IProps {
     isAuthenticated: boolean
     user: IClientUser | null
+    treeOfType: 'groups' | 'users'
     login: any
     logout: any
 }
@@ -23,8 +24,8 @@ class Admin extends React.Component<IProps, {}> {
             <main style={styles.chat}>
                 <section style={styles.leftSection} >
                     <SideHeader user={this.props.user} onLogout={this.props.logout} />
-                    <GroupsTree />
-                    <SmallAdminPanel currentActive="groups" />
+                    <Tree />
+                    <SmallAdminPanel editMode={this.props.treeOfType} />
                 </section>
                 <AdminPanel style={styles.rightSection} />
             </main>
@@ -54,7 +55,8 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const mapStateToProps = (state: IAppState) => ({
     user: state.global.user,
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
+    treeOfType: state.tree.ofType
 })
 
 const mapDispatchToProps = {

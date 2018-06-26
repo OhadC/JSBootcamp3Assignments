@@ -54,6 +54,9 @@ button {
   background: #6bc31d;
   color: white;
 }
+button:focus {
+  outline:0;
+}
 
 button:disabled {
   cursor: auto;

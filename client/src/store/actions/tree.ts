@@ -1,7 +1,7 @@
 import { Dispatch, AnyAction } from "redux"
 
 import { actionTypes, apiRequest } from "."
-import { IClientGroup, ITreeItem } from "../../models"
+import { IClientGroup, ITreeItem, IClientUser } from "../../models"
 import treeSearch from "../../common/treeSearch"
 import { IAppState } from "../reducers"
 
@@ -15,26 +15,30 @@ const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]): AnyActi
     payload: { filteredTree, filterText }
 })
 
-export const setActiveGroup = (activeGroup: IClientGroup): AnyAction => ({
-    type: actionTypes.SET_ACTIVE_GROUP,
-    payload: { activeGroup }
+export const setActive = (active: IClientGroup | IClientUser): AnyAction => ({
+    type: actionTypes.SET_ACTIVE,
+    payload: { active }
 })
 
-export const setExpandedGroupIds = (expandedGroupIds: string[]): AnyAction => ({
-    type: actionTypes.SET_EXPANDED_GROUP_IDS,
-    payload: { expandedGroupIds }
+export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
+    type: actionTypes.SET_EXPANDED_IDS,
+    payload: { expandedIds }
 })
 
 export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
-    const userId = getState().auth.userId
-    const success = (groups: any[]) => {
-        const tree = makeTree(groups, userId)
-        dispatch(setTree(tree))
+    const { auth: { userId }, tree: { ofType } } = getState()
+    if (ofType === 'groups') {
+        const success = (groups: any[]) => {
+            const tree = makeTree(groups, userId)
+            dispatch(setTree(tree))
+        }
+        dispatch(apiRequest({
+            url: '/group',
+            success
+        }))
+    } else {
+        // TODO: ofType 'users'
     }
-    dispatch(apiRequest({
-        url: '/group',
-        success
-    }))
 }
 
 export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {

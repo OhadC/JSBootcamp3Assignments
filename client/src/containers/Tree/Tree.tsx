@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { connect } from 'react-redux';
+import * as React from "react"
+import { connect } from 'react-redux'
 
 import * as actions from '../../store/actions'
 import { IAppState } from '../../store/reducers'
@@ -11,23 +11,23 @@ import './Tree.css'
 
 interface IProps {
     filteredTree: ITreeItem[]
-    activeGroupId: string | null
-    expandedGroupIds: string[]
-    changeActiveGroup: any
-    changeExpandedGroupIds: any
+    activeId: string | null
+    expandedIds: string[]
+    changeActive: any
+    changeExpandedIds: any
     changeTreeFilter: any
 }
 
-class Tree extends React.Component<IProps, {}> {
-    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroup(activeElement.item.group)
-    expandedGroupIdsChangedHandler = (groupId: string, expandedGroupIds: string[]) => this.props.changeExpandedGroupIds(expandedGroupIds)
+export class Tree extends React.Component<IProps, {}> {
+    activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActive(activeElement.item.group)
+    expandedIdsChangedHandler = (id: string, expandedIds: string[]) => this.props.changeExpandedIds(expandedIds)
 
     render() {
         const chatTreeProps = {
             activeElementChanged: this.activeElementChangedHandler,
-            activeId: this.props.activeGroupId,
-            expandedIds: this.props.expandedGroupIds,
-            expandedIdsChanged: this.expandedGroupIdsChangedHandler,
+            activeId: this.props.activeId,
+            expandedIds: this.props.expandedIds,
+            expandedIdsChanged: this.expandedIdsChangedHandler,
             filteredTree: this.props.filteredTree
         }
 
@@ -51,13 +51,13 @@ const TreeStyle: React.CSSProperties = {
 
 const mapStateToProps = (state: IAppState) => ({
     filteredTree: state.tree.filteredTree,
-    activeGroupId: state.tree.activeGroup && state.tree.activeGroup.id,
-    expandedGroupIds: state.tree.expandedGroupIds
+    activeId: state.tree.active && state.tree.active.id,
+    expandedIds: state.tree.expandedIds
 })
 
 const mapDispatchToProps = {
-    changeActiveGroup: actions.setActiveGroup,
-    changeExpandedGroupIds: actions.setExpandedGroupIds,
+    changeActive: actions.setActive,
+    changeExpandedIds: actions.setExpandedIds,
     changeTreeFilter: actions.setTreeFilter
 }
 

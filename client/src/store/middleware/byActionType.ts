@@ -9,9 +9,9 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
             dispatch(fetchTree())
             break
 
-        case (actionTypes.SET_ACTIVE_GROUP):
+        case (actionTypes.SET_ACTIVE):
             next(action)
-            dispatch(fetchMessages(action.payload.activeGroup.id))
+            dispatch(fetchMessages(action.payload.active.id))
             break
             
         default: next(action)

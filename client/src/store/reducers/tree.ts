@@ -1,21 +1,23 @@
 import { actionTypes } from "../actions"
-import { ITreeItem, IClientGroup } from "../../models"
+import { ITreeItem, IClientGroup, IClientUser } from "../../models"
 import { updateObject, createReducer } from "../utility"
 
 export interface ITreeState {
-    activeGroup: IClientGroup | null
+    ofType: 'groups' | 'users'
+    active: IClientGroup | IClientUser | null
     tree: ITreeItem[]
     filterText: string
-    filteredTree: Array<ITreeItem>
-    expandedGroupIds: string[]
+    filteredTree: ITreeItem[]
+    expandedIds: string[]
 }
 
 const initialState: ITreeState = {
-    activeGroup: null,
+    ofType: 'groups',
+    active: null,
     tree: [],
     filterText: '',
     filteredTree: [],
-    expandedGroupIds: []
+    expandedIds: []
 }
 
 const setTree = (state: ITreeState, action: any): ITreeState => {
@@ -41,17 +43,17 @@ const updateTree = (state: ITreeState, action: any): ITreeState => {
         tree: action.payload.tree,
         filterText: action.payload.filterText || state.filterText,
         filteredTree: action.payload.filteredTree,
-        activeGroup: null,
-        expandedGroupIds: []
+        active: null,
+        expandedIds: []
     }
     return updateObject(state, newValues)
 }
 
-const setActiveGroup = (state: ITreeState, action: any): ITreeState =>
-    updateObject(state, { activeGroup: action.payload.activeGroup })
+const setActive = (state: ITreeState, action: any): ITreeState =>
+    updateObject(state, { active: action.payload.active })
 
-const setExpandedGroupIds = (state: ITreeState, action: any): ITreeState =>
-    updateObject(state, { expandedGroupIds: action.payload.expandedGroupIds })
+const setExpandedIds = (state: ITreeState, action: any): ITreeState =>
+    updateObject(state, { expandedIds: action.payload.expandedIds })
 
 const logout = (state: ITreeState): ITreeState => initialState
 
@@ -59,7 +61,7 @@ export const treeReducer = createReducer(initialState, {
     [actionTypes.SET_TREE]: setTree,
     [actionTypes.UPDATE_TREE]: updateTree,
     [actionTypes.SET_FILTERED_TREE]: setFilteredTree,
-    [actionTypes.SET_ACTIVE_GROUP]: setActiveGroup,
-    [actionTypes.SET_EXPANDED_GROUP_IDS]: setExpandedGroupIds,
+    [actionTypes.SET_ACTIVE]: setActive,
+    [actionTypes.SET_EXPANDED_IDS]: setExpandedIds,
     [actionTypes.LOGOUT]: logout
 })

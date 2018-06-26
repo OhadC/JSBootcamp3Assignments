@@ -37,7 +37,7 @@ const boardStyle: React.CSSProperties = {
 const mapStateToProps = (state: IAppState) => ({
         messages: state.messages.messages,
         selfUserId: state.auth.userId,
-        group: state.tree.activeGroup
+        group: state.tree.active
 })
 
 const mapDispatchToProps = {
