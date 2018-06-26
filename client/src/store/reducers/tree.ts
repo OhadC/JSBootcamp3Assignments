@@ -3,7 +3,7 @@ import { ITreeItem, IClientGroup, IClientUser } from "../../models"
 import { updateObject, createReducer } from "../utility"
 
 export interface ITreeState {
-    ofType: 'groups' | 'users'
+    itemsType: 'groups' | 'users'
     active: IClientGroup | IClientUser | null
     tree: ITreeItem[]
     filterText: string
@@ -12,7 +12,7 @@ export interface ITreeState {
 }
 
 const initialState: ITreeState = {
-    ofType: 'groups',
+    itemsType: 'groups',
     active: null,
     tree: [],
     filterText: '',
@@ -22,9 +22,12 @@ const initialState: ITreeState = {
 
 const setTree = (state: ITreeState, action: any): ITreeState => {
     const newValues = {
+        itemsType: action.payload.itemsType || state.itemsType,
+        active: null,
         tree: action.payload.tree,
         filterText: '',
-        filteredTree: action.payload.tree
+        filteredTree: action.payload.tree,
+        expandedIds: []
     }
     return updateObject(state, newValues)
 }
@@ -43,8 +46,6 @@ const updateTree = (state: ITreeState, action: any): ITreeState => {
         tree: action.payload.tree,
         filterText: action.payload.filterText || state.filterText,
         filteredTree: action.payload.filteredTree,
-        active: null,
-        expandedIds: []
     }
     return updateObject(state, newValues)
 }

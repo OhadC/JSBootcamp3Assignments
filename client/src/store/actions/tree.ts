@@ -5,9 +5,9 @@ import { IClientGroup, ITreeItem, IClientUser } from "../../models"
 import treeSearch from "../../common/treeSearch"
 import { IAppState } from "../reducers"
 
-const setTree = (tree: any): AnyAction => ({
+const setTree = (tree: any, itemsType?: 'groups' | 'users'): AnyAction => ({
     type: actionTypes.SET_TREE,
-    payload: { tree }
+    payload: { tree, itemsType }
 })
 
 const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]): AnyAction => ({
@@ -25,19 +25,32 @@ export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
     payload: { expandedIds }
 })
 
-export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
-    const { auth: { userId }, tree: { ofType } } = getState()
-    if (ofType === 'groups') {
-        const success = (groups: any[]) => {
-            const tree = makeTree(groups, userId)
-            dispatch(setTree(tree))
+export const setTreeItemsType = (itemsType: 'groups' | 'users') => ({
+    type: actionTypes.SET_TREE_ITEMS_TYPE,
+    payload: { itemsType }
+})
+
+export const fetchTree = (itemsType?: 'groups' | 'users') => (dispatch: Dispatch, getState: Function) => {
+    const { auth: { userId }, tree: { itemsType: itemsTypeFromState } } = getState()
+    itemsType = itemsType || itemsTypeFromState
+    if (itemsType === 'groups') {
+        const success = (groups: IClientGroup[]) => {
+            const tree = makeGroupsTree(groups, userId)
+            dispatch(setTree(tree, itemsType))
         }
         dispatch(apiRequest({
             url: '/group',
             success
         }))
     } else {
-        // TODO: ofType 'users'
+        const success = (users: IClientUser[]) => {
+            const tree = makeUsersTree(users)
+            dispatch(setTree(tree, itemsType))
+        }
+        dispatch(apiRequest({
+            url: '/user',
+            success
+        }))
     }
 }
 
@@ -63,7 +76,7 @@ const filterTree = (fullTree: ITreeItem[], filterText: string) => {
     }
 }
 
-const makeTree = (groups: IClientGroup[], userId: string) => {
+const makeGroupsTree = (groups: IClientGroup[], userId: string) => {
     const treeRootGroups = groups.filter(group => group.isRoot)
 
     const groupsMap = groups.reduce((obj, group) => {
@@ -91,4 +104,12 @@ const makeTree = (groups: IClientGroup[], userId: string) => {
             items
         }
     }
+}
+
+const makeUsersTree = (users: IClientUser[]) => {
+    return users.map((user) => ({
+        group: user,
+        type: 'user',
+        name: user.name
+    }))
 }

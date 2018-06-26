@@ -4,7 +4,7 @@ import { userController } from '../controllers'
 
 const router = express.Router()
 
-// router.get('/', userController.getAllUsers)
+router.get('/', userController.getAllUsers)
 router.get('/:id', userController.getUserById)
 router.get('/:id/groups', userController.getAllGroupsById)
 router.put('/:id', userController.updateUser)

@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const GroupInfo = (props: IProps) => {
-    const usersList = props.group.users!.reduce((prev, user: IClientUser, idx: number) => {
+    const usersList = props.group.users && props.group.users.reduce((prev, user: IClientUser, idx: number) => {
         return prev + (idx > 0 ? ", " : "") + user.name
     }, "")
 

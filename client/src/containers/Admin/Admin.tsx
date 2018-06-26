@@ -13,9 +13,10 @@ import Tree from "../Tree/Tree"
 interface IProps {
     isAuthenticated: boolean
     user: IClientUser | null
-    treeOfType: 'groups' | 'users'
+    itemsType: 'groups' | 'users'
     login: any
     logout: any
+    setTreeItemsType: any
 }
 
 class Admin extends React.Component<IProps, {}> {
@@ -25,7 +26,7 @@ class Admin extends React.Component<IProps, {}> {
                 <section style={styles.leftSection} >
                     <SideHeader user={this.props.user} onLogout={this.props.logout} />
                     <Tree />
-                    <SmallAdminPanel editMode={this.props.treeOfType} />
+                    <SmallAdminPanel itemsType={this.props.itemsType} onGroups={this.props.setTreeItemsType.bind(this, 'groups')} onUsers={this.props.setTreeItemsType.bind(this, 'users')}/>
                 </section>
                 <AdminPanel style={styles.rightSection} />
             </main>
@@ -56,12 +57,13 @@ const styles: { [key: string]: React.CSSProperties } = {
 const mapStateToProps = (state: IAppState) => ({
     user: state.global.user,
     isAuthenticated: !!state.auth.token,
-    treeOfType: state.tree.ofType
+    itemsType: state.tree.itemsType
 })
 
 const mapDispatchToProps = {
     login: actions.login,
-    logout: actions.logout
+    logout: actions.logout,
+    setTreeItemsType: actions.setTreeItemsType
 }
 
 

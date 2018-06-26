@@ -21,7 +21,7 @@ export const fetchMessages = (groupId: string): AnyAction =>
     })
 
 export const sendMessage = (content: string): AnyAction => {
-    const { tree: { activeGroup: { id: groupId } }, auth: { userId } }: any = store.getState()
+    const { tree: { active: { id: groupId } }, auth: { userId } }: any = store.getState()
     const message = {
         groupId,
         userId,
