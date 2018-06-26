@@ -1,7 +1,7 @@
 import * as React from "react"
-
-import { IClientUser } from "../../../models"
 import { Link } from "react-router-dom"
+
+import { IClientUser } from "../models"
 import './SideHeader.css'
 
 interface IProps {
@@ -16,6 +16,10 @@ const SideHeader = (props: IProps) => {
             return (
                 <ul>
                     <li>
+                        <Link to="/chat">Chat</Link>
+                    </li>
+                    |
+                    <li>
                         <Link to="/admin">Admin</Link>
                     </li>
                     |
@@ -25,7 +29,13 @@ const SideHeader = (props: IProps) => {
                 </ul>
             )
         } else {
-            return <Link to="/login">Login</Link>
+            return (
+                <ul>
+                    <li>
+                        <Link to="/login">Login</Link>
+                    </li>
+                </ul>
+            )
         }
     }
 

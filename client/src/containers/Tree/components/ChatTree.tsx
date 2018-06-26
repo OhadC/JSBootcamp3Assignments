@@ -5,10 +5,10 @@ import { ITreeItem } from '../../../models'
 
 interface IProps {
     filteredTree: ITreeItem[]
-    activeGroupId: string | null
-    expandedGroupIds: string[]
+    activeId: string | null
+    expandedIds: string[]
     activeElementChanged: any
-    expandedGroupIdsChanged: any
+    expandedIdsChanged: any
 }
 
 class ChatTree extends React.Component<IProps, {}> {
@@ -28,20 +28,22 @@ class ChatTree extends React.Component<IProps, {}> {
         this.chatTree = ChatTreeModule(treeDivElement)
 
         this.chatTree.on('activeElementChanged', this.props.activeElementChanged)
-        this.chatTree.on('groupExpanded', this.props.expandedGroupIdsChanged)
-        this.chatTree.on('groupFolded', this.props.expandedGroupIdsChanged)
+        this.chatTree.on('groupExpanded', this.props.expandedIdsChanged)
+        this.chatTree.on('groupFolded', this.props.expandedIdsChanged)
 
-        this.loadTree(this.props.filteredTree, this.props.expandedGroupIds, this.props.activeGroupId)
+        this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
     }
     componentDidUpdate(prevProps: IProps, prevState: {}, snapshot: any) {
         if (prevProps.filteredTree !== this.props.filteredTree) {
-            this.loadTree(this.props.filteredTree, this.props.expandedGroupIds, this.props.activeGroupId)
+            this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
         }
     }
     componentWillUnmount() {
         this.chatTree.off('activeElementChanged', this.props.activeElementChanged)
-        this.chatTree.off('groupExpanded', this.props.expandedGroupIdsChanged)
-        this.chatTree.off('groupFolded', this.props.expandedGroupIdsChanged)
+        this.chatTree.off('groupExpanded', this.props.expandedIdsChanged)
+        this.chatTree.off('groupFolded', this.props.expandedIdsChanged)
+        
+        this.chatTree.clear()
     }
 
     loadTree = (filteredTree: ITreeItem[], expandedGroupIds: string[], activeGroupId: string | null) => {

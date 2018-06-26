@@ -10,7 +10,6 @@ import ChatTree from './components/ChatTree'
 import './Tree.css'
 
 interface IProps {
-    style: object
     filteredTree: ITreeItem[]
     activeGroupId: string | null
     expandedGroupIds: string[]
@@ -26,14 +25,14 @@ class Tree extends React.Component<IProps, {}> {
     render() {
         const chatTreeProps = {
             activeElementChanged: this.activeElementChangedHandler,
-            activeGroupId: this.props.activeGroupId,
-            expandedGroupIds: this.props.expandedGroupIds,
-            expandedGroupIdsChanged: this.expandedGroupIdsChangedHandler,
+            activeId: this.props.activeGroupId,
+            expandedIds: this.props.expandedGroupIds,
+            expandedIdsChanged: this.expandedGroupIdsChangedHandler,
             filteredTree: this.props.filteredTree
         }
-        
+
         return (
-            <section style={{ ...this.props.style, ...TreeStyle }}>
+            <section style={TreeStyle}>
                 <TreeSearch filterData={this.props.changeTreeFilter} />
                 <ChatTree {...chatTreeProps} />
             </section>
@@ -46,7 +45,8 @@ const TreeStyle: React.CSSProperties = {
     color: 'white',
     overflowY: 'auto',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    flex: 1
 }
 
 const mapStateToProps = (state: IAppState) => ({

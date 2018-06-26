@@ -1,0 +1,17 @@
+.small-admin-panel {
+    padding: 1rem 0.5rem;
+    background-color: #191b27;
+    color: white;
+    display: flex;
+}
+
+.small-admin-panel button {
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 0.5rem;
+    flex: 1;
+}
+
+.small-admin-panel button.active {
+    background: rgba(255, 255, 255, 0.4);
+}

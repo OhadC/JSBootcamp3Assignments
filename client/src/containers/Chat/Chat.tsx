@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 
 import * as actions from '../../store/actions'
 import { IAppState } from "../../store/reducers"
-import Tree from "./../Tree/Tree"
+import GroupsTree from "../Tree/GroupsTree"
 import Board from "./../Board/Board"
 import LogIn from "../../components/LogIn"
 import { IClientUser } from "../../models"
-import SideHeader from "./components/SideHeader"
+import SideHeader from "../../components/SideHeader"
 
 interface IProps {
     isAuthenticated: boolean
@@ -28,7 +28,7 @@ class Chat extends React.Component<IProps, {}> {
                 <main style={styles.chat}>
                     <section style={styles.leftSection} >
                         <SideHeader user={this.props.user} onLogout={this.props.logout} />
-                        <Tree style={{flex: 1}} />
+                        <GroupsTree />
                     </section>
                     <Board style={styles.rightSection} />
                 </main>
@@ -58,8 +58,8 @@ const styles: { [key: string]: React.CSSProperties } = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-        user: state.global.user,
-        isAuthenticated: !!state.auth.token
+    user: state.global.user,
+    isAuthenticated: !!state.auth.token
 })
 
 const mapDispatchToProps = {

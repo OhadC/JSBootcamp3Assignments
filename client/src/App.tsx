@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router'
 
 import Chat from './containers/Chat/Chat'
 import { IAppState } from './store/reducers'
+import Admin from './containers/Admin/Admin';
 
 interface IProps {
     isAuthenticated: boolean
@@ -14,7 +15,7 @@ class App extends React.Component<IProps, {}> {
         const authRouts = () => (
             <Switch>
                 <Route path="/chat" render={Chat} />
-                <Route path="/admin" render={Chat/*Admin*/} />
+                <Route path="/admin" render={Admin} />
                 <Redirect to='/chat' />
             </Switch>
         )
