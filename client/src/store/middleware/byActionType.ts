@@ -15,11 +15,6 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
             itemsType === 'groups' && dispatch(fetchMessages(action.payload.active.id)) // TODO: only in messages! IDK how
             break
 
-        case (actionTypes.SET_TREE_ITEMS_TYPE):
-            next(action)
-            dispatch(fetchTree(action.payload.itemsType))
-            break
-
         default: next(action)
     }
 }
