@@ -34,6 +34,7 @@ const setTree = (state: ITreeState, action: any): ITreeState => {
 
 const updateTree = (state: ITreeState, action: any): ITreeState => {
     const newValues = {
+        items: action.payload.items || state.items,
         tree: action.payload.tree,
         filterText: action.payload.filterText || state.filterText
     }

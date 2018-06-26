@@ -11,7 +11,7 @@ const UserEdit = (props: any) => {
             </label>
             <input type="text" value={props.active.age} />
             <hr />
-            <button>Save</button><button>Delete User</button>
+            <button>Save</button><button onClick={props.deleteUser.bind(null, props.active)}>Delete User</button>
         </>
     )
 }

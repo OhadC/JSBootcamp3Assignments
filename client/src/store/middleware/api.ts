@@ -42,8 +42,8 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
             success && success(data)
             label && dispatch(notify('success', label, data))
         })
-        .catch(({ response: { data: { message } } }: any) => {
-            console.log(message)
-            label && dispatch(notify('fail', label, message)) // TODO: no label
+        .catch((response: any) => {
+            console.log(response.data.message)
+            label && dispatch(notify('fail', label, response.data.message)) // TODO: no label
         })
 }

@@ -5,16 +5,14 @@ import { connect } from 'react-redux'
 import SideHeader from "../../components/SideHeader"
 import * as actions from "../../store/actions"
 import { IAppState } from "../../store/reducers"
-import { IClientUser, IClientGroup } from "../../models"
+import { IClientUser } from "../../models"
 import SmallAdminPanel from "./components/SmallAdminPanel"
-import AdminPanel from "./components/AdminPanel"
+import AdminPanel from "./AdminPanel"
 import Tree from "../Tree/Tree"
 
 interface IProps {
-    isAuthenticated: boolean
     user: IClientUser | null
-    itemsType: 'groups' | 'users',
-    active: IClientGroup | IClientUser
+    itemsType: 'groups' | 'users'
     login: any
     logout: any
     setTreeItemsType: any
@@ -29,7 +27,7 @@ class Admin extends React.Component<IProps, {}> {
                     <Tree />
                     <SmallAdminPanel itemsType={this.props.itemsType} onGroups={this.props.setTreeItemsType.bind(this, 'groups')} onUsers={this.props.setTreeItemsType.bind(this, 'users')}/>
                 </section>
-                <AdminPanel style={styles.rightSection} itemsType={this.props.itemsType} active={this.props.active} />
+                <AdminPanel style={styles.rightSection} />
             </main>
         )
     }
@@ -57,9 +55,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const mapStateToProps = (state: IAppState) => ({
     user: state.global.user,
-    isAuthenticated: !!state.auth.token,
-    itemsType: state.tree.itemsType,
-    active: state.tree.active
+    itemsType: state.tree.itemsType
 })
 
 const mapDispatchToProps = {
@@ -67,6 +63,5 @@ const mapDispatchToProps = {
     logout: actions.logout,
     setTreeItemsType: actions.setTreeItemsType
 }
-
 
 export default (withRouter as any)(connect(mapStateToProps, mapDispatchToProps)(Admin))

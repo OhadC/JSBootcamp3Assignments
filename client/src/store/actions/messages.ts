@@ -9,6 +9,10 @@ export const setMessages = (messages: IClientMessage[]): AnyAction => ({
     payload: { messages }
 })
 
+export const socketLoginSuccess = (): AnyAction => ({
+    type: actionTypes.SOCKET_LOGIN_SUCCESS
+})
+
 export const addMessage = (message: IClientMessage): AnyAction => ({
     type: actionTypes.ADD_MESSAGE,
     payload: { message }
