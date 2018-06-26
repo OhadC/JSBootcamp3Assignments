@@ -14,6 +14,13 @@ const updateTree = (tree: ITreeItem[], filterText?: string): AnyAction => ({
     payload: { tree, filterText }
 })
 
+export const updateTreeItems = (items: IClientUser[] | IClientGroup[]) => (dispatch: any, getState: Function) => {
+    const { auth: { userId }, tree: { itemsType } } = getState()
+    const tree = itemsType === 'groups' ?
+        makeGroupsTree(items as IClientGroup[], userId!) : makeUsersTree(items as IClientUser[])
+    updateTree(tree)
+}
+
 export const setActive = (active: IClientGroup | IClientUser): AnyAction => ({
     type: actionTypes.SET_ACTIVE,
     payload: { active }
@@ -24,7 +31,10 @@ export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
     payload: { expandedIds }
 })
 
-export const setTreeItemsType = (itemsType: 'groups' | 'users') => fetchTree(itemsType)
+export const setTreeItemsType = (itemsType: 'groups' | 'users') => (dispatch: any, getState: Function) => {
+    getState().tree.itemsType !== itemsType &&
+        dispatch(fetchTree(itemsType))
+}
 
 export const fetchTree = (itemsType?: 'groups' | 'users') => (dispatch: Dispatch, getState: Function) => {
     const { auth: { userId }, tree: { itemsType: itemsTypeFromState } } = getState()

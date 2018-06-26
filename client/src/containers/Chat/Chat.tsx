@@ -15,9 +15,14 @@ interface IProps {
     user: IClientUser | null
     login: any
     logout: any
+    setTreeItemsType: any
 }
 
 class Chat extends React.Component<IProps, {}> {
+    componentDidMount(){
+        this.props.setTreeItemsType('groups')
+    }
+
     public render() {
         const login = () => <LogIn submit={this.props.login} />
 
@@ -59,12 +64,13 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const mapStateToProps = (state: IAppState) => ({
     user: state.global.user,
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
 })
 
 const mapDispatchToProps = {
     login: actions.login,
-    logout: actions.logout
+    logout: actions.logout,
+    setTreeItemsType: actions.setTreeItemsType
 }
 
 export default (withRouter as any)(connect(mapStateToProps, mapDispatchToProps)(Chat))

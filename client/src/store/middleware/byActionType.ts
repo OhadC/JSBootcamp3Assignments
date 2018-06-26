@@ -14,7 +14,7 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
             const { tree: { itemsType } } = getState()
             itemsType === 'groups' && dispatch(fetchMessages(action.payload.active.id)) // TODO: only in messages! IDK how
             break
-
+            
         default: next(action)
     }
 }
