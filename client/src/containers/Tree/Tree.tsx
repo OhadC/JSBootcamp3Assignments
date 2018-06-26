@@ -4,48 +4,38 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions'
 import { IAppState } from '../../store/reducers'
 import { ITreeItem } from '../../models'
-import { ChatTree, IItemHTMLElement } from './chat-tree'
+import { IItemHTMLElement } from './components/chat-tree-module'
 import TreeSearch from './components/treeSearch'
+import ChatTree from './components/ChatTree'
 import './Tree.css'
 
 interface IProps {
     style: object
     filteredTree: ITreeItem[]
+    activeGroupId: string | null
+    expandedGroupIds: string[]
     changeActiveGroup: any
+    changeExpandedGroupIds: any
     changeTreeFilter: any
 }
 
 class Tree extends React.Component<IProps, {}> {
-    private treeDivRef: React.RefObject<any>
-    private sectionRef: React.RefObject<any>
-
-    constructor(props: IProps) {
-        super(props)
-
-        this.sectionRef = React.createRef()
-        this.treeDivRef = React.createRef()
-    }
-
-    componentDidUpdate(prevProps: IProps, prevState: {}, snapshot: any) {
-        if (prevProps.filteredTree !== this.props.filteredTree) {
-            const sectionElement = this.sectionRef.current
-            const treeDivElement = this.treeDivRef.current
-
-            const chatTree = ChatTree(treeDivElement)
-            chatTree.on('activeElementChanged', this.activeElementChangedHandler)
-            sectionElement.removeChild(treeDivElement)
-            chatTree.load(this.props.filteredTree, ['0', '1'], '2')
-            sectionElement.appendChild(treeDivElement)
-        }
-    }
-
     activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActiveGroup(activeElement.item.group)
+    expandedGroupIdsChangedHandler = (groupId: string, expandedGroupIds: string[]) => this.props.changeExpandedGroupIds(expandedGroupIds)
 
     render() {
+        const chatTreeProps = {
+            activeElementChanged: this.activeElementChangedHandler,
+            activeGroupId: this.props.activeGroupId,
+            expandedGroupIds: this.props.expandedGroupIds,
+            expandedGroupIdsChanged: this.expandedGroupIdsChangedHandler,
+            filteredTree: this.props.filteredTree
+        }
+        
         return (
-            <section style={{ ...this.props.style, ...TreeStyle }} ref={this.sectionRef}>
-                <TreeSearch style={{ margin: '1rem', background: 'rgba(255,255,255,0.1)', color: 'white' }} filterData={this.props.changeTreeFilter} />
-                <ul className="Tree" ref={this.treeDivRef} style={{ flex: '1' }} tabIndex={0} />
+            <section style={{ ...this.props.style, ...TreeStyle }}>
+                <TreeSearch filterData={this.props.changeTreeFilter} />
+                <ChatTree {...chatTreeProps} />
             </section>
         )
     }
@@ -60,11 +50,14 @@ const TreeStyle: React.CSSProperties = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-        filteredTree: state.tree.filteredTree
+    filteredTree: state.tree.filteredTree,
+    activeGroupId: state.tree.activeGroup && state.tree.activeGroup.id,
+    expandedGroupIds: state.tree.expandedGroupIds
 })
 
 const mapDispatchToProps = {
     changeActiveGroup: actions.setActiveGroup,
+    changeExpandedGroupIds: actions.setExpandedGroupIds,
     changeTreeFilter: actions.setTreeFilter
 }
 

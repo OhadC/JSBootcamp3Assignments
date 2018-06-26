@@ -2,7 +2,6 @@
 export const API_REQUEST = 'API_REQUEST'
 
 // Global
-export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'
 export const SOCKET_LOGIN_SUCCESS = 'SOCKET_LOGIN_SUCCESS'
 
 // Auth
@@ -20,4 +19,7 @@ export const FETCH_MESSAGES_FAIL = 'FETCH_MESSAGES_FAIL'
 
 // Tree
 export const SET_TREE = 'SET_TREE'
+export const UPDATE_TREE = 'UPDATE_TREE'
 export const SET_FILTERED_TREE = 'SET_FILTERED_TREE'
+export const SET_EXPANDED_GROUP_IDS = 'SET_EXPANDED_GROUP_IDS'
+export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'

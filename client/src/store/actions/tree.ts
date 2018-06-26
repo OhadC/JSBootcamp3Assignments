@@ -3,7 +3,7 @@ import { Dispatch, AnyAction } from "redux"
 import { actionTypes, apiRequest } from "."
 import { IClientGroup, ITreeItem } from "../../models"
 import treeSearch from "../../common/treeSearch"
-import { IAppState } from "../reducers";
+import { IAppState } from "../reducers"
 
 const setTree = (tree: any): AnyAction => ({
     type: actionTypes.SET_TREE,
@@ -13,6 +13,16 @@ const setTree = (tree: any): AnyAction => ({
 const setFilteredTree = (filterText: string, filteredTree: ITreeItem[]): AnyAction => ({
     type: actionTypes.SET_FILTERED_TREE,
     payload: { filteredTree, filterText }
+})
+
+export const setActiveGroup = (activeGroup: IClientGroup): AnyAction => ({
+    type: actionTypes.SET_ACTIVE_GROUP,
+    payload: { activeGroup }
+})
+
+export const setExpandedGroupIds = (expandedGroupIds: string[]): AnyAction => ({
+    type: actionTypes.SET_EXPANDED_GROUP_IDS,
+    payload: { expandedGroupIds }
 })
 
 export const fetchTree = () => (dispatch: Dispatch, getState: Function) => {
@@ -35,9 +45,13 @@ export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getSta
         dispatch(setFilteredTree(filterText, fullTree))
         return
     }
-    const filteredTree = treeSearch(fullTree, predicate)
+    const filteredTree = filterTree(fullTree, filterText)
 
     dispatch(setFilteredTree(filterText, filteredTree))
+}
+
+const filterTree = (fullTree: ITreeItem[], filterText: string) => {
+    return treeSearch(fullTree, predicate)
 
     function predicate(item: ITreeItem) {
         return item instanceof Object && item.name &&

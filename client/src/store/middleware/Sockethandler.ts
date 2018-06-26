@@ -35,7 +35,7 @@ export const Sockethandler = ({ dispatch, getState }: any) => (next: any) => (ac
     }
 
     function onNewMessage(message: IClientMessage) {
-        const { global: { activeGroup } } = getState()
+        const { tree: { activeGroup } } = getState()
         if (activeGroup && activeGroup.id === message.groupId)
             dispatch(addMessage(message))
     }

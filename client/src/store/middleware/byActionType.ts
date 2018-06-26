@@ -11,7 +11,7 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
 
         case (actionTypes.SET_ACTIVE_GROUP):
             next(action)
-            dispatch(fetchMessages(action.payload.group.id))
+            dispatch(fetchMessages(action.payload.activeGroup.id))
             break
             
         default: next(action)

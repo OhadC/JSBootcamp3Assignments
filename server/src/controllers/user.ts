@@ -3,8 +3,6 @@ import { Request, Response } from 'express'
 import { userService, groupService } from '../services'
 import { requestHandlerFactory } from './utils'
 
-// TODO: to requestHandler
-
 export const getAllUsers = requestHandlerFactory(
     userService.getAllUsers
 )

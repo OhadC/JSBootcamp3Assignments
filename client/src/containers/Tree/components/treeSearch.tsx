@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-class TreeSearch extends React.Component<{ style: React.CSSProperties, filterData: Function }, any> {
+class TreeSearch extends React.Component<{ filterData: Function }, any> {
     state = {
         filter: ''
     }

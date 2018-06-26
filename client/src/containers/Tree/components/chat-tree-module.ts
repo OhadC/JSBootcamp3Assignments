@@ -1,7 +1,7 @@
-import Events from "../../common/Events";
-import { ITreeItem } from "../../models";
+import Events from "../../../common/Events"
+import { ITreeItem } from "../../../models"
 
-interface IItemHTMLElement extends HTMLElement {
+export interface IItemHTMLElement extends HTMLElement {
     item: ITreeItem
     parentItem: ITreeItem | null
     firstChild: IItemHTMLElement | null
@@ -9,7 +9,7 @@ interface IItemHTMLElement extends HTMLElement {
     nextSibling: IItemHTMLElement | null
 }
 
-function ChatTree(element: IItemHTMLElement) {
+export default function ChatTree(element: IItemHTMLElement) {
     let activeElement: IItemHTMLElement | null
     let activeElementId: string | null
     let events = Events()
@@ -63,6 +63,7 @@ function ChatTree(element: IItemHTMLElement) {
         toActiveElement.classList.add("active")
         activeElement = toActiveElement
         activeElementId = toActiveElement.item.group.id
+
         events.emit('activeElementChanged', [activeElement])
     }
 
@@ -113,7 +114,7 @@ function ChatTree(element: IItemHTMLElement) {
 
         element.insertBefore(li, addBefore || null)
 
-        if(activeElementId === item.group.id) setActiveElement(li)
+        if (activeElementId === item.group.id) setActiveElement(li)
         if (expandedGroups.indexOf(item.group.id) !== -1) expandGroup(li)
     }
 
@@ -129,14 +130,14 @@ function ChatTree(element: IItemHTMLElement) {
             groupElem.setAttribute('expanded', '')
             if (expandedGroups.indexOf(groupId) === -1) {
                 expandedGroups.push(groupId)
-                events.emit('groupExpanded', [groupId])
+                events.emit('groupExpanded', [groupId, expandedGroups])
             }
         } else {
             groupElem.removeAttribute('expanded')
             const indexToRemove = expandedGroups.indexOf(groupId)
             if (indexToRemove !== -1) {
                 expandedGroups.splice(indexToRemove, 1)
-                events.emit('groupFolded', [groupId])
+                events.emit('groupFolded', [groupId, expandedGroups])
             }
         }
     }
@@ -154,7 +155,7 @@ function ChatTree(element: IItemHTMLElement) {
     }
 
     function load(items: ITreeItem[], groupsToExpand: string[] = [], activeItemId?: string) {
-        expandedGroups = groupsToExpand
+        expandedGroups = groupsToExpand.slice()
         activeElementId = activeItemId || null
         clear()
         items.forEach((item: ITreeItem) => addListItem(item, null))
@@ -169,8 +170,12 @@ function ChatTree(element: IItemHTMLElement) {
         while (element.firstChild) {
             element.removeChild(element.firstChild)
         }
-        // itemsArray = null
+        
         activeElement = null
+
+        element.removeEventListener("click", onClick)
+        element.removeEventListener("dblclick", ondblclick)
+        element.removeEventListener("keydown", onkeydown)
     }
 
     const on: (name: string, listener: Function) => void = events.on
@@ -184,5 +189,3 @@ function ChatTree(element: IItemHTMLElement) {
         off
     }
 }
-
-export { ChatTree, IItemHTMLElement }
