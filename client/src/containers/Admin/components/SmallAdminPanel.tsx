@@ -1,14 +1,12 @@
 import * as React from 'react'
 
-import './SmallAdminPanel.css'
+interface IProps {
+    itemsType: "users" | "groups"
+    onUsers: any
+    onGroups: any
+}
 
-// interface IProps {
-//     currentActive: string
-//     onUsers: any
-//     onGroups: any
-// }
-
-const SmallAdminPanel = (props: any) => {
+const SmallAdminPanel = (props: IProps) => {
     return (
         <div className="small-admin-panel">
             <button onClick={props.onUsers} className={props.itemsType === "users" ? "active" : undefined}>Users</button>

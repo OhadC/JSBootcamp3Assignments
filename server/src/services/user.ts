@@ -45,8 +45,7 @@ export const deleteUser = async (id: string) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
-    groupService.deleteUserFromAllGroups(id)
-    messageService.deleteAllMessagesOfUser(id)
+    await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.deleteUserFromAllGroups(id)])
     return db.delete(dbName, { id })
 }
 

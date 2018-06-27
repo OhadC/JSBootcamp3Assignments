@@ -42,9 +42,11 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
             success && success(data)
             label && dispatch(notify('success', label, data))
         })
-        .catch((response: any) => {
-            console.log(response)
-            fail && fail(response)
-            label && dispatch(notify('fail', label, response.data.message)) // TODO: no label
+        .catch((error: any) => {
+            if (!('response' in error) || !('data' in error.response)) throw error
+            const errorData = error.response.data
+            console.log(errorData)
+            fail && fail(errorData)
+            label && dispatch(notify('fail', label, errorData.message)) // TODO: no label
         })
 }

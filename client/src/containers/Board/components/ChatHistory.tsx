@@ -5,7 +5,7 @@ import { IClientMessage } from '../../../models';
 
 interface IProps {
     style: React.CSSProperties
-    messages: Object
+    messages: IClientMessage[]
     selfUserId: string
 }
 
@@ -36,11 +36,9 @@ class ChatHistory extends React.Component<IProps, {}> {
 
     render() {
         const { messages, selfUserId } = this.props
-        const messagesElements = Object.keys(messages).map(key => messages[key]).map(
-            (message: IClientMessage) => (
-                <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
-            )
-        )
+        const messagesElements = messages.map(message => (
+            <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
+        ))
 
         return (
             <ul style={{ ...this.props.style, ...styles.chatHistory }} ref={this.messagesList}>

@@ -47,13 +47,10 @@ export const deleteGroup = async (id: string) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No group with that ID, ' + id)
     }
-    try {
-        const children = await db.findOne(dbName, { parentId: id })
-        await messageService.deleteAllMessagesOfgroup(id)
-        await Promise.all(children.map(child => deleteGroup(child.id)))
-    } catch (e) {
-
-    }
+    const children = await db.find(dbName, { parentId: id })
+    await messageService.deleteAllMessagesOfgroup(id)
+    await db.delete(dbName, { id })
+    await Promise.all(children.map(child => deleteGroup(child.id)))
     return "Group deleted"
 }
 
@@ -75,8 +72,8 @@ export const deleteUserFromAllGroups = async (userId: string) => {
         }
     })
     await Promise.all([
-        await Promise.all(groupsToUpdate.map(group => db.update(dbName, { id: group.id }, group))),
-        await Promise.all(groupsToDelete.map(group => db.delete(dbName, { id: group.id })))
+        Promise.all(groupsToUpdate.map(group => db.update(dbName, { id: group.id }, group))),
+        Promise.all(groupsToDelete.map(group => deleteGroup(group.id)))
     ])
 }
 

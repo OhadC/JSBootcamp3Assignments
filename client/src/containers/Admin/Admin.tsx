@@ -9,6 +9,7 @@ import { IClientUser } from "../../models"
 import SmallAdminPanel from "./components/SmallAdminPanel"
 import AdminPanel from "./AdminPanel"
 import Tree from "../Tree/Tree"
+import './Admin.css'
 
 interface IProps {
     user: IClientUser | null

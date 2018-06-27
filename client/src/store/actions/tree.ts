@@ -32,7 +32,7 @@ export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
     payload: { expandedIds }
 })
 
-export const setTreeItemsType = (itemsType: 'groups' | 'users') => (dispatch: any, getState: Function) => {     // TODO: delete this
+export const setTreeItemsType = (itemsType: 'groups' | 'users') => (dispatch: any, getState: Function) => {     // TODO: delete this. make adapter instead.
     getState().tree.itemsType !== itemsType &&
         dispatch(fetchTree(itemsType))
 }
@@ -66,6 +66,7 @@ export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getSta
     if (filterText === oldFilterText) {
         return
     }
+    //TODO: filter not working anymore. fix this
     const filteredTree = itemsType === 'groups' ?
         makeGroupsTree(items as IClientGroup[], userId!, filterText) : makeUsersTree(items as IClientUser[], filterText)
 
