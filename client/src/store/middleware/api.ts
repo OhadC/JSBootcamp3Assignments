@@ -23,7 +23,7 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
         return next(action)
     }
     const { auth: { token } } = getState()
-    const { url, method, data, success, label } = action.payload
+    const { url, method, data, success, fail, label } = action.payload
 
     const config: Axios.AxiosRequestConfig = {
         method: method ? method : 'get',
@@ -43,7 +43,8 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
             label && dispatch(notify('success', label, data))
         })
         .catch((response: any) => {
-            console.log(response.data.message)
+            console.log(response)
+            fail && fail(response)
             label && dispatch(notify('fail', label, response.data.message)) // TODO: no label
         })
 }

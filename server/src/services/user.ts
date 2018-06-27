@@ -1,5 +1,5 @@
 import { db, IUser, IServerUser, IClientUser } from '../models'
-import { authService } from '.'
+import { authService, messageService, groupService } from '.'
 
 const dbName = 'user'
 
@@ -28,6 +28,7 @@ export const addUser = async (name, password) => {
     if (!!(await db.findOne(dbName, { name }))) {
         throw Error('User with that name already exists. ' + name)
     }
+    // TODO: no id, name etc..
     const user: IServerUser = await db.add('user', { name, password })
     return toUserWithoutPassword(user)
 }
@@ -44,6 +45,8 @@ export const deleteUser = async (id: string) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
+    groupService.deleteUserFromAllGroups(id)
+    messageService.deleteAllMessagesOfUser(id)
     return db.delete(dbName, { id })
 }
 

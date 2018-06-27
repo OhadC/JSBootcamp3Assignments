@@ -21,6 +21,14 @@ export const addMessage = async (messageIn) => {
     return populateUser(message)
 }
 
+export const deleteAllMessagesOfUser = async (userId) => {
+    await db.delete(dbName, { userId })
+}
+
+export const deleteAllMessagesOfgroup = async (groupId) => {
+    await db.delete(dbName, { groupId })
+}
+
 const populateUser = async (message: any): Promise<IClientMessage> => {
     message.user = await getUserById(message.userId)
     return message

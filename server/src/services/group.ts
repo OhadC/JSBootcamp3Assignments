@@ -1,5 +1,6 @@
 import { db, IGroup, IServerGroup, IClientGroup } from '../models'
 import { getUserById } from './user'
+import { messageService } from '.'
 
 const dbName = 'group'
 
@@ -22,20 +23,11 @@ export const getGroupById = async (id: string) => {
     return populateUsers(group)
 }
 
-export const addGroup = async (parentGroupId: string, groupToAdd: IGroup) => {
-    const parentGroup: IServerGroup = await db.findOne(dbName, { id: parentGroupId })
-    if (!parentGroup) {
-        throw Error('No group with that ID, ' + parentGroupId)
+export const addGroup = async (groupToAdd: IGroup) => {
+    if (groupToAdd.parentId && !(await db.findOne(dbName, { id: groupToAdd.parentId }))) {
+        throw Error('No group with that ID, ' + groupToAdd.parentId)
     }
-    if (parentGroup.groupIds) {
-        await Promise.all(parentGroup.groupIds.map(async (groupId) => {
-            const group: IServerGroup = await db.findOne(dbName, { id: groupId })
-            if (group.name === groupToAdd.name) {
-                throw Error('Group with that name already exists, ' + groupToAdd.name)
-            }
-        }))
-    }
-    await db.update(dbName, { id: parentGroupId }, parentGroup)
+    // TODO: no users, etc..
     const newGroup: IServerGroup = await db.add(dbName, groupToAdd)
     return populateUsers(newGroup)
 }
@@ -45,6 +37,7 @@ export const updateGroup = async (id: string, updatedGroup: IGroup) => {
     if (!group) {
         throw Error('No group with that ID, ' + id)
     }
+    // TODO: no parentId, no users, etc..
     updatedGroup = { ...group, ...updatedGroup }
     const updatedGroupFromDb = db.update(dbName, { id }, updatedGroup)
     return populateUsers(updatedGroupFromDb)
@@ -54,7 +47,37 @@ export const deleteGroup = async (id: string) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No group with that ID, ' + id)
     }
-    // return Promise.all([db.delete(dbName, { id }), 
+    try {
+        const children = await db.findOne(dbName, { parentId: id })
+        await messageService.deleteAllMessagesOfgroup(id)
+        await Promise.all(children.map(child => deleteGroup(child.id)))
+    } catch (e) {
+
+    }
+    return "Group deleted"
+}
+
+export const deleteUserFromAllGroups = async (userId: string) => {
+    const allGroups: IServerGroup[] = await db.find(dbName)
+    const groupsToUpdate = []
+    const groupsToDelete = []
+    allGroups.forEach(group => {
+        if (group.userIds) {
+            const idIndex = group.userIds.findIndex(id => id === userId)
+            if (idIndex !== -1) {
+                if (group.isPrivate) {
+                    groupsToDelete.push(group)
+                } else {
+                    group.userIds.splice(idIndex, 1)
+                    groupsToUpdate.push(group)
+                }
+            }
+        }
+    })
+    await Promise.all([
+        await Promise.all(groupsToUpdate.map(group => db.update(dbName, { id: group.id }, group))),
+        await Promise.all(groupsToDelete.map(group => db.delete(dbName, { id: group.id })))
+    ])
 }
 
 const populateUsers = async (group: any): Promise<IClientGroup> => {

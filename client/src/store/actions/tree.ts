@@ -1,4 +1,5 @@
 import { Dispatch, AnyAction } from "redux"
+import * as _ from 'lodash'
 
 import { actionTypes, apiRequest } from "."
 import { IClientGroup, ITreeItem, IClientUser } from "../../models"
@@ -31,7 +32,7 @@ export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
     payload: { expandedIds }
 })
 
-export const setTreeItemsType = (itemsType: 'groups' | 'users') => (dispatch: any, getState: Function) => {
+export const setTreeItemsType = (itemsType: 'groups' | 'users') => (dispatch: any, getState: Function) => {     // TODO: delete this
     getState().tree.itemsType !== itemsType &&
         dispatch(fetchTree(itemsType))
 }
@@ -75,31 +76,27 @@ const makeGroupsTree = (groups: IClientGroup[], userId: string, filterText?: str
     groups.forEach(group => {
         group.name = group.name || (group.users[0].id != userId ? group.users[0].name : group.users[1].name)
     })
-    const groupsMap = groups.reduce((obj, group) => {
-        obj[group.id] = group
-        return obj
-    }, {})
+    const roots: ITreeItem[] = []
+    const groupsMap = _.keyBy(groups, 'id')
+    const treeItemsMap = {}
 
-    let treeRootGroups
-    if (!!filterText) {
-        filterText = filterText.toLowerCase()
-        treeRootGroups = groups.filter(group => group.name!.toLowerCase().includes(filterText!))
-    } else {
-        treeRootGroups = groups.filter(group => group.isRoot)
-    }
-
-    return treeRootGroups!.map(groupToNode)
+    groups.forEach(group => {
+        const treeItem = treeItemsMap[group.id] = treeItemsMap[group.id] || groupToNode(group)  // Seems legit.
+        if (!(group.parentId) || !(group.parentId in groupsMap)) {
+            roots.push(treeItem)
+        } else {
+            treeItemsMap[group.parentId] = treeItemsMap[group.parentId] || groupToNode(groupsMap[group.parentId])
+            treeItemsMap[group.parentId].items.push(treeItem)
+        }
+    })
+    return roots
 
     function groupToNode(group: any): ITreeItem {
-        let items = []
-        if ('groupIds' in group && !!group.groupIds) {
-            items = group.groupIds.map((groupId: string) => groupToNode(groupsMap[groupId]))
-        }
         return {
             group,
             type: group.isPrivate ? 'user' : 'group',
             name: group.name,
-            items
+            items: []
         }
     }
 }

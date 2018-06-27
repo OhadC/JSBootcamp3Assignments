@@ -1,22 +1,16 @@
 import { actionTypes } from "../actions"
 
 import { createReducer } from "../utility"
-import { ITreeItem, IClientGroup, IClientUser } from "../../models";
+import { IClientGroup, IClientUser } from "../../models";
 
 export interface IAdminlState {
     editMode: 'groups' | 'users'
-    active: IClientGroup | IClientUser | null
-    tree: ITreeItem[]
-    filteredTree: ITreeItem[]
-    expandedIds: string[]
+    items: IClientGroup[] | IClientUser[] | null
 }
 
 const initialState: IAdminlState = {
     editMode: 'groups',
-    active: null,
-    tree: [],
-    filteredTree: [],
-    expandedIds: [],
+    items: [],
 }
 
 const logout = (): IAdminlState => initialState

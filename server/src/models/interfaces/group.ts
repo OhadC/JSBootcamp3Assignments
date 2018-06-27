@@ -2,31 +2,28 @@ import { IUser } from ".";
 import { IClientUser } from "./user";
 
 export interface IGroup {
+    parentId?: string
     id: string
     name?: string
     userIds?: string[]
     users?: IUser[]
-    groupIds?: string[]
-    isRoot: boolean
     isPrivate: boolean
 }
 
 export interface IServerGroup extends IGroup {
+    parentId?: string
     id: string
     name?: string
     userIds?: string[]
     users: undefined
-    groupIds?: string[]
-    isRoot: boolean
     isPrivate: boolean
 }
 
 export interface IClientGroup extends IGroup {
+    parentId?: string
     id: string
     name?: string
     userIds?: string[]
     users: IClientUser[]
-    groupIds?: string[]
-    isRoot: boolean
     isPrivate: boolean
 }

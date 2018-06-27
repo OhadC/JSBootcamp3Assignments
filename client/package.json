@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/lodash": "^4.14.110",
     "axios": "^0.18.0",
     "connected-react-router": "^4.3.0",
+    "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",

@@ -50,6 +50,7 @@ class DB {
         const index = this.db[dbName].findIndex(dict => this.isMatching(dict, conditions))
         if (index !== -1) {
             this.db[dbName][index] = updatedDict
+            await this.writeToJson(dbName)
             return { success: true }
         } else {
             return { error: 'No matching' }
@@ -83,7 +84,7 @@ class DB {
         return JSON.parse(text)
     }
     private async writeToJson(name: string) {
-        writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]));
+        // writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]));
     }
 }
 
