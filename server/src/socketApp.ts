@@ -29,7 +29,6 @@ const socketApp = (httpServer: Server) => {
     }
 
     async function onMessage(message) {
-        console.log(message)
         const fromDbMessage: IClientMessage = await messageService.addMessage(message)
         io.emit('message', fromDbMessage)
     }

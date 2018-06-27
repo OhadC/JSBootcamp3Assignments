@@ -16,21 +16,45 @@ export const getAllGroupsByUserId = async (userId) => {
 
 export const getGroupById = async (id: string) => {
     const group: IServerGroup = await db.findOne(dbName, { id })
+    if (!group) {
+        throw Error('No group with that ID, ' + id)
+    }
     return populateUsers(group)
 }
 
-export const addGroup = async (group: IGroup) => {
-    const newGroup = await db.add(dbName, group)
+export const addGroup = async (parentGroupId: string, groupToAdd: IGroup) => {
+    const parentGroup: IServerGroup = await db.findOne(dbName, { id: parentGroupId })
+    if (!parentGroup) {
+        throw Error('No group with that ID, ' + parentGroupId)
+    }
+    if (parentGroup.groupIds) {
+        await Promise.all(parentGroup.groupIds.map(async (groupId) => {
+            const group: IServerGroup = await db.findOne(dbName, { id: groupId })
+            if (group.name === groupToAdd.name) {
+                throw Error('Group with that name already exists, ' + groupToAdd.name)
+            }
+        }))
+    }
+    await db.update(dbName, { id: parentGroupId }, parentGroup)
+    const newGroup: IServerGroup = await db.add(dbName, groupToAdd)
     return populateUsers(newGroup)
 }
 
 export const updateGroup = async (id: string, updatedGroup: IGroup) => {
+    const group: IServerGroup = await db.findOne(dbName, { id })
+    if (!group) {
+        throw Error('No group with that ID, ' + id)
+    }
+    updatedGroup = { ...group, ...updatedGroup }
     const updatedGroupFromDb = db.update(dbName, { id }, updatedGroup)
     return populateUsers(updatedGroupFromDb)
 }
 
 export const deleteGroup = async (id: string) => {
-    return db.delete(dbName, { id })
+    if (!(await db.findOne(dbName, { id }))) {
+        throw Error('No group with that ID, ' + id)
+    }
+    // return Promise.all([db.delete(dbName, { id }), 
 }
 
 const populateUsers = async (group: any): Promise<IClientGroup> => {

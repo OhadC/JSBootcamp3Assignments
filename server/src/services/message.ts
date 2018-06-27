@@ -9,6 +9,9 @@ export const getAllMessages = async () => {
 }
 
 export const getMessagesOfGroup = async (groupId) => {
+    if (!await db.findOne('group', { id: groupId })) {
+        throw Error('No group with that ID, ' + groupId)
+    }
     const messages: IServerMessage[] = await db.find(dbName, { groupId })
     return Promise.all(messages.map(populateUser))
 }
