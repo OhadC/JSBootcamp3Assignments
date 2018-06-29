@@ -4,8 +4,7 @@ class GroupEdit extends React.Component<any, any> {
     state = {
         isNew: false,
         name: "",
-        userIds: [],
-        parentId: ""
+        userIds: []
     }
 
     componentDidMount() {
@@ -13,7 +12,7 @@ class GroupEdit extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
-        if (prevProps !== this.props) {
+        if (!this.state.isNew && (prevState.isNew || prevProps !== this.props)) {
             this.getStateFromProps()
         }
     }

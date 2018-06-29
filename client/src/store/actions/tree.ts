@@ -61,12 +61,12 @@ export const fetchTree = (itemsType?: 'groups' | 'users') => (dispatch: Dispatch
     }
 }
 
-export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {   // TODO:
+export const setTreeFilter = (filterText: string) => (dispatch: Dispatch, getState: () => IAppState) => {
     const { auth: { userId }, tree: { filterText: oldFilterText, items, itemsType } } = getState()
     if (filterText === oldFilterText) {
         return
     }
-    //TODO: filter not working anymore. fix this
+
     const filteredTree = itemsType === 'groups' ?
         makeGroupsTree(items as IClientGroup[], userId!, filterText) : makeUsersTree(items as IClientUser[], filterText)
 
@@ -79,18 +79,24 @@ const makeGroupsTree = (groups: IClientGroup[], userId: string, filterText?: str
     })
     const roots: ITreeItem[] = []
     const groupsMap = _.keyBy(groups, 'id')
-    const treeItemsMap = {}
+    const treeItemsMap: { [key: string]: ITreeItem } = {}
 
     groups.forEach(group => {
-        const treeItem = treeItemsMap[group.id] = treeItemsMap[group.id] || groupToNode(group)  // Seems legit.
+        const treeItem: ITreeItem = treeItemsMap[group.id] = treeItemsMap[group.id] || groupToNode(group)  // Seems legit.
         if (!(group.parentId) || !(group.parentId in groupsMap)) {
             roots.push(treeItem)
         } else {
             treeItemsMap[group.parentId] = treeItemsMap[group.parentId] || groupToNode(groupsMap[group.parentId])
-            treeItemsMap[group.parentId].items.push(treeItem)
+            treeItemsMap[group.parentId].items!.push(treeItem)
         }
     })
-    return roots
+
+    if (!filterText) {
+        return roots
+    } else {
+        return _.values(treeItemsMap)
+            .filter((item: ITreeItem) => item.name.toLowerCase().includes(filterText.toLowerCase()))
+    }
 
     function groupToNode(group: any): ITreeItem {
         return {
