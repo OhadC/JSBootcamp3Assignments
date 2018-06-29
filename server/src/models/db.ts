@@ -1,5 +1,6 @@
 import * as util from 'util'
 import * as fs from 'fs'
+import * as _ from 'lodash'
 
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -74,7 +75,17 @@ class DB {
     private isMatching(dict, conditions) {
         for (const key in conditions) {
             if (!(key in dict)) return false
-            if (dict[key] !== conditions[key]) return false
+            if (Array.isArray(dict[key])) {
+                if (Array.isArray(conditions[key])) {
+                    for (const item in conditions[key]) {
+                        if (!_.includes(dict[key], item)) return false
+                    }
+                } else {
+                    if (!_.includes(dict[key], conditions[key])) return false
+                }
+            } else {
+                if (dict[key] !== conditions[key]) return false
+            }
         }
         return true
     }

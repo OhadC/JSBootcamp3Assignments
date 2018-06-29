@@ -10,8 +10,7 @@ export const getAllGroups = async () => {
 }
 
 export const getAllGroupsByUserId = async (userId) => {
-    const allGroups: IServerGroup[] = await db.find(dbName)
-    const filterGroups: IServerGroup[] = allGroups.filter(group => group.userIds.includes(userId))
+    const filterGroups: IServerGroup[] = await db.find(dbName, {userIds: userId})
     return Promise.all(filterGroups.map(populateUsers))
 }
 
