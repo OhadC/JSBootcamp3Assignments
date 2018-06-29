@@ -5,31 +5,24 @@ const dbName = 'message'
 
 export const getAllMessages = async () => {
     const messages: IServerMessage[] = await db.find(dbName)
-    return Promise.all(messages.map(populateUser))
+    return Promise.all(messages.map(withUser))
 }
 
-export const getMessagesOfGroup = async (groupId) => {
-    if (!await db.findOne('group', { id: groupId })) {
-        throw Error('No group with that ID, ' + groupId)
-    }
-    const messages: IServerMessage[] = await db.find(dbName, { groupId })
-    return Promise.all(messages.map(populateUser))
+export const getMessagesOfConversation = async (conversationId) => {
+    const messages: IServerMessage[] = await db.find(dbName, { conversationId })
+    return Promise.all(messages.map(withUser))
 }
 
-export const addMessage = async (messageIn) => {
-    const message: IServerMessage = await db.add(dbName, messageIn)
-    return populateUser(message)
+export const addMessage = async ({ conversationId, userId, content, date }) => {
+    const message: IServerMessage = await db.add(dbName, { conversationId, userId, content, date }) // TODO: server date
+    return withUser(message)
 }
 
-export const deleteAllMessagesOfUser = async (userId) => {
-    await db.delete(dbName, { userId })
+export const deleteAllMessagesOfConversation = (conversationId) => {
+    return db.delete(dbName, { conversationId })
 }
 
-export const deleteAllMessagesOfgroup = async (groupId) => {
-    await db.delete(dbName, { groupId })
-}
-
-const populateUser = async (message: any): Promise<IClientMessage> => {
+const withUser = async (message: any): Promise<IClientMessage> => {     // TODO: do this on client
     message.user = await getUserById(message.userId)
     return message
 }

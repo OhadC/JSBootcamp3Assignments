@@ -7,6 +7,7 @@ const writeFileAsync = util.promisify(fs.writeFile)
 
 class DB {
     private db: { [key: string]: Object[] } = {}
+    private throttleFiles = {}
 
     constructor() { }
 
@@ -95,7 +96,13 @@ class DB {
         return JSON.parse(text)
     }
     private async writeToJson(name: string) {
-        // writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]));
+        if (this.throttleFiles[name]) return
+        this.throttleFiles[name] = true
+        setTimeout(
+            () => {
+                writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]))
+                this.throttleFiles[name] = false
+            }, 1000)
     }
 }
 

@@ -12,7 +12,7 @@ const saltRounds = 10
 export const login = async (name: string, plaintextPassword: string) => {
     if (await userService.validateUser(name, plaintextPassword)) {
         const user = await userService.getUserByName(name)
-        const token = await jwtSignAsync(user, jwtSecret, {expiresIn: '1h'})
+        const token = await jwtSignAsync(user, jwtSecret, { expiresIn: '1h' })
         return { user, token }
     }
     throw Error('Invalid name or password')
@@ -20,7 +20,7 @@ export const login = async (name: string, plaintextPassword: string) => {
 
 export const join = async (name: string, plaintextPassword: string) => {
     const hashedPassword = await getHashedPassword(plaintextPassword)
-    return userService.addUser(name, hashedPassword)
+    return userService.addUser({ name, password: hashedPassword })
 }
 
 const getHashedPassword = async (plaintextPassword) => {

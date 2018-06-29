@@ -16,15 +16,16 @@ export const getGroupById = requestHandlerFactory(
 
 export const getAllGroupsByUserId = requestHandlerFactory(
     (req: Request) => {
-        const userId = req.params.id
+        const userId = req.params.id // TODO: req.user.id
         return groupService.getAllGroupsByUserId(userId)
     }
 )
 
 export const getMessagesById = requestHandlerFactory(
     (req: Request) => {
+        console.log(req.user)
         const groupId = req.params.id
-        return messageService.getMessagesOfGroup(groupId)
+        return groupService.getMessagesById(groupId)
     }
 )
 

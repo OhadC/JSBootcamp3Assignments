@@ -1,11 +1,11 @@
-import { db, IUser, IServerUser, IClientUser } from '../models'
-import { authService, messageService, groupService } from '.'
+import { db, IServerUser, IClientUser } from '../models'
+import { authService, groupService, conversationService } from '.'
 
 const dbName = 'user'
 
 export const getAllUsers = async () => {
     const users: IServerUser[] = await db.find(dbName)
-    return users.map(toUserWithoutPassword)
+    return users.map(withoutPassword)
 }
 
 export const getUserById = async (id: string) => {
@@ -13,7 +13,7 @@ export const getUserById = async (id: string) => {
     if (!user) {
         throw Error('No user with that ID, ' + id)
     }
-    return toUserWithoutPassword(user)
+    return withoutPassword(user)
 }
 
 export const getUserByName = async (name: string) => {
@@ -21,33 +21,38 @@ export const getUserByName = async (name: string) => {
     if (!user) {
         throw Error('No user with that name, ' + name)
     }
-    return toUserWithoutPassword(user)
+    return withoutPassword(user)
 }
 
-export const addUser = async (name, password) => {
+export const addUser = async ({name, password}) => {
     if (!!(await db.findOne(dbName, { name }))) {
         throw Error('User with that name already exists. ' + name)
     }
-    // TODO: no id, name etc..
     const user: IServerUser = await db.add('user', { name, password })
-    return toUserWithoutPassword(user)
+    return withoutPassword(user)
 }
 
-export const updateUser = async (id: string, updatedUser: IUser) => {
+export const updateUser = async (id: string, { age }) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
-    const updatedUserFromDb = db.update(dbName, { id }, updatedUser)
-    return toUserWithoutPassword(updatedUserFromDb)
+    const updatedUserFromDb = db.update(dbName, { id }, { age })
+    return withoutPassword(updatedUserFromDb)
 }
 
 export const deleteUser = async (id: string) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
-    await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.deleteUserFromAllGroups(id)])
-    return db.delete(dbName, { id })
+    await Promise.all([
+        conversationService.deleteConversationByParentIds(id),
+        groupService.removeUserFromAllGroups(id),
+        db.delete(dbName, { id })
+    ])
+    return 'User deleted.'
 }
+
+export const getMessagesBy
 
 export const validateUser = async (name: string, password) => {
     const user: IServerUser = await db.findOne(dbName, { name })
@@ -57,7 +62,7 @@ export const validateUser = async (name: string, password) => {
     return authService.checkPassword(password, user.password)
 }
 
-function toUserWithoutPassword(user): IClientUser {
+function withoutPassword(user): IClientUser {
     const newContact: any = { ...user }
     delete newContact['password']
     return newContact

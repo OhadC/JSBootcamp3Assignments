@@ -1,17 +1,17 @@
-export interface IConversation{
+export interface IConversation {
     id: string
     ofType: "group" | "user"
-    parentId: string[]
+    parentIds: string[]
 }
 
-export interface IServerConversation{
+export interface IServerConversation {
     id: string
     ofType: "group" | "user"
-    parentId: string[]
+    parentIds: string[]
 }
 
-export interface IClientConversation{
+export interface IClientConversation {
     id: string
     ofType: "group" | "user"
-    parentId: string[]
+    parentIds: string[]
 }

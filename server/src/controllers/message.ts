@@ -7,12 +7,12 @@ export const getAllMessages = requestHandlerFactory(
     messageService.getAllMessages
 )
 
-export const getMessagesById = requestHandlerFactory(
-    (req: Request) => {
-        const messageId = req.params.id
-        return messageService.getMessagesOfGroup(messageId)
-    }
-)
+// export const getMessagesById = requestHandlerFactory(
+//     (req: Request) => {
+//         const messageId = req.params.id
+//         return messageService.getMessagesOfGroup(messageId)
+//     }
+// )
 
 export const addMessage = requestHandlerFactory(
     (req: Request) => {
