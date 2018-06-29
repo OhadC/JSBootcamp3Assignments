@@ -6,8 +6,7 @@
             "0",
             "2",
             "3"
-        ],
-        "isPrivate": false
+        ]
     },
     {
         "parentId": "0",
@@ -16,41 +15,6 @@
         "userIds": [
             "2",
             "3"
-        ],
-        "isPrivate": false
-    },
-    {
-        "parentId": "1",
-        "id": "2",
-        "userIds": [
-            "0",
-            "3"
-        ],
-        "isPrivate": true
-    },
-    {
-        "parentId": "0",
-        "id": "3",
-        "userIds": [
-            "0",
-            "2"
-        ],
-        "isPrivate": true
-    },
-    {
-        "id": "4",
-        "userIds": [
-            "0",
-            "0"
-        ],
-        "isPrivate": true
-    },
-    {
-        "id": "5",
-        "userIds": [
-            "0",
-            "1"
-        ],
-        "isPrivate": true
+        ]
     }
 ]

@@ -7,7 +7,6 @@ export interface IGroup {
     name?: string
     userIds?: string[]
     users?: IUser[]
-    isPrivate: boolean
 }
 
 export interface IServerGroup extends IGroup {
@@ -16,7 +15,6 @@ export interface IServerGroup extends IGroup {
     name?: string
     userIds?: string[]
     users: undefined
-    isPrivate: boolean
 }
 
 export interface IClientGroup extends IGroup {
@@ -25,5 +23,4 @@ export interface IClientGroup extends IGroup {
     name?: string
     userIds?: string[]
     users: IClientUser[]
-    isPrivate: boolean
 }

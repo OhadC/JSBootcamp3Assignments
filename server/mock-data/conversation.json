@@ -1,0 +1,32 @@
+[
+    {
+        "id": "0",
+        "ofType": "group",
+        "parentId": ["0"]
+    },
+    {
+        "id": "1",
+        "ofType": "group",
+        "parentId": ["1"]
+    },
+    {
+        "id": "2",
+        "ofType": "user",
+        "parentId": ["0", "3"]
+    },
+    {
+        "id": "3",
+        "ofType": "user",
+        "parentId": ["0", "2"]
+    },
+    {
+        "id": "4",
+        "ofType": "user",
+        "parentId": ["0", "0"]
+    },
+    {
+        "id": "5",
+        "ofType": "user",
+        "parentId": ["0", "1"]
+    }
+]

@@ -3,7 +3,7 @@ import { IClientUser } from "./user";
 
 export interface IMessage {
     id: string
-    groupId: string
+    conversationId: string
     userId: string
     user?: IUser
     content: string
@@ -12,7 +12,7 @@ export interface IMessage {
 
 export interface IServerMessage extends IMessage{
     id: string
-    groupId: string
+    conversationId: string
     userId: string
     user: undefined
     content: string
@@ -21,7 +21,7 @@ export interface IServerMessage extends IMessage{
 
 export interface IClientMessage extends IMessage{
     id: string
-    groupId: string
+    conversationId: string
     userId: string
     user: IClientUser
     content: string
