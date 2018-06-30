@@ -21,14 +21,14 @@ class LogIn extends React.Component<{ submit: Function }, any> {
 
         return (
             <Modal style={styles.modal}>
-                <p style={styles.p}>
+                <div style={styles.inputWrapper}>
                     <label style={styles.label} htmlFor="username">Username</label>
                     <input style={styles.input} type="text" name="username" value={this.state.username} onChange={this.inputChangedHandler} />
-                </p>
-                <p>
+                </div>
+                <div style={styles.inputWrapper}>
                     <label style={styles.label} htmlFor="password">Password</label>
                     <input style={styles.input} type="password" name="password" value={this.state.password} onChange={this.inputChangedHandler} />
-                </p>
+                </div>
                 <button disabled={!canSubmit} onClick={this.submit} style={{ width: "100%", textAlign: 'center', marginTop: "0.5em" }}>Submit</button>
             </Modal>
         )
@@ -39,11 +39,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     modal: {
         minWidth: '23em'
     },
-    p: {
+    inputWrapper: {
         margin: "0 0 0.5em 0",
     },
     label: {
-        display: "inline-block",
+        display: "block",
         marginBottom: ".5rem"
     },
     input: {

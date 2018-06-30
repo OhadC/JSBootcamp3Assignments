@@ -1,17 +1,16 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import CheckboxList from '../../../components/CheckboxList'
 import { IAppState } from '../../../store/reducers'
 import * as actions from '../../../store/actions'
 import Checkbox from '../../../components/Checkbox';
 
-class GroupEdit extends React.Component<any, any> {
+class UserEdit extends React.Component<any, any> {
     state = {
         isNew: false,
-        isRoot: false,
         name: "",
-        userIds: []
+        age: "",
+        password: "",
     }
 
     componentDidMount() {
@@ -22,68 +21,71 @@ class GroupEdit extends React.Component<any, any> {
         if (!this.state.isNew && (prevState.isNew || prevProps.editedItem !== this.props.editedItem)) {
             this.getStateFromProps()
         } else if (!prevState.isNew && this.state.isNew) {
-            this.setState({ isRoot: false, name: "", userIds: [] })
+            this.setState({ name: "", age: "", password: "" })
         }
     }
     getStateFromProps() {
-        const { name, userIds, parentId } = this.props.editedItem
-        this.setState({ isNew: false, name, userIds, parentId })
+        const { name, age } = this.props.editedItem
+        this.setState({ isNew: false, name, age, password: "" })
     }
 
-    nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ name: e.target.value })
+    inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name
+        const value = event.target.value
+        this.setState({ [name]: value })
     }
-
-    usersListChangeHandler = (userIds: string[]) => this.setState({ userIds })
 
     valueCheckedHandler = (value: string, isChecked: boolean) => {
         this.setState({ [value]: isChecked })
     }
 
     onSave = () => {
-        const { name, userIds } = this.state
         if (this.state.isNew) {
-            const parentId = this.state.isRoot ? undefined : this.props.editedItem.id
-            this.props.createNewGroup({
-                parentId,
+            const { name, age, password } = this.state
+            this.props.createNewUser({
                 name,
-                userIds
+                age,
+                password
             })
         } else {
+            const { age } = this.state
             const id = this.props.editedItem.id
-            this.props.updateGroup({
+            this.props.updateUser({
                 id,
-                name,
-                userIds
+                age
             })
         }
     }
-    onDelete = () => this.props.deleteGroup(this.props.editedItem)
+    onDelete = () => this.props.deleteUser(this.props.editedItem)
 
     render() {
         return (
             <>
                 <div style={styles.inputWrapper}>
                     <h2>
-                        Currently editing group {this.props.editedItem && this.props.editedItem.name}:
+                        Currently editing User {this.props.editedItem && this.props.editedItem.name}:
                     </h2>
                 </div>
                 <div style={styles.inputWrapper}>
                     <label style={styles.label} htmlFor="name">
                         Name:
                     </label>
-                    <input type="text" value={this.state.name} name={name} onChange={this.nameChangeHandler} style={styles.input} />
+                    <input type="text" value={this.state.name} name="name" onChange={this.inputChangedHandler} style={styles.input} disabled={!this.state.isNew} />
                 </div>
                 <div style={styles.inputWrapper}>
-                    <label style={styles.label}>
-                        Users:
+                    <label style={styles.label} htmlFor="age">
+                        age:
                     </label>
-                    <CheckboxList data={this.props.users} value={"id"} label={"name"} checkedValues={this.state.userIds} onChange={this.usersListChangeHandler} />
+                    <input type="text" value={this.state.age} name="age" onChange={this.inputChangedHandler} style={styles.input} />
                 </div>
                 <div style={styles.inputWrapper}>
-                    <Checkbox isChecked={this.state.isNew} label={"Make new Group"} value={"isNew"} onChange={this.valueCheckedHandler} />
-                    <br />
-                    {this.state.isNew && <Checkbox isChecked={this.state.isRoot} label={"Put at root level"} value={"isRoot"} onChange={this.valueCheckedHandler} />}
+                    <label style={styles.label} htmlFor="password">
+                        password:
+                    </label>
+                    <input type="password" value={this.state.password} name="password" onChange={this.inputChangedHandler} style={styles.input} disabled={!this.state.isNew} />
+                </div>
+                <div style={styles.inputWrapper}>
+                    <Checkbox isChecked={this.state.isNew} label={"Make new User"} value={"isNew"} onChange={this.valueCheckedHandler} />
                 </div>
                 <button onClick={this.onSave}>Save</button>
                 <button onClick={this.onDelete}>Delete</button>
@@ -114,10 +116,10 @@ const mapStateToProps = (state: IAppState) => ({
 
 const mapDispatchToProps = {
     fetchUsers: actions.fetchUsers,
-    createNewGroup: actions.createNewGroup,
-    updateGroup: actions.updateGroup,
-    deleteGroup: actions.deleteGroup,
+    createNewUser: actions.createNewUser,
+    updateUser: actions.updateUser,
+    deleteUser: actions.deleteUser,
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupEdit)
+export default connect(mapStateToProps, mapDispatchToProps)(UserEdit)

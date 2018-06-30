@@ -7,7 +7,7 @@ const baseURL = 'http://localhost:4000'
 
 const notify = (status: 'start' | 'success' | 'fail', label: string, data?: any) => {
     const type = toUnderscore(label) + "_" + toUnderscore(status)
-    const payload = data
+    const payload = data // TODO: { data }
     return {
         type,
         payload
@@ -26,7 +26,7 @@ export const api = ({ dispatch, getState }: any) => (next: any) => (action: AnyA
     const { url, method, data, success, fail, label } = action.payload
 
     const config: Axios.AxiosRequestConfig = {
-        method: method ? method : 'get',
+        method: method ? method : 'GET',
         baseURL,
         url,
         data,

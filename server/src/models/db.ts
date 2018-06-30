@@ -7,6 +7,7 @@ const writeFileAsync = util.promisify(fs.writeFile)
 
 class DB {
     private db: { [key: string]: Object[] } = {}
+    private throttleFiles: { [name: string]: boolean } = {}
 
     constructor() { }
 
@@ -43,16 +44,17 @@ class DB {
         return dict as any
     }
 
-    async update(dbName: string, conditions: Object, updatedDict: Object) {
+    async update(dbName: string, conditions: Object, updatedFields: Object) {
         if (!(dbName in this.db)) {
             await this.fetchDb(dbName)
         }
 
         const index = this.db[dbName].findIndex(dict => this.isMatching(dict, conditions))
         if (index !== -1) {
+            const updatedDict = {...this.db[dbName][index], ...updatedFields}
             this.db[dbName][index] = updatedDict
             await this.writeToJson(dbName)
-            return { success: true }
+            return updatedDict
         } else {
             return { error: 'No matching' }
         }
@@ -95,7 +97,13 @@ class DB {
         return JSON.parse(text)
     }
     private async writeToJson(name: string) {
-        // writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]));
+        if (this.throttleFiles[name]) return
+        this.throttleFiles[name] = true
+        setTimeout(
+            () => {
+                // writeFileAsync(`./mock-data/${name}.json`, JSON.stringify(this.db[name]))
+                this.throttleFiles[name] = false
+            }, 1000)
     }
 }
 

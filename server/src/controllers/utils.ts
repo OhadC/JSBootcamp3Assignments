@@ -9,6 +9,7 @@ export const requestHandlerFactory = (wrapped: (req?: Request) => any | Promise<
                 data
             })
         } catch (error) {
+            console.log(error)
             res.status(500).json({
                 status: "error",
                 message: error.toString()

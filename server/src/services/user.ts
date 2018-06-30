@@ -5,7 +5,7 @@ const dbName = 'user'
 
 export const getAllUsers = async () => {
     const users: IServerUser[] = await db.find(dbName)
-    return users.map(toUserWithoutPassword)
+    return users.map(withoutPassword)
 }
 
 export const getUserById = async (id: string) => {
@@ -13,7 +13,7 @@ export const getUserById = async (id: string) => {
     if (!user) {
         throw Error('No user with that ID, ' + id)
     }
-    return toUserWithoutPassword(user)
+    return withoutPassword(user)
 }
 
 export const getUserByName = async (name: string) => {
@@ -21,24 +21,24 @@ export const getUserByName = async (name: string) => {
     if (!user) {
         throw Error('No user with that name, ' + name)
     }
-    return toUserWithoutPassword(user)
+    return withoutPassword(user)
 }
 
-export const addUser = async (name, password) => {
+export const addUser = async ({ name, password, age }) => {
     if (!!(await db.findOne(dbName, { name }))) {
         throw Error('User with that name already exists. ' + name)
     }
-    // TODO: no id, name etc..
-    const user: IServerUser = await db.add('user', { name, password })
-    return toUserWithoutPassword(user)
+    password = await authService.getHashedPassword(password)
+    const user: IServerUser = await db.add('user', { name, password, age })
+    return withoutPassword(user)
 }
 
-export const updateUser = async (id: string, updatedUser: IUser) => {
+export const updateUser = async (id: string, updatedFields: IUser) => {
     if (!(await db.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
-    const updatedUserFromDb = db.update(dbName, { id }, updatedUser)
-    return toUserWithoutPassword(updatedUserFromDb)
+    const updatedUser = await db.update(dbName, { id }, updatedFields)
+    return withoutPassword(updatedUser)
 }
 
 export const deleteUser = async (id: string) => {
@@ -57,7 +57,7 @@ export const validateUser = async (name: string, password) => {
     return authService.checkPassword(password, user.password)
 }
 
-function toUserWithoutPassword(user): IClientUser {
+function withoutPassword(user): IClientUser {
     const newContact: any = { ...user }
     delete newContact['password']
     return newContact

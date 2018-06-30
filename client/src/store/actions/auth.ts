@@ -4,7 +4,7 @@ import { apiRequest, actionTypes } from ".";
 export const login = (name: string, password: string) =>
     apiRequest({
         url: '/auth/login',
-        method: 'post',
+        method: 'POST',
         data: { name, password },
         label: 'login'
     })

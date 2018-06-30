@@ -29,3 +29,8 @@ export const UPDATE_TREE = 'UPDATE_TREE'
 export const UPDATE_TREE_ITEMS = 'UPDATE_TREE_ITEMS'
 export const SET_ACTIVE = 'SET_ACTIVE'
 export const SET_EXPANDED_IDS = 'SET_EXPANDED_IDS'
+
+// Users
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
+export const SET_USERS = 'SET_USERS'
+export const ADD_USER = 'ADD_USER'

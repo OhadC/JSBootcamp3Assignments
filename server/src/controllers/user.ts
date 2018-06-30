@@ -29,6 +29,13 @@ export const updateUser = requestHandlerFactory(
     }
 )
 
+export const addUser = requestHandlerFactory(
+    (req: Request) => {
+        const user = req.body
+        return userService.addUser(user)
+    }
+)
+
 export const deleteUser = requestHandlerFactory(
     (req: Request) => {
         const userId = req.params.id
