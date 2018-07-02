@@ -24,9 +24,18 @@ const addGroup = (state: IGroupsState, action: AnyAction) => {
     return updateObject(state, { data: newData })
 }
 
+const updateGroup = (state: IGroupsState, action: AnyAction) => {
+    const updatedGroup = action.payload.group
+    const groups = state.data.slice()
+    const groupIndex = groups.findIndex(group => group.id === updatedGroup.id)
+    groups[groupIndex] = { ...groups[groupIndex], ...updatedGroup }
+    return updateObject(state, { data: groups })
+}
+
 export const groupsReducer = createReducer(initialState, {
     [actionTypes.FETCH_GROUPS_SUCCESS]: setGroups,
     [actionTypes.FETCH_ALL_GROUPS_SUCCESS]: (state, action) => setGroups(state, action, true),
     [actionTypes.ADD_GROUP]: addGroup,
+    [actionTypes.UPDATE_GROUP]: updateGroup,
     [actionTypes.SET_GROUPS]: setGroups,
 })

@@ -24,7 +24,8 @@ function selectorsToTree(groups: IClientGroup[], users: IClientUser[], editModeS
         const groupsFromUsers = users.map(user => ({
             id: user.id,
             name: user.name,
-            isPrivate: true
+            isPrivate: true,
+            age: user.age
         }))
 
         return makeTree((groupsFromUsers as any), "", filterText)

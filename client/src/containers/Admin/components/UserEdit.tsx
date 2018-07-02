@@ -9,7 +9,7 @@ class UserEdit extends React.Component<any, any> {
     state = {
         isNew: false,
         name: "",
-        age: "",
+        age: 0,
         password: "",
     }
 
@@ -20,12 +20,12 @@ class UserEdit extends React.Component<any, any> {
         if (!this.state.isNew && (prevState.isNew || prevProps.editedItem !== this.props.editedItem)) {
             this.getStateFromProps()
         } else if (!prevState.isNew && this.state.isNew) {
-            this.setState({ name: "", age: "", password: "" })
+            this.setState({ name: "", age: 0, password: "" })
         }
     }
     getStateFromProps() {
         const { name, age } = this.props.editedItem
-        this.setState({ isNew: false, name, age, password: "" })
+        this.setState({ isNew: false, name: name || "", age: age || 0, password: "" })
     }
 
     inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +75,7 @@ class UserEdit extends React.Component<any, any> {
                     <label style={styles.label} htmlFor="age">
                         age:
                     </label>
-                    <input type="text" value={this.state.age} name="age" onChange={this.inputChangedHandler} style={styles.input} />
+                    <input type="number" value={+this.state.age} name="age" onChange={this.inputChangedHandler} style={styles.input} />
                 </div>
                 <div style={styles.inputWrapper}>
                     <label style={styles.label} htmlFor="password">

@@ -1,5 +1,4 @@
-import { actionTypes, fetchMessages, fetchAllUsers } from "../actions"
-import { fetchGroups, fetchAllGroups } from "../actions/groups";
+import { actionTypes, fetchMessages, fetchAllUsers, fetchGroups, fetchAllGroups } from "../actions"
 
 export const byActionType = ({ dispatch, getState }: any) => (next: Function) => (action: any) => {
     switch (action.type) {

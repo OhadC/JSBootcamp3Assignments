@@ -24,9 +24,18 @@ const addUser = (state: IUsersState, action: AnyAction) => {
     return updateObject(state, { data: newData })
 }
 
+const updateUser = (state: IUsersState, action: AnyAction) => {
+    const updatedUser = action.payload.user
+    const users = state.data.slice()
+    const userIndex = users.findIndex(user => user.id === updatedUser.id)
+    users[userIndex] = { ...users[userIndex], ...updatedUser }
+    return updateObject(state, { data: users })
+}
+
 export const usersReducer = createReducer(initialState, {
     [actionTypes.FETCH_USERS_SUCCESS]: setUsers,
     [actionTypes.FETCH_ALL_USERS_SUCCESS]: (state, action) => setUsers(state, action, true),
     [actionTypes.ADD_USER]: addUser,
+    [actionTypes.UPDATE_USER]: updateUser,
     [actionTypes.SET_USERS]: setUsers,
 })
