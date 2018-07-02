@@ -7,6 +7,7 @@ import { ITreeItem } from '../../models'
 import { IItemHTMLElement } from './components/chat-tree-module'
 import TreeSearch from './components/treeSearch'
 import ChatTree from './components/ChatTree'
+import { treeSelector } from "../../store/selectors"
 import './Tree.css'
 
 interface IProps {
@@ -50,7 +51,7 @@ const TreeStyle: React.CSSProperties = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-    tree: state.tree.tree,
+    tree: treeSelector(state),
     activeId: state.tree.active && state.tree.active.id,
     expandedIds: state.tree.expandedIds
 })

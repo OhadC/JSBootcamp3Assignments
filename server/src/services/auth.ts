@@ -10,7 +10,6 @@ const jwtSignAsync = util.promisify(jsonwebtoken.sign) as any
 const saltRounds = 10
 
 export const login = async (name: string, plaintextPassword: string) => {
-    console.log(name, plaintextPassword)
     if (await userService.validateUser(name, plaintextPassword)) {
         const user = await userService.getUserByName(name)
         const token = await jwtSignAsync(user, jwtSecret, {expiresIn: '1h'})

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 interface IProps {
-    itemsType: "users" | "groups"
+    editMode: "users" | "groups"
     onUsers: any
     onGroups: any
 }
@@ -9,8 +9,8 @@ interface IProps {
 const SmallAdminPanel = (props: IProps) => {
     return (
         <div className="small-admin-panel">
-            <button onClick={props.onUsers} className={props.itemsType === "users" ? "active" : undefined}>Users</button>
-            <button onClick={props.onGroups} className={props.itemsType === "groups" ? "active" : undefined}>Groups</button>
+            <button onClick={props.onUsers} className={props.editMode === "users" ? "active" : undefined}>Users</button>
+            <button onClick={props.onGroups} className={props.editMode === "groups" ? "active" : undefined}>Groups</button>
         </div>
     )
 }

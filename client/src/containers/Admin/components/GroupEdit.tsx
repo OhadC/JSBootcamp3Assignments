@@ -15,7 +15,6 @@ class GroupEdit extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        this.props.fetchUsers()
         this.getStateFromProps()
     }
     componentDidUpdate(prevProps: any, prevState: any, snapshot: any) {
@@ -108,12 +107,11 @@ const styles: { [key: string]: React.CSSProperties } = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-    editedItem: state.tree.active,
+    editedItem: state.admin.editedItem,
     users: state.users.data
 })
 
 const mapDispatchToProps = {
-    fetchUsers: actions.fetchUsers,
     createNewGroup: actions.createNewGroup,
     updateGroup: actions.updateGroup,
     deleteGroup: actions.deleteGroup,

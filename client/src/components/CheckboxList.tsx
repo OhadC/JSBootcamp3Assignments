@@ -18,7 +18,6 @@ const CheckboxList = (props: IProps) => {
     }
 
     const { data, label, value } = props
-    console.log(data)
 
     const checkboxes = data.map(dataItem => (
         <Checkbox label={dataItem[label]} key={dataItem[value]} value={dataItem[value]} isChecked={_.includes(props.checkedValues, dataItem[value])} onChange={valueCheckedHandler} />

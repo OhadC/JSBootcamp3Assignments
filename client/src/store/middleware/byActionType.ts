@@ -1,20 +1,25 @@
-import { actionTypes, fetchMessages } from "../actions"
-import { fetchTree } from "../actions"
+import { actionTypes, fetchMessages, fetchAllUsers } from "../actions"
+import { fetchGroups, fetchAllGroups } from "../actions/groups";
 
 export const byActionType = ({ dispatch, getState }: any) => (next: Function) => (action: any) => {
     switch (action.type) {
 
         case (actionTypes.LOGIN_SUCCESS):
             next(action)
-            dispatch(fetchTree())
+            dispatch(fetchGroups())
             break
 
         case (actionTypes.SET_ACTIVE):
             next(action)
-            const { tree: { itemsType } } = getState()
-            itemsType === 'groups' && dispatch(fetchMessages(action.payload.active.id)) // TODO: only in messages! IDK how
+            dispatch(fetchMessages(action.payload.active.id))
             break
-            
+
+        case (actionTypes.SET_ADMIN_EDIT_MODE):     // TODO: this not happend when getting into admin panel.
+            next(action)
+            const { groups: { isComplete: isGroupsComplete }, users: { isComplete: isUsersComplete } } = getState()
+            isGroupsComplete || dispatch(fetchAllGroups())
+            isUsersComplete || dispatch(fetchAllUsers())
+
         default: next(action)
     }
 }

@@ -33,22 +33,24 @@ class ChatTree extends React.Component<IProps, {}> {
 
         this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
     }
-    componentDidUpdate(prevProps: IProps, prevState: {}, snapshot: any) {
-        if (prevProps.filteredTree !== this.props.filteredTree) {
-            this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
-        }
+    shouldComponentUpdate(nextProps: IProps) {
+        return this.props.filteredTree !== nextProps.filteredTree
+    }
+    componentDidUpdate() {
+        this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
     }
     componentWillUnmount() {
         this.chatTree.off('activeElementChanged', this.props.activeElementChanged)
         this.chatTree.off('groupExpanded', this.props.expandedIdsChanged)
         this.chatTree.off('groupFolded', this.props.expandedIdsChanged)
-        
+
         this.chatTree.clear()
     }
 
     loadTree = (filteredTree: ITreeItem[], expandedGroupIds: string[], activeGroupId: string | null) => {
         const sectionElement = this.sectionRef.current
         const treeDivElement = this.treeDivRef.current
+
         sectionElement.removeChild(treeDivElement)
         this.chatTree.load(filteredTree, expandedGroupIds, activeGroupId)
         sectionElement.appendChild(treeDivElement)

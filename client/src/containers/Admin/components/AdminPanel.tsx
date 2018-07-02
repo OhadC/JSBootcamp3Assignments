@@ -5,7 +5,7 @@ import UserEdit from './UserEdit';
 
 interface IProps {
     style: React.CSSProperties
-    itemsType: 'groups' | 'users'
+    editMode: 'groups' | 'users'
     editedItem: IClientGroup | IClientUser
 }
 
@@ -15,8 +15,8 @@ const AdminPanel = (props: IProps) => {
             <h1>
                 Admin Panel
             </h1>
-            {props.editedItem && props.itemsType === 'groups' && <GroupEdit />}
-            {props.editedItem && props.itemsType === 'users' && <UserEdit />}
+            {props.editedItem && props.editMode === 'groups' && <GroupEdit />}
+            {props.editedItem && props.editMode === 'users' && <UserEdit />}
         </div>
     )
 }

@@ -15,14 +15,14 @@ export default function ChatTree(element: IItemHTMLElement) {
     let events = Events()
     let expandedGroups: string[] = []
 
-    const onClick = (event: MouseEvent) => {
+    function onClick(event: MouseEvent) {
         event.stopPropagation()
         const srcElement = event.srcElement as IItemHTMLElement
         if (srcElement.localName === 'li') {
             setActiveElement(srcElement)
         }
     }
-    const ondblclick = (event: MouseEvent) => {
+    function ondblclick(event: MouseEvent) {
         event.stopPropagation()
         const srcElement = event.srcElement as IItemHTMLElement
         if (srcElement.localName === 'li' && isGroup(srcElement)) {
@@ -30,7 +30,7 @@ export default function ChatTree(element: IItemHTMLElement) {
         }
     }
 
-    const onkeydown = (event: KeyboardEvent) => {
+    function onkeydown(event: KeyboardEvent) {
         event.stopPropagation()
         if (!activeElement) return
         switch (event.key) {
@@ -170,7 +170,7 @@ export default function ChatTree(element: IItemHTMLElement) {
         while (element.firstChild) {
             element.removeChild(element.firstChild)
         }
-        
+
         activeElement = null
 
         element.removeEventListener("click", onClick)
