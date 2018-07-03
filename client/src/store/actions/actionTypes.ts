@@ -39,6 +39,7 @@ export const FETCH_ALL_GROUPS_SUCCESS = 'FETCH_ALL_GROUPS_SUCCESS'
 export const SET_GROUPS = 'SET_GROUPS'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
+export const DELETE_GROUP = 'DELETE_GROUP'
 
 // Users
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
@@ -46,3 +47,4 @@ export const FETCH_ALL_USERS_SUCCESS = 'FETCH_ALL_USERS_SUCCESS'
 export const SET_USERS = 'SET_USERS'
 export const ADD_USER = 'ADD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
+export const DELETE_USER = 'DELETE_USER'

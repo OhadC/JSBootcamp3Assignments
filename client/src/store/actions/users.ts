@@ -1,7 +1,5 @@
-import * as _ from 'lodash'
-
 import * as actions from '../../store/actions'
-import { IClientUser, IUser, IClientGroup } from "../../models"
+import { IClientUser, IUser } from "../../models"
 import { actionTypes, apiRequest } from "."
 
 export const fetchUsers = () => fetchAllUsers()
@@ -45,28 +43,10 @@ export const updateUser = (updatedUserFields: IClientUser) => (dispatch: any, ge
 }
 
 export const deleteUser = (user: IClientUser) => (dispatch: any, getState: Function) => {
-    const success = () => {
-        const { groups: { data: groups }, users: { data: users } } = getState()
-        const newGroups: IClientGroup[] = groups.slice()
-        const newUsers = _.differenceWith((users), [user], (a: any, b) => a.id === b.id)
-
-        for (let i = newGroups.length - 1; i >= 0; i--) {
-            const group = newGroups[i]
-            if (group.userIds && _.includes(group.userIds, user.id)) {
-                if (group.isPrivate) {
-                    newGroups.splice(i, 1)
-                } else {
-                    const newGroup = Object.assign({}, group)
-                    newGroup.userIds = _.difference(newGroup.userIds, [user.id])
-                    newGroup.users = _.differenceWith(newGroup.users, [user], (a: any, b) => a.id === b.id)
-                    newGroups[i] = newGroup
-                }
-            }
-        }
-
-        dispatch(setUsers(newUsers))
-        dispatch(actions.setGroups(newGroups))
-    }
+    const success = () => dispatch({
+        type: actionTypes.DELETE_USER,
+        payload: { user }
+    })
     dispatch(actions.apiRequest({
         url: `/user/${user.id}`,
         method: 'DELETE',

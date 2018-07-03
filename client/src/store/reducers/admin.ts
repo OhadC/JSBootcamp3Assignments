@@ -18,13 +18,15 @@ const initialState: IAdminState = {
     expandedIds: []
 }
 
-const setEditMode = (state: IAdminState, action: AnyAction): IAdminState =>
-    updateObject(state, {
+const setEditMode = (state: IAdminState, action: AnyAction): IAdminState => {
+    if (state.editMode === action.payload.editMode) return state
+    return updateObject(state, {
         editMode: action.payload.editMode,
         editedItem: null,
         expandedIds: [],
         filterText: ''
     })
+}
 
 const setEditedItem = (state: IAdminState, action: AnyAction): IAdminState =>
     updateObject(state, { editedItem: action.payload.editedItem })

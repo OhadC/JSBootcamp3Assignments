@@ -2,11 +2,16 @@ import { connect } from 'react-redux'
 
 import { Tree } from "../../Tree/Tree"
 import { IAppState } from "../../../store/reducers"
-import { adminTreeSelector } from "../../../store/selectors"
+import { adminGroupsTreeSelector, adminUsersTreeSelector } from "../../../store/selectors"
 import * as actions from "../../../store/actions"
 
+const chooseCombiner = (editMode: 'groups' | 'users') => {
+    if (editMode === 'groups') return adminGroupsTreeSelector
+    else return adminUsersTreeSelector
+}
+
 const mapStateToProps = (state: IAppState) => ({
-    tree: adminTreeSelector(state),
+    tree: chooseCombiner(state.admin.editMode)(state),
     activeId: state.admin.editedItem && state.admin.editedItem.id,
     expandedIds: state.admin.expandedIds
 })

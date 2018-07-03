@@ -1,5 +1,3 @@
-import * as _ from 'lodash'
-
 import { actionTypes } from '../../store/actions'
 import { IClientGroup } from "../../models"
 import { apiRequest } from "."
@@ -50,21 +48,10 @@ export const updateGroup = (updatedGroupFields: IClientGroup) => (dispatch: any,
 }
 
 export const deleteGroup = (group: IClientGroup) => (dispatch: any, getState: Function) => {
-    const success = () => {
-        const { groups: { data: groups } } = getState()
-        const groupsMap = _.mapKeys(groups, 'id')
-        deleteGroupRecursively(group)
-        dispatch(setGroups(_.values(groupsMap)))
-
-        function deleteGroupRecursively(groupToDelete: IClientGroup) {
-            delete groupsMap[groupToDelete.id]
-            _.forEach(groupsMap, group => {
-                if (group && group.parentId === groupToDelete.id) {
-                    deleteGroupRecursively(group)
-                }
-            })
-        }
-    }
+    const success = () => dispatch({
+        type: actionTypes.DELETE_GROUP,
+        payload: { group }
+    })
     dispatch(apiRequest({
         url: `/group/${group.id}`,
         method: 'DELETE',
