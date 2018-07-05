@@ -46,7 +46,5 @@ function* sendMessageSaga(action: AnyAction) {
 }
 
 function* disconnectToSocketSaga(action: AnyAction) {
-    console.log(channel)
     yield channel.close()
-    console.log(channel)
 }

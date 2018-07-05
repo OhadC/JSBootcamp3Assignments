@@ -1,12 +1,8 @@
 import * as React from 'react'
 
-class TreeSearch extends React.Component<{ filterData: Function }, any> {
+class TreeSearch extends React.PureComponent<{ filterData: Function }, any> {
     state = {
         filter: ''
-    }
-
-    componentDidMount() {
-        this.setState({ filter: '' })
     }
 
     filterChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

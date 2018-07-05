@@ -11,9 +11,9 @@ interface IProps {
     onChange: (newCheckedValues: string[]) => any
 }
 
-const CheckboxList = (props: IProps) => {
+const CheckboxList: React.SFC<IProps> = props => {
 
-    function valueCheckedHandler(value: string, isChecked: boolean) {
+    const valueCheckedHandler = (value: string, isChecked: boolean) => {
         props.onChange(_.xor(props.checkedValues, [value]))
     }
 

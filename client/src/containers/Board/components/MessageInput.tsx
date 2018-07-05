@@ -8,7 +8,7 @@ interface IState {
     inputValue: string
 }
 
-class MessageInput extends React.Component<IProps, IState>{
+class MessageInput extends React.PureComponent<IProps, IState>{
     state = {
         inputValue: ''
     }

@@ -2,7 +2,7 @@ import * as React from "react"
 
 import Modal from "../components/Modal"
 
-class LogIn extends React.Component<{ submit: Function }, any> {
+class LogIn extends React.PureComponent<{ submit: any }, any> {
     state = {
         username: 'Ori',
         password: 'Ori'

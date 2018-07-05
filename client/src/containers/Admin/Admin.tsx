@@ -20,7 +20,7 @@ interface IProps {
     setEditMode: any
 }
 
-class Admin extends React.Component<IProps, {}> {
+class Admin extends React.PureComponent<IProps, {}> {
     componentDidMount() {
         this.props.setEditMode('groups')
     }

@@ -7,8 +7,8 @@ interface IProps {
     onChange: (value: string | number, isChecked: boolean) => any
 }
 
-const Checkbox = (props: IProps) => {
-    function toggleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>) {
+const Checkbox: React.SFC<IProps> = props => {
+    const toggleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onChange(props.value, e.target.checked)
     }
 

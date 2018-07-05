@@ -17,25 +17,22 @@ interface IProps {
     logout: any
 }
 
-class Chat extends React.Component<IProps, {}> {
+const Chat: React.SFC<IProps> = props => {
+    const login = () => <LogIn submit={props.login} />
 
-    public render() {
-        const login = () => <LogIn submit={this.props.login} />
+    return (
+        <>
+            <Route path="/login" exact={true} render={login} />
 
-        return (
-            <>
-                <Route path="/login" exact={true} render={login} />
-
-                <main style={styles.chat}>
-                    <section style={styles.leftSection} >
-                        <SideHeader user={this.props.user} onLogout={this.props.logout} />
-                        <Tree />
-                    </section>
-                    <Board style={styles.rightSection} />
-                </main>
-            </>
-        )
-    }
+            <main style={styles.chat}>
+                <section style={styles.leftSection} >
+                    <SideHeader user={props.user} onLogout={props.logout} />
+                    <Tree />
+                </section>
+                <Board style={styles.rightSection} />
+            </main>
+        </>
+    )
 }
 
 const styles: { [key: string]: React.CSSProperties } = {

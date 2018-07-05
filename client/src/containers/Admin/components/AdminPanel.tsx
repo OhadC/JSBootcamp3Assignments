@@ -9,7 +9,7 @@ interface IProps {
     editedItem: IClientGroup | IClientUser
 }
 
-const AdminPanel = (props: IProps) => {
+const AdminPanel: React.SFC<IProps> = props => {
     return (
         <div style={props.style}>
             <h1>

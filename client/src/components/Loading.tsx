@@ -2,9 +2,13 @@ import * as React from "react"
 import { connect } from 'react-redux'
 
 import './Loading.css'
-import { IAppState } from "../store/reducers";
+import { IAppState } from "../store/reducers"
 
-const Loading = (props: any) => {
+interface IProps {
+    isLoading: boolean
+}
+
+const Loading: React.SFC<IProps> = props => {
     return (
         <div className="loading-wrapper" style={{ display: props.isLoading ? 'block' : 'none' }}>
             <div className="loader" />

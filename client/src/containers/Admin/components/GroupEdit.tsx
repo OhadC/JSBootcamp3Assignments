@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import CheckboxList from '../../../components/CheckboxList'
 import { IAppState } from '../../../store/reducers'
 import * as actions from '../../../store/actions'
-import Checkbox from '../../../components/Checkbox';
+import Checkbox from '../../../components/Checkbox'
 
-class GroupEdit extends React.Component<any, any> {
+class GroupEdit extends React.PureComponent<any, any> {
     state = {
         isNew: false,
         isRoot: false,

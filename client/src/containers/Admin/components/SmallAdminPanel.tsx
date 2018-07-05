@@ -6,7 +6,7 @@ interface IProps {
     onGroups: any
 }
 
-const SmallAdminPanel = (props: IProps) => {
+const SmallAdminPanel: React.SFC<IProps> = props => {
     return (
         <div className="small-admin-panel">
             <button onClick={props.onUsers} className={props.editMode === "users" ? "active" : undefined}>Users</button>

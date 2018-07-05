@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/react-toastify": "^4.0.0",
+    "@types/recompose": "^0.26.1",
     "axios": "^0.18.0",
     "connected-react-router": "^4.3.0",
     "lodash": "^4.17.10",
@@ -15,6 +16,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.16.0",
     "react-toastify": "^4.1.0",
+    "recompose": "^0.27.1",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",

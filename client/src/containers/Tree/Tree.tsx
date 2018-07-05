@@ -19,7 +19,7 @@ interface IProps {
     changeTreeFilter: any
 }
 
-export class Tree extends React.Component<IProps, {}> {
+export class Tree extends React.PureComponent<IProps, {}> {
     activeElementChangedHandler = (activeElement: IItemHTMLElement) => this.props.changeActive(activeElement.item.group)
     expandedIdsChangedHandler = (id: string, expandedIds: string[]) => this.props.changeExpandedIds(expandedIds)
 

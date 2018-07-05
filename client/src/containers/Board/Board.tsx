@@ -17,21 +17,19 @@ interface IProps {
     selectPrivateGroup: any
 }
 
-class Board extends React.Component<IProps, {}> {
-    privateChatSelectedHandler = (userId: string) => {
-        this.props.selectPrivateGroup(this.props.group.id, userId)
+const Board: React.SFC<IProps> = props => {
+    const privateChatSelectedHandler = (userId: string) => {
+        props.selectPrivateGroup(props.group.id, userId)
     }
 
-    render() {
-        const { messages, selfUserId } = this.props
-        return (
-            <section style={{ ...this.props.style, ...boardStyle }}>
-                {this.props.group ? <GroupInfo group={this.props.group} selfUserId={this.props.selfUserId} onUserClicked={this.privateChatSelectedHandler} /> : null}
-                <ChatHistory style={{ flex: '1' }} messages={messages} selfUserId={selfUserId} />
-                <MessageInput addMessage={this.props.addMessage} />
-            </section>
-        )
-    }
+    const { messages, selfUserId } = props
+    return (
+        <section style={{ ...props.style, ...boardStyle }}>
+            {props.group && <GroupInfo group={props.group} selfUserId={props.selfUserId} onUserClicked={privateChatSelectedHandler} />}
+            <ChatHistory style={{ flex: '1' }} messages={messages} selfUserId={selfUserId} />
+            <MessageInput addMessage={props.addMessage} />
+        </section>
+    )
 }
 
 const boardStyle: React.CSSProperties = {
@@ -40,9 +38,9 @@ const boardStyle: React.CSSProperties = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-        messages: state.messages.messages,
-        selfUserId: state.auth.userId,
-        group: state.tree.active
+    messages: state.messages.messages,
+    selfUserId: state.auth.userId,
+    group: state.tree.active
 })
 
 const mapDispatchToProps = {

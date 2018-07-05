@@ -9,7 +9,7 @@ interface IProps {
     selfUserId: string
 }
 
-class ChatHistory extends React.Component<IProps, {}> {
+class ChatHistory extends React.PureComponent<IProps, {}> {
     private messagesList: React.RefObject<any>
     private messagesBottom: React.RefObject<any>
 

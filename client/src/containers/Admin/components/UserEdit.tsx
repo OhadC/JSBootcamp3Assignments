@@ -5,7 +5,7 @@ import { IAppState } from '../../../store/reducers'
 import * as actions from '../../../store/actions'
 import Checkbox from '../../../components/Checkbox';
 
-class UserEdit extends React.Component<any, any> {
+class UserEdit extends React.PureComponent<any, any> {
     state = {
         isNew: false,
         name: "",

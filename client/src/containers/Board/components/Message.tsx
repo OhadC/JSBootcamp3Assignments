@@ -2,10 +2,16 @@ import * as React from 'react'
 import * as moment from 'moment'
 
 import './Message.css'
-import { IClientMessage } from '../../../models/message';
-import { IClientUser } from '../../../models';
+import { IClientMessage } from '../../../models/message'
+import { IClientUser } from '../../../models'
 
-const Message = (props: { message: IClientMessage, selfMessage: boolean, user: IClientUser }) => {
+interface IProps {
+    message: IClientMessage,
+    selfMessage: boolean,
+    user: IClientUser
+}
+
+const Message: React.SFC<IProps> = props => {
     return (
         <li className='clearfix'>
             <div className={['message', props.selfMessage ? 'self' : ''].join(' ')}>

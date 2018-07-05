@@ -9,7 +9,7 @@ interface IProps {
     onLogout: any
 }
 
-const SideHeader = (props: IProps) => {
+const SideHeader: React.SFC<IProps> = props => {
     const userName = props.user ? props.user.name : "guest"
     const menu = () => {
         if (props.user) {

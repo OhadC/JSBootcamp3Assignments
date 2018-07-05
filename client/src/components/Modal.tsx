@@ -5,7 +5,7 @@ interface IProps {
     style?: React.CSSProperties
 }
 
-const Modal = (props: IProps) => {
+const Modal: React.SFC<IProps> = props => {
     return (
         <div style={blackScreenStyle}>
             <div style={{ ...modalStyle, ...(props.style || {}) }}>
