@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route, Redirect, withRouter } from 'react-router'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import Chat from './containers/Chat/Chat'
 import { IAppState } from './store/reducers'
-import Admin from './containers/Admin/Admin';
+import Admin from './containers/Admin/Admin'
+import Loading from './components/Loading'
 
 interface IProps {
     isAuthenticated: boolean
@@ -27,9 +30,13 @@ class App extends React.Component<IProps, {}> {
         )
 
         return (
-            <div style={styles.app}>
-                {this.props.isAuthenticated ? authRouts() : notAuthRouts()}
-            </div>
+            <>
+                <Loading />
+                <ToastContainer newestOnTop={true} />
+                <div style={styles.app}>
+                    {this.props.isAuthenticated ? authRouts() : notAuthRouts()}
+                </div>
+            </>
         )
     }
 }
@@ -48,7 +55,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-        isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token
 })
 
 export default (withRouter as any)(connect(mapStateToProps)(App))

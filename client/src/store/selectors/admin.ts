@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 
 import { IAppState } from '../reducers'
 import { IClientGroup, IClientUser } from '../../models'
-import { makeTree } from '.'
+import { makeTree } from '../../common/makeTree'
 
 const groupsSelector = (state: IAppState) => state.groups.data
 const usersSelector = (state: IAppState) => state.users.data

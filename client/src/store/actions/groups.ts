@@ -2,7 +2,6 @@ import { actionTypes } from '../../store/actions'
 import { IClientGroup } from "../../models"
 import { apiRequest } from "."
 
-
 export const fetchGroups = () => apiRequest({
     url: '/group',
     method: 'GET',
@@ -10,14 +9,9 @@ export const fetchGroups = () => apiRequest({
 })
 
 export const fetchAllGroups = () => apiRequest({
-    url: '/group', // TODO: all
+    url: '/group/all',
     method: 'GET',
     label: 'fetchAllGroups'
-})
-
-export const setGroups = (groups: IClientGroup[]) => ({
-    type: actionTypes.SET_GROUPS,
-    payload: groups
 })
 
 export const addGroup = (group: IClientGroup) => ({

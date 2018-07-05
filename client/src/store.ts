@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history'
 
 import { reducers } from './store/reducers'
 import { byActionType, api } from './store/middleware'
-import { Sockethandler } from "./store/middleware/Sockethandler"
+import { watchGroups, watchMessages, watchUsers, watchSocket } from "./store/sagas"
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -22,9 +22,11 @@ export const store = createStore(connectRouter(history)(rootReducer), composeEnh
         ReduxThunk,
         sagaMiddleware,
         byActionType,
-        Sockethandler,
         api
     )
 ))
 
-// sagaMiddleware.run(mySaga)
+sagaMiddleware.run(watchGroups)
+sagaMiddleware.run(watchUsers)
+sagaMiddleware.run(watchMessages)
+sagaMiddleware.run(watchSocket)

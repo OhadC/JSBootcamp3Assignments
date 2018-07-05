@@ -1,6 +1,10 @@
 // API
 export const API_REQUEST = 'API_REQUEST'
 
+// Global
+export const START_LOADING = 'START_LOADING'
+export const FINISH_LOADING = 'FINISH_LOADING'
+
 // Auth
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -11,13 +15,6 @@ export const SET_ADMIN_EDIT_MODE = 'SET_ADMIN_EDIT_MODE'
 export const SET_ADMIN_FILTER_TEXT = 'SET_ADMIN_FILTER_TEXT'
 export const SET_EDITED_ITEM = 'SET_EDITED_ITEM'
 export const SET_ADMIN_EXPANDED_IDS = 'SET_ADMIN_EXPANDED_IDS'
-
-// export const CREATE_NEW_GROUP = 'CREATE_NEW_GROUP'
-// export const UPDATE_GROUP = 'UPDATE_GROUP'
-// export const DELETE_GROUP = 'DELETE_GROUP'
-// export const CREATE_NEW_USER = 'CREATE_NEW_USER'
-// export const UPDATE_USER = 'UPDATE_USER'
-// export const DELETE_USER = 'DELETE_USER'
 
 // Messages
 export const SET_MESSAGES = 'SET_MESSAGES'
@@ -32,11 +29,11 @@ export const SOCKET_LOGIN_SUCCESS = 'SOCKET_LOGIN_SUCCESS'
 export const SET_TREE_FILTER = 'SET_TREE_FILTER'
 export const SET_ACTIVE = 'SET_ACTIVE'
 export const SET_EXPANDED_IDS = 'SET_EXPANDED_IDS'
+export const SELECT_PRIVATE_GROUP = 'SELECT_PRIVATE_GROUP'
 
 // Groups
 export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS'
 export const FETCH_ALL_GROUPS_SUCCESS = 'FETCH_ALL_GROUPS_SUCCESS'
-export const SET_GROUPS = 'SET_GROUPS'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const DELETE_GROUP = 'DELETE_GROUP'

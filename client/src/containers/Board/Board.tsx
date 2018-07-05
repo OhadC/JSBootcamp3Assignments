@@ -14,14 +14,19 @@ interface IProps {
     selfUserId: string
     messages: IClientMessage[]
     addMessage: any
+    selectPrivateGroup: any
 }
 
 class Board extends React.Component<IProps, {}> {
+    privateChatSelectedHandler = (userId: string) => {
+        this.props.selectPrivateGroup(this.props.group.id, userId)
+    }
+
     render() {
         const { messages, selfUserId } = this.props
         return (
             <section style={{ ...this.props.style, ...boardStyle }}>
-                {this.props.group ? <GroupInfo group={this.props.group} /> : null}
+                {this.props.group ? <GroupInfo group={this.props.group} selfUserId={this.props.selfUserId} onUserClicked={this.privateChatSelectedHandler} /> : null}
                 <ChatHistory style={{ flex: '1' }} messages={messages} selfUserId={selfUserId} />
                 <MessageInput addMessage={this.props.addMessage} />
             </section>
@@ -41,7 +46,8 @@ const mapStateToProps = (state: IAppState) => ({
 })
 
 const mapDispatchToProps = {
-    addMessage: actions.sendMessage
+    addMessage: actions.sendMessage,
+    selectPrivateGroup: actions.selectPrivateGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board)

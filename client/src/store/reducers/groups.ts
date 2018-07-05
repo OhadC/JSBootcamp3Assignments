@@ -16,12 +16,17 @@ const initialState: IGroupsState = {
 }
 
 const setGroups = (state: IGroupsState, action: AnyAction, isComplete?: boolean) => {
-    return updateObject(state, { data: action.payload, isComplete })
+    let data: IClientGroup[] = action.payload
+    if (isComplete) {
+        const privateGroups = state.data.filter(group => group.isPrivate)
+        Array.prototype.push.apply(data, privateGroups)
+    }
+    return updateObject(state, { data, isComplete })
 }
 
 const addGroup = (state: IGroupsState, action: AnyAction) => {
     const newData = state.data.slice()
-    newData.push(action.payload)
+    newData.push(action.payload.group)
     return updateObject(state, { data: newData })
 }
 
@@ -78,5 +83,4 @@ export const groupsReducer = createReducer(initialState, {
     [actionTypes.UPDATE_GROUP]: updateGroup,
     [actionTypes.DELETE_GROUP]: deleteGroup,
     [actionTypes.DELETE_USER]: deleteUser,
-    [actionTypes.SET_GROUPS]: setGroups,
 })

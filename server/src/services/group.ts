@@ -7,7 +7,7 @@ import { messageService } from '.'
 const dbName = 'group'
 
 export const getAllGroups = async () => {
-    const allGroups: IServerGroup[] = await db.find(dbName)
+    const allGroups: IServerGroup[] = await db.find(dbName, { isPrivate: false })
     return Promise.all(allGroups.map(withUsers))
 }
 
@@ -20,6 +20,22 @@ export const getGroupById = async (id: string) => {
     const group: IServerGroup = await db.findOne(dbName, { id })
     if (!group) {
         throw Error('No group with that ID, ' + id)
+    }
+    return withUsers(group)
+}
+
+export const getPrivateGroup = async (parentGroupId, userId1, userId2) => {
+    let group = await db.findOne(dbName, { parentId: parentGroupId, isPrivate: true, userIds: [userId1, userId2] })
+    if (!group) {
+        const [parentGroup, user1, user2] = await Promise.all([
+            db.findOne(dbName, { id: parentGroupId }),
+            db.findOne('user', { id: userId1 }),
+            db.findOne('user', { id: userId2 })
+        ])
+        if (!parentGroup || !user1 || !user2 || !_.includes(parentGroup.userIds, userId1) || !_.includes(parentGroup.userIds, userId2)) {
+            throw Error('Bad request')
+        }
+        group = await db.add(dbName, { parentId: parentGroupId, isPrivate: true, userIds: [userId1, userId2] })
     }
     return withUsers(group)
 }
