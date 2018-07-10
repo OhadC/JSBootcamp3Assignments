@@ -1,4 +1,5 @@
 export * from './interfaces'
 
-import db from './db'
-export { db }
+import jsonDb from './jsonDb'
+
+export { jsonDb }

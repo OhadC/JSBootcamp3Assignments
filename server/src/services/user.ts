@@ -1,15 +1,15 @@
-import { db, IUser, IServerUser, IClientUser } from '../models'
+import { jsonDb, IUser, IServerUser, IClientUser } from '../models'
 import { authService, messageService, groupService } from '.'
 
 const dbName = 'user'
 
 export const getAllUsers = async () => {
-    const users: IServerUser[] = await db.find(dbName)
+    const users: IServerUser[] = await jsonDb.find(dbName)
     return users.map(withoutPassword)
 }
 
 export const getUserById = async (id: string) => {
-    const user: IServerUser = await db.findOne(dbName, { id })
+    const user: IServerUser = await jsonDb.findOne(dbName, { id })
     if (!user) {
         throw Error('No user with that ID, ' + id)
     }
@@ -17,7 +17,7 @@ export const getUserById = async (id: string) => {
 }
 
 export const getUserByName = async (name: string) => {
-    const user: IServerUser = await db.findOne(dbName, { name })
+    const user: IServerUser = await jsonDb.findOne(dbName, { name })
     if (!user) {
         throw Error('No user with that name, ' + name)
     }
@@ -25,32 +25,32 @@ export const getUserByName = async (name: string) => {
 }
 
 export const addUser = async ({ name, password, age }) => {
-    if (!!(await db.findOne(dbName, { name }))) {
+    if (!!(await jsonDb.findOne(dbName, { name }))) {
         throw Error('User with that name already exists. ' + name)
     }
     password = await authService.getHashedPassword(password)
-    const user: IServerUser = await db.add('user', { name, password, age })
+    const user: IServerUser = await jsonDb.add('user', { name, password, age })
     return withoutPassword(user)
 }
 
 export const updateUser = async (id: string, updatedFields: IUser) => {
-    if (!(await db.findOne(dbName, { id }))) {
+    if (!(await jsonDb.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
-    const updatedUser = await db.update(dbName, { id }, updatedFields)
+    const updatedUser = await jsonDb.update(dbName, { id }, updatedFields)
     return withoutPassword(updatedUser)
 }
 
 export const deleteUser = async (id: string) => {
-    if (!(await db.findOne(dbName, { id }))) {
+    if (!(await jsonDb.findOne(dbName, { id }))) {
         throw Error('No user with that ID, ' + id)
     }
     await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.deleteUserFromAllGroups(id)])
-    return db.delete(dbName, { id })
+    return jsonDb.delete(dbName, { id })
 }
 
 export const validateUser = async (name: string, password) => {
-    const user: IServerUser = await db.findOne(dbName, { name })
+    const user: IServerUser = await jsonDb.findOne(dbName, { name })
     if (!user) {
         return false
     }

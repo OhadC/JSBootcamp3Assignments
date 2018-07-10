@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/OhadC/JSBootcamp3Assignment04#readme",
   "dependencies": {
-    "concurrently": "^3.5.1",
-    "react-toastify": "^4.1.0"
+    "concurrently": "^3.5.1"
   }
 }
