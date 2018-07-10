@@ -40,7 +40,7 @@ const readFileAsync = util.promisify(fs.readFile);
     await Promise.all(messages.map((message) => {
         const _id = new mongoose.mongo.ObjectId()
         const groupId = groupIds[message.groupId]
-        const userId = groupIds[message.userId]
+        const userId = userIds[message.userId]
         const { content, date } = message
         models.Message.collection.insert({ _id, groupId, userId, content, date })
     }))

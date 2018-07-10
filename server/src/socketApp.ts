@@ -27,7 +27,7 @@ const socketApp = (httpServer: Server) => {
         // TODO: take userID from socket.decoded
         socket.on('message', onMessage)
     }
-
+    
     async function onMessage(message) {
         const fromDbMessage: IClientMessage = await messageService.addMessage(message)
         io.emit('message', fromDbMessage)

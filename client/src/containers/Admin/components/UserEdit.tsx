@@ -48,7 +48,7 @@ class UserEdit extends React.PureComponent<any, any> {
             })
         } else {
             const { age } = this.state
-            const id = this.props.editedItem.id
+            const id = this.props.editedItem._id
             this.props.updateUser({
                 id,
                 age

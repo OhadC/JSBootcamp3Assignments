@@ -17,19 +17,7 @@
             "2",
             "3"
         ],
-        "isPrivate": false,
-        "users": [
-            {
-                "id": "2",
-                "name": "Udi",
-                "age": 3
-            },
-            {
-                "id": "3",
-                "name": "Tommy",
-                "age": 4
-            }
-        ]
+        "isPrivate": false
     },
     {
         "parentId": "1",
@@ -38,19 +26,7 @@
             "0",
             "3"
         ],
-        "isPrivate": true,
-        "users": [
-            {
-                "id": "0",
-                "name": "Ori",
-                "age": 1
-            },
-            {
-                "id": "3",
-                "name": "Tommy",
-                "age": 4
-            }
-        ]
+        "isPrivate": true
     },
     {
         "parentId": "0",
@@ -59,39 +35,15 @@
             "0",
             "2"
         ],
-        "isPrivate": true,
-        "users": [
-            {
-                "id": "0",
-                "name": "Ori",
-                "age": 1
-            },
-            {
-                "id": "2",
-                "name": "Udi",
-                "age": 3
-            }
-        ]
+        "isPrivate": true
     },
     {
         "id": "4",
         "userIds": [
             "0",
-            "0"
+            "2"
         ],
-        "isPrivate": true,
-        "users": [
-            {
-                "id": "0",
-                "name": "Ori",
-                "age": 1
-            },
-            {
-                "id": "0",
-                "name": "Ori",
-                "age": 1
-            }
-        ]
+        "isPrivate": true
     },
     {
         "id": "5",
@@ -99,18 +51,6 @@
             "0",
             "1"
         ],
-        "isPrivate": true,
-        "users": [
-            {
-                "id": "0",
-                "name": "Ori",
-                "age": 1
-            },
-            {
-                "id": "1",
-                "name": "Roni",
-                "age": 2
-            }
-        ]
+        "isPrivate": true
     }
 ]

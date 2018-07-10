@@ -37,7 +37,7 @@ class ChatHistory extends React.PureComponent<IProps, {}> {
     render() {
         const { messages, selfUserId } = this.props
         const messagesElements = messages.map(message => (
-            <Message key={message.id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
+            <Message key={message._id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
         ))
 
         return (

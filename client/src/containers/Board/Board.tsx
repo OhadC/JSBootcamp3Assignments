@@ -19,7 +19,7 @@ interface IProps {
 
 const Board: React.SFC<IProps> = props => {
     const privateChatSelectedHandler = (userId: string) => {
-        props.selectPrivateGroup(props.group.id, userId)
+        props.selectPrivateGroup(props.group._id, userId)
     }
 
     const { messages, selfUserId } = props

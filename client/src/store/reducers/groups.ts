@@ -33,7 +33,7 @@ const addGroup = (state: IGroupsState, action: AnyAction) => {
 const updateGroup = (state: IGroupsState, action: AnyAction) => {
     const updatedGroup = action.payload.group
     const data = state.data.slice()
-    const groupIndex = data.findIndex(group => group.id === updatedGroup.id)
+    const groupIndex = data.findIndex(group => group._id === updatedGroup._id)
     data[groupIndex] = { ...data[groupIndex], ...updatedGroup }
     return updateObject(state, { data })
 }
@@ -46,9 +46,9 @@ const deleteGroup = (state: IGroupsState, action: AnyAction) => {
     return updateObject(state, { data })
 
     function deleteGroupRecursively(groupToDelete: IClientGroup) {
-        delete dataMap[groupToDelete.id]
+        delete dataMap[groupToDelete._id]
         _.forEach(dataMap, group => {
-            if (group && group.parentId === groupToDelete.id) {
+            if (group && group.parentId === groupToDelete._id) {
                 deleteGroupRecursively(group)
             }
         })
@@ -61,13 +61,13 @@ const deleteUser = (state: IGroupsState, action: AnyAction) => {
 
     for (let i = data.length - 1; i >= 0; i--) {
         const group = data[i]
-        if (group.userIds && _.includes(group.userIds, deletedUser.id)) {
+        if (group.userIds && _.includes(group.userIds, deletedUser._id)) {
             if (group.isPrivate) {
                 data.splice(i, 1)
             } else {
                 const newGroup = Object.assign({}, group)
-                newGroup.userIds = _.difference(newGroup.userIds, [deletedUser.id])
-                newGroup.users = _.differenceWith(newGroup.users, [deletedUser], (a: any, b) => a.id === b.id)
+                newGroup.userIds = _.difference(newGroup.userIds, [deletedUser._id])
+                newGroup.users = _.differenceWith(newGroup.users, [deletedUser], (a: any, b) => a._id === b._id)
                 data[i] = newGroup
             }
         }

@@ -42,16 +42,16 @@ class GroupEdit extends React.PureComponent<any, any> {
     onSave = () => {
         const { name, userIds } = this.state
         if (this.state.isNew) {
-            const parentId = this.state.isRoot ? undefined : this.props.editedItem.id
+            const parentId = this.state.isRoot ? undefined : this.props.editedItem._id
             this.props.createNewGroup({
                 parentId,
                 name,
                 userIds
             })
         } else {
-            const id = this.props.editedItem.id
+            const _id = this.props.editedItem._id
             this.props.updateGroup({
-                id,
+                _id,
                 name,
                 userIds
             })
@@ -77,7 +77,7 @@ class GroupEdit extends React.PureComponent<any, any> {
                     <label style={styles.label}>
                         Users:
                     </label>
-                    <CheckboxList data={this.props.users} value={"id"} label={"name"} checkedValues={this.state.userIds} onChange={this.usersListChangeHandler} />
+                    <CheckboxList data={this.props.users} value={"_id"} label={"name"} checkedValues={this.state.userIds} onChange={this.usersListChangeHandler} />
                 </div>
                 <div style={styles.inputWrapper}>
                     <Checkbox isChecked={this.state.isNew} label={"Make new Group"} value={"isNew"} onChange={this.valueCheckedHandler} />

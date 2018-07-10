@@ -35,7 +35,7 @@ function* connectToSocketSaga(action: AnyAction) {
     while (true) {
         const message: IClientMessage = yield take(channel)
         const state: IAppState = yield select()
-        if (state.tree.active && state.tree.active.id === message.groupId) {
+        if (state.tree.active && state.tree.active._id === message.groupId) {
             yield put(addMessage(message))
         }
     }

@@ -62,7 +62,7 @@ export default function ChatTree(element: IItemHTMLElement) {
         activeElement && activeElement.classList.remove("active")
         toActiveElement.classList.add("active")
         activeElement = toActiveElement
-        activeElementId = toActiveElement.item.group.id
+        activeElementId = toActiveElement.item.group._id
 
         events.emit('activeElementChanged', [activeElement])
     }
@@ -114,8 +114,8 @@ export default function ChatTree(element: IItemHTMLElement) {
 
         element.insertBefore(li, addBefore || null)
 
-        if (activeElementId === item.group.id) setActiveElement(li)
-        if (expandedGroups.indexOf(item.group.id) !== -1) expandGroup(li)
+        if (activeElementId === item.group._id) setActiveElement(li)
+        if (expandedGroups.indexOf(item.group._id) !== -1) expandGroup(li)
     }
 
     function isGroup(elem: IItemHTMLElement) {
@@ -125,7 +125,7 @@ export default function ChatTree(element: IItemHTMLElement) {
         return groupElem.hasAttribute('expanded')
     }
     function setGroupExpanded(groupElem: IItemHTMLElement, isExpanded: boolean, groupItem?: ITreeItem) {
-        const groupId: string = (groupItem || groupElem.item).group.id
+        const groupId: string = (groupItem || groupElem.item).group._id
         if (isExpanded) {
             groupElem.setAttribute('expanded', '')
             if (expandedGroups.indexOf(groupId) === -1) {

@@ -7,6 +7,12 @@ const GroupSchema = new Schema({
     userIds: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     isPrivate: Boolean
 })
+GroupSchema.virtual('users', {
+    ref: 'user',
+    localField: 'userIds',
+    foreignField: '_id'
+})
+
 export const Group = model('group', GroupSchema)
 
 const UserSchema = new Schema({
@@ -22,4 +28,10 @@ const MessageSchema = new Schema({
     content: String,
     date: Date
 })
+MessageSchema.virtual('user', {
+    ref: 'user',
+    localField: 'userId',
+    foreignField: '_id'
+})
+
 export const Message = model('message', MessageSchema)

@@ -2,12 +2,12 @@ import { IUser, IClientUser } from '../models'
 import { authService, messageService, groupService } from '.'
 import { User } from '../models/mongoose/models'
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (): Promise<IClientUser[]> => {
     return User.find({}, {password: 0}).lean()
 }
 
 export const getUserById = async (_id: string) => {
-    const user = await User.findOne({ _id }, {password: 0}).lean()
+    const user: IClientUser = await User.findOne({ _id }, {password: 0}).lean()
     if (!user) {
         throw Error('No user with that ID, ' + _id)
     }
@@ -15,7 +15,7 @@ export const getUserById = async (_id: string) => {
 }
 
 export const getUserByName = async (name: string) => {
-    const user = await User.findOne({ name }, {password: 0}).lean()
+    const user: IClientUser = await User.findOne({ name }, {password: 0}).lean()
     if (!user) {
         throw Error('No user with that name, ' + name)
     }
@@ -43,7 +43,7 @@ export const deleteUser = async (id: string) => {
     if (!(await getUserById(id))) {
         throw Error('No user with that ID, ' + id)
     }
-    await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.deleteUserFromAllGroups(id)])
+    await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.removeUserFromAllGroups(id)])
     return User.findByIdAndRemove(id).select({password: 0}).lean()
 }
 

@@ -34,7 +34,7 @@ export const updateGroup = (updatedGroupFields: IClientGroup) => (dispatch: any,
         payload: { group }
     })
     dispatch(apiRequest({
-        url: `/group/${updatedGroupFields.id}`,
+        url: `/group/${updatedGroupFields._id}`,
         method: 'PUT',
         data: updatedGroupFields,
         success,
@@ -47,7 +47,7 @@ export const deleteGroup = (group: IClientGroup) => (dispatch: any, getState: Fu
         payload: { group }
     })
     dispatch(apiRequest({
-        url: `/group/${group.id}`,
+        url: `/group/${group._id}`,
         method: 'DELETE',
         success
     }))

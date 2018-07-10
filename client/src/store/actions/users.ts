@@ -35,7 +35,7 @@ export const updateUser = (updatedUserFields: IClientUser) => (dispatch: any, ge
         payload: { user }
     })
     dispatch(actions.apiRequest({
-        url: `/user/${updatedUserFields.id}`,
+        url: `/user/${updatedUserFields._id}`,
         method: 'PUT',
         data: updatedUserFields,
         success,
@@ -48,7 +48,7 @@ export const deleteUser = (user: IClientUser) => (dispatch: any, getState: Funct
         payload: { user }
     })
     dispatch(actions.apiRequest({
-        url: `/user/${user.id}`,
+        url: `/user/${user._id}`,
         method: 'DELETE',
         success
     }))

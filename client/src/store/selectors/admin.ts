@@ -26,7 +26,7 @@ function groupsTreeCombiner(groups: IClientGroup[], filterText?: string) {
 
 function usersTreeCombiner(users: IClientUser[], filterText?: string) {
     const groupsFromUsers = users.map(user => ({
-        id: user.id,
+        _id: user._id,
         name: user.name,
         isPrivate: true,
         age: user.age

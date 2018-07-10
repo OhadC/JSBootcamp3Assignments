@@ -6,7 +6,7 @@ import { IAppState } from "../reducers";
 
 export function* watchUsers() {
     yield all([
-        takeEvery(actionTypes.SET_ADMIN_EDIT_MODE, getAllUsersSaga)
+        takeEvery(actionTypes.LOGIN_SUCCESS, getAllUsersSaga)
     ])
 }
 

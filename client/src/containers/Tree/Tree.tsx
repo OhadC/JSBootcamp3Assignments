@@ -52,7 +52,7 @@ const TreeStyle: React.CSSProperties = {
 
 const mapStateToProps = (state: IAppState) => ({
     tree: treeSelector(state),
-    activeId: state.tree.active && state.tree.active.id,
+    activeId: state.tree.active && state.tree.active._id,
     expandedIds: state.tree.expandedIds
 })
 

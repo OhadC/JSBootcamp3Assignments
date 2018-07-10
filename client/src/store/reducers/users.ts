@@ -28,14 +28,14 @@ const addUser = (state: IUsersState, action: AnyAction) => {
 const updateUser = (state: IUsersState, action: AnyAction) => {
     const updatedUser = action.payload.user
     const data = state.data.slice()
-    const userIndex = data.findIndex(user => user.id === updatedUser.id)
+    const userIndex = data.findIndex(user => user._id === updatedUser._id)
     data[userIndex] = { ...data[userIndex], ...updatedUser }
     return updateObject(state, { data: data })
 }
 
 const deleteUser = (state: IUsersState, action: AnyAction) => {
     const deletedUser = action.payload.user
-    const data = _.differenceWith(state.data, [deletedUser], (a: any, b) => a.id === b.id)
+    const data = _.differenceWith(state.data, [deletedUser], (a: any, b) => a._id === b._id)
     return updateObject(state, { data })
 }
 

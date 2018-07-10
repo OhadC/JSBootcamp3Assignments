@@ -16,13 +16,13 @@ const GroupInfo = (props: IProps) => {
     let toList
     if (props.group.isPrivate) {
         toList = (user: IClientUser) => {
-            return <span key={user.id}> {user.name} </span>
+            return <span key={user._id}> {user.name} </span>
         }
     } else {
         toList = (user: IClientUser) => {
-            if (props.selfUserId !== user.id)
-                return <button key={user.id} onClick={props.onUserClicked.bind(null, user.id)}> {user.name} </button>
-            else return <span key={user.id} > you </span>
+            if (props.selfUserId !== user._id)
+                return <button key={user._id} onClick={props.onUserClicked.bind(null, user._id)}> {user.name} </button>
+            else return <span key={user._id} > you </span>
         }
     }
 

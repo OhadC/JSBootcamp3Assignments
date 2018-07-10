@@ -10,5 +10,5 @@ export function* watchMessages() {
 }
 
 function* fetchMessagesSaga(action: AnyAction) {
-    yield put(fetchMessages(action.payload.active.id))
+    yield put(fetchMessages(action.payload.active._id))
 }
