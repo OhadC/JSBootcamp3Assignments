@@ -2,51 +2,45 @@ import * as _ from 'lodash'
 
 import { jsonDb, IGroup, IServerGroup, IClientGroup } from '../models'
 import { getUserById } from './user'
-import { messageService } from '.'
+import { messageService, userService } from '.'
+import { Group } from '../models/mongoose/models'
 
 const dbName = 'group'
 
-export const getAllGroups = async () => {
-    const allGroups: IServerGroup[] = await jsonDb.find(dbName, { isPrivate: false })
-    return Promise.all(allGroups.map(withUsers))
-}
+export const getAllGroups = async () =>
+    Group.find({ isPrivate: false }).populate({ userIds: 'user' }).lean()
 
-export const getAllGroupsByUserId = async (userId) => {
-    const filterGroups: IServerGroup[] = await jsonDb.find(dbName, { userIds: userId })
-    return Promise.all(filterGroups.map(withUsers))
-}
+export const getAllGroupsByUserId = async (userId) =>
+    Group.find({ userIds: userId }).lean()
 
 export const getGroupById = async (id: string) => {
-    const group: IServerGroup = await jsonDb.findOne(dbName, { id })
+    const group: IServerGroup = await Group.findById(id).lean()
     if (!group) {
         throw Error('No group with that ID, ' + id)
     }
-    return withUsers(group)
+    return group
 }
 
 export const getPrivateGroup = async (parentGroupId, userId1, userId2) => {
-    let group = await jsonDb.findOne(dbName, { parentId: parentGroupId, isPrivate: true, userIds: [userId1, userId2] })
-    if (!group) {
-        const [parentGroup, user1, user2] = await Promise.all([
-            jsonDb.findOne(dbName, { id: parentGroupId }),
-            jsonDb.findOne('user', { id: userId1 }),
-            jsonDb.findOne('user', { id: userId2 })
-        ])
-        if (!parentGroup || !user1 || !user2 || !_.includes(parentGroup.userIds, userId1) || !_.includes(parentGroup.userIds, userId2)) {
-            throw Error('Bad request')
-        }
-        group = await jsonDb.add(dbName, { parentId: parentGroupId, isPrivate: true, userIds: [userId1, userId2] })
+    let group = await Group.findOne({ parentId: parentGroupId, isPrivate: true, userIds: { $all: [userId1, userId2] } })
+    if (group) {
+        return group
     }
-    return withUsers(group)
+
+    await Promise.all([
+        getGroupById(parentGroupId),
+        userService.getUserById(userId1),
+        userService.getUserById(userId2)
+    ])
+
+    return new Group({ parentId: parentGroupId, isPrivate: true, userIds: [userId1, userId2] }).save()
 }
 
-export const addGroup = async (groupToAdd: IGroup) => {
-    if (groupToAdd.parentId && !(await jsonDb.findOne(dbName, { id: groupToAdd.parentId }))) {
-        throw Error('No group with that ID, ' + groupToAdd.parentId)
+export const addGroup = async ({ parentId, name, userIds }: IGroup) => {
+    if (parentId && !(await Group.findById(parentId))) {
+        throw Error('No group with that ID, ' + parentId)
     }
-    // TODO: no users, etc..
-    const newGroup: IServerGroup = await jsonDb.add(dbName, groupToAdd)
-    return withUsers(newGroup)
+    return new Group({ parentId, name, userIds, isPrivate: false }).save()
 }
 
 export const updateGroup = async (id: string, updatedGroup: IGroup) => {

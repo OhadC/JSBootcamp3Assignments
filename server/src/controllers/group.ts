@@ -16,7 +16,7 @@ export const getGroupById = requestHandlerFactory(
 
 export const getAllGroupsByUserId = requestHandlerFactory(
     (req: Request) => {
-        const userId = req.user.id
+        const userId = req.user._id
         return groupService.getAllGroupsByUserId(userId)
     }
 )
@@ -24,7 +24,7 @@ export const getAllGroupsByUserId = requestHandlerFactory(
 export const getPrivateGroup = requestHandlerFactory(
     (req: Request) => {
         const groupId = req.params.id
-        const userId1 = req.user.id
+        const userId1 = req.user._id
         const userId2 = req.params.userId
         return groupService.getPrivateGroup(groupId, userId1, userId2)
     }

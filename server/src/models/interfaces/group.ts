@@ -3,7 +3,7 @@ import { IClientUser } from "./user";
 
 export interface IGroup {
     parentId?: string
-    id: string
+    _id: string
     name?: string
     userIds?: string[]
     users?: IUser[]
@@ -12,7 +12,7 @@ export interface IGroup {
 
 export interface IServerGroup extends IGroup {
     parentId?: string
-    id: string
+    _id: string
     name?: string
     userIds?: string[]
     users: undefined
@@ -21,7 +21,7 @@ export interface IServerGroup extends IGroup {
 
 export interface IClientGroup extends IGroup {
     parentId?: string
-    id: string
+    _id: string
     name?: string
     userIds?: string[]
     users: IClientUser[]

@@ -1,56 +1,54 @@
-import { jsonDb, IUser, IServerUser, IClientUser } from '../models'
+import { IUser, IClientUser } from '../models'
 import { authService, messageService, groupService } from '.'
-
-const dbName = 'user'
+import { User } from '../models/mongoose/models'
 
 export const getAllUsers = async () => {
-    const users: IServerUser[] = await jsonDb.find(dbName)
-    return users.map(withoutPassword)
+    return User.find({}, {password: 0}).lean()
 }
 
-export const getUserById = async (id: string) => {
-    const user: IServerUser = await jsonDb.findOne(dbName, { id })
+export const getUserById = async (_id: string) => {
+    const user = await User.findOne({ _id }, {password: 0}).lean()
     if (!user) {
-        throw Error('No user with that ID, ' + id)
+        throw Error('No user with that ID, ' + _id)
     }
-    return withoutPassword(user)
+    return user
 }
 
 export const getUserByName = async (name: string) => {
-    const user: IServerUser = await jsonDb.findOne(dbName, { name })
+    const user = await User.findOne({ name }, {password: 0}).lean()
     if (!user) {
         throw Error('No user with that name, ' + name)
     }
-    return withoutPassword(user)
+    return user
 }
 
 export const addUser = async ({ name, password, age }) => {
-    if (!!(await jsonDb.findOne(dbName, { name }))) {
+    if (!!(await getUserByName(name))) {
         throw Error('User with that name already exists. ' + name)
     }
     password = await authService.getHashedPassword(password)
-    const user: IServerUser = await jsonDb.add('user', { name, password, age })
-    return withoutPassword(user)
+    const userDocument = await new User({ name, password, age }).save()
+    return withoutPassword(userDocument.toObject())
 }
 
 export const updateUser = async (id: string, updatedFields: IUser) => {
-    if (!(await jsonDb.findOne(dbName, { id }))) {
+    if (!(await getUserById(id))) {
         throw Error('No user with that ID, ' + id)
     }
-    const updatedUser = await jsonDb.update(dbName, { id }, updatedFields)
-    return withoutPassword(updatedUser)
+    return User.findByIdAndUpdate(id, updatedFields)
+        .select({ password: 0 }).lean()
 }
 
 export const deleteUser = async (id: string) => {
-    if (!(await jsonDb.findOne(dbName, { id }))) {
+    if (!(await getUserById(id))) {
         throw Error('No user with that ID, ' + id)
     }
     await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.deleteUserFromAllGroups(id)])
-    return jsonDb.delete(dbName, { id })
+    return User.findByIdAndRemove(id).select({password: 0}).lean()
 }
 
 export const validateUser = async (name: string, password) => {
-    const user: IServerUser = await jsonDb.findOne(dbName, { name })
+    const user: any = await User.findOne({ name }).lean()
     if (!user) {
         return false
     }
@@ -58,7 +56,7 @@ export const validateUser = async (name: string, password) => {
 }
 
 function withoutPassword(user): IClientUser {
-    const newContact: any = { ...user }
-    delete newContact['password']
+    const newContact: any = Object.assign({}, user, { password: undefined })
+    // delete newContact['password']
     return newContact
 }
