@@ -37,7 +37,7 @@ const addGroup = (state: IGroupsState, action: AnyAction) => {
 const updateGroup = (state: IGroupsState, action: AnyAction) => {
     if (action.status !== actionTypes.SUCCESS) return state
 
-    const updatedGroup = action.payload.group
+    const updatedGroup = action.payload
     const data = state.data.slice()
     const groupIndex = data.findIndex(group => group._id === updatedGroup._id)
     data[groupIndex] = { ...data[groupIndex], ...updatedGroup }

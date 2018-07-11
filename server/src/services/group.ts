@@ -43,7 +43,7 @@ export const addGroup = async ({ parentId, name, userIds }: IGroup) => {
     return getGroupById(_id)
 }
 
-export const updateGroup = async (id: string, { userIds }: IGroup) => {
+export const updateGroup = async (id: string, { name, userIds }: IGroup) => {
     const group: IServerGroup = await getGroupById(id)
     if (!group) {
         throw Error('No group with that ID, ' + id)
@@ -56,7 +56,7 @@ export const updateGroup = async (id: string, { userIds }: IGroup) => {
             Promise.all(deletedGroupIds.map(groupId => messageService.deleteAllMessagesOfgroup(groupId)))
         ])
     }
-    await Group.findByIdAndUpdate(id, { userIds })
+    await Group.findByIdAndUpdate(id, { name, userIds })
     return getGroupById(id)
 }
 

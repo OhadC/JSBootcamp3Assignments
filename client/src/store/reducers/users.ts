@@ -32,7 +32,7 @@ const addUser = (state: IUsersState, action: AnyAction) => {
 const updateUser = (state: IUsersState, action: AnyAction) => {
     if (action.status !== actionTypes.SUCCESS) return state
 
-    const updatedUser = action.payload.user
+    const updatedUser = action.payload
     const data = state.data.slice()
     const userIndex = data.findIndex(user => user._id === updatedUser._id)
     data[userIndex] = { ...data[userIndex], ...updatedUser }
@@ -42,7 +42,7 @@ const updateUser = (state: IUsersState, action: AnyAction) => {
 const deleteUser = (state: IUsersState, action: AnyAction) => {
     if (action.status !== actionTypes.SUCCESS) return state
 
-    const deletedUser = action.payload.user
+    const deletedUser = action.payload
     const data = _.differenceWith(state.data, [deletedUser], (a: any, b) => a._id === b._id)
     return updateObject(state, { data })
 }

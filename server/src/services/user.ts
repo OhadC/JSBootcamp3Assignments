@@ -31,11 +31,11 @@ export const addUser = async ({ name, password, age }) => {
     return getUserById(userDocument._id)
 }
 
-export const updateUser = async (id: string, updatedFields: IUser) => {
+export const updateUser = async (id: string, { age }: IUser) => {
     await getUserById(id)
 
-    return User.findByIdAndUpdate(id, updatedFields)
-        .select({ password: 0 }).lean()
+    await User.findByIdAndUpdate(id, { age }).select({ password: 0 }).lean()
+    return getUserById(id)
 }
 
 export const deleteUser = async (id: string) => {

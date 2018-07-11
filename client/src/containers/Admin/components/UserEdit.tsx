@@ -48,9 +48,9 @@ class UserEdit extends React.PureComponent<any, any> {
             })
         } else {
             const { age } = this.state
-            const id = this.props.editedItem._id
+            const _id = this.props.editedItem._id
             this.props.updateUser({
-                id,
+                _id,
                 age
             })
         }
@@ -115,8 +115,8 @@ const mapStateToProps = (state: IAppState) => ({
 
 const mapDispatchToProps = {
     createNewUser: actions.addUserRequest,
-    updateUser: actions.updateUser,
-    deleteUser: actions.deleteUser,
+    updateUser: actions.updateUserRequest,
+    deleteUser: actions.deleteUserRequest,
 }
 
 
