@@ -16,18 +16,24 @@ const initialState: IGroupsState = {
 }
 
 const setGroups = (state: IGroupsState, action: AnyAction, isComplete?: boolean) => {
-    let data: IClientGroup[] = action.payload
-    if (isComplete) {
-        const privateGroups = state.data.filter(group => group.isPrivate)
-        Array.prototype.push.apply(data, privateGroups)
+    if (action.status === actionTypes.SUCCESS) {
+        let data: IClientGroup[] = action.payload
+        if (isComplete) {
+            const privateGroups = state.data.filter(group => group.isPrivate)
+            Array.prototype.push.apply(data, privateGroups)
+        }
+        return updateObject(state, { data, isComplete })
     }
-    return updateObject(state, { data, isComplete })
+    return state
 }
 
 const addGroup = (state: IGroupsState, action: AnyAction) => {
-    const newData = state.data.slice()
-    newData.push(action.payload.group)
-    return updateObject(state, { data: newData })
+    if (action.status === actionTypes.SUCCESS) {
+        const newData = state.data.slice()
+        newData.push(action.payload)
+        return updateObject(state, { data: newData })
+    }
+    return state
 }
 
 const updateGroup = (state: IGroupsState, action: AnyAction) => {
@@ -40,7 +46,7 @@ const updateGroup = (state: IGroupsState, action: AnyAction) => {
 
 const deleteGroup = (state: IGroupsState, action: AnyAction) => {
     const deletedGroup = action.payload.group
-    const dataMap = _.mapKeys(state.data, 'id')
+    const dataMap = _.mapKeys(state.data, '_id')
     deleteGroupRecursively(deletedGroup)
     const data = _.values(dataMap)
     return updateObject(state, { data })
@@ -77,8 +83,8 @@ const deleteUser = (state: IGroupsState, action: AnyAction) => {
 }
 
 export const groupsReducer = createReducer(initialState, {
-    [actionTypes.FETCH_GROUPS_SUCCESS]: setGroups,
-    [actionTypes.FETCH_ALL_GROUPS_SUCCESS]: (state, action) => setGroups(state, action, true),
+    [actionTypes.FETCH_GROUPS]: setGroups,
+    [actionTypes.FETCH_ALL_GROUPS]: (state, action) => setGroups(state, action, true),
     [actionTypes.ADD_GROUP]: addGroup,
     [actionTypes.UPDATE_GROUP]: updateGroup,
     [actionTypes.DELETE_GROUP]: deleteGroup,

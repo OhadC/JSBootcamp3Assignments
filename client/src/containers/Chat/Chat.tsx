@@ -61,7 +61,7 @@ const mapStateToProps = (state: IAppState) => ({
 })
 
 const mapDispatchToProps = {
-    login: actions.login,
+    login: actions.loginRequest,
     logout: actions.logout
 }
 

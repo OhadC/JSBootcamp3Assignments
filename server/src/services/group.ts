@@ -19,7 +19,8 @@ export const getGroupById = async (id: string) => {
 }
 
 export const getPrivateGroup = async (parentGroupId, userId1, userId2) => {
-    let group = await Group.findOne({ parentId: parentGroupId, isPrivate: true, userIds: { $all: [userId1, userId2] } }).populate('users', '-password').lean()
+    let group = await Group.findOne({ parentId: parentGroupId, isPrivate: true, userIds: { $all: [userId1, userId2] } })
+        .populate('users', '-password').lean()
     if (group) {
         return group
     }

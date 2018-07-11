@@ -13,6 +13,11 @@ export const setActive = (active: IClientGroup): AnyAction => ({
     payload: { active }
 })
 
+export const setForcedActive = (forcedActive: IClientGroup): AnyAction => ({
+    type: actionTypes.SET_FORCED_ACTIVE,
+    payload: { forcedActive }
+})
+
 export const setExpandedIds = (expandedIds: string[]): AnyAction => ({
     type: actionTypes.SET_EXPANDED_IDS,
     payload: { expandedIds }

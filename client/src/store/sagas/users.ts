@@ -6,7 +6,7 @@ import { IAppState } from "../reducers";
 
 export function* watchUsers() {
     yield all([
-        takeEvery(actionTypes.LOGIN_SUCCESS, getAllUsersSaga)
+        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.SUCCESS, getAllUsersSaga)
     ])
 }
 

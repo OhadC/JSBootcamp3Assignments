@@ -13,7 +13,7 @@ let channel: Channel<IClientMessage>
 
 export function* watchSocket() {
     yield all([
-        takeEvery(actionTypes.LOGIN_SUCCESS, connectToSocketSaga),
+        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.SUCCESS, connectToSocketSaga),
         takeEvery(actionTypes.SEND_MESSAGE, sendMessageSaga),
         takeEvery(actionTypes.LOGOUT, disconnectToSocketSaga),
     ])

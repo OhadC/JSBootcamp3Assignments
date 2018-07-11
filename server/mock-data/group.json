@@ -14,6 +14,7 @@
         "id": "1",
         "name": "Best Friends",
         "userIds": [
+            "0",
             "2",
             "3"
         ],
@@ -34,22 +35,6 @@
         "userIds": [
             "0",
             "2"
-        ],
-        "isPrivate": true
-    },
-    {
-        "id": "4",
-        "userIds": [
-            "0",
-            "2"
-        ],
-        "isPrivate": true
-    },
-    {
-        "id": "5",
-        "userIds": [
-            "0",
-            "1"
         ],
         "isPrivate": true
     }

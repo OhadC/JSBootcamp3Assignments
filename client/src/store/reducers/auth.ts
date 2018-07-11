@@ -13,17 +13,20 @@ const initialState: IAuthState = {
     token: null
 }
 
-const loginSuccess = (state: IAuthState, action: AnyAction): IAuthState => {
-    const newValues = {
-        userId: action.payload.user._id, // TODO: need to be user
-        token: action.payload.token
+const login = (state: IAuthState, action: AnyAction): IAuthState => {
+    if (action.status === actionTypes.SUCCESS) {
+        const newValues = {
+            userId: action.payload.user._id, // TODO: need to be user
+            token: action.payload.token
+        }
+        return updateObject(state, newValues)
     }
-    return updateObject(state, newValues)
+    return state
 }
 
 const logout = (state: IAuthState, action: AnyAction): IAuthState => initialState
 
 export const authReducer = createReducer(initialState, {
-    [actionTypes.LOGIN_SUCCESS]: loginSuccess,
+    [actionTypes.LOGIN]: login,
     [actionTypes.LOGOUT]: logout
 })

@@ -112,7 +112,7 @@ const mapStateToProps = (state: IAppState) => ({
 })
 
 const mapDispatchToProps = {
-    createNewGroup: actions.createNewGroup,
+    createNewGroup: actions.addGroupRequest,
     updateGroup: actions.updateGroup,
     deleteGroup: actions.deleteGroup,
 }

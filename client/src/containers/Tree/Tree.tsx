@@ -13,6 +13,7 @@ import './Tree.css'
 interface IProps {
     tree: ITreeItem[]
     activeId: string | null
+    forcedActiveId: string | null
     expandedIds: string[]
     changeActive: any
     changeExpandedIds: any
@@ -27,9 +28,10 @@ export class Tree extends React.PureComponent<IProps, {}> {
         const chatTreeProps = {
             activeElementChanged: this.activeElementChangedHandler,
             activeId: this.props.activeId,
+            forcedActiveId: this.props.forcedActiveId,
             expandedIds: this.props.expandedIds,
             expandedIdsChanged: this.expandedIdsChangedHandler,
-            filteredTree: this.props.tree
+            filteredTree: this.props.tree,
         }
 
         return (
@@ -53,7 +55,8 @@ const TreeStyle: React.CSSProperties = {
 const mapStateToProps = (state: IAppState) => ({
     tree: treeSelector(state),
     activeId: state.tree.active && state.tree.active._id,
-    expandedIds: state.tree.expandedIds
+    forcedActiveId: state.tree.forcedActive && state.tree.forcedActive._id,
+    expandedIds: state.tree.expandedIds,
 })
 
 const mapDispatchToProps = {

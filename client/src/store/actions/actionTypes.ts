@@ -1,4 +1,8 @@
 // API
+export const REQUEST = 'REQUEST'
+export const SUCCESS = 'SUCCESS'
+export const FAIL = 'FAIL'
+
 export const API_REQUEST = 'API_REQUEST'
 
 // Global
@@ -6,8 +10,7 @@ export const START_LOADING = 'START_LOADING'
 export const FINISH_LOADING = 'FINISH_LOADING'
 
 // Auth
-export const LOGIN_START = 'LOGIN_START'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 
 // Admin
@@ -20,6 +23,7 @@ export const SET_ADMIN_EXPANDED_IDS = 'SET_ADMIN_EXPANDED_IDS'
 export const SET_MESSAGES = 'SET_MESSAGES'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const FETCH_MESSAGES = 'FETCH_MESSAGES'
 export const FETCH_MESSAGES_START = 'FETCH_MESSAGES_START'
 export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS'
 export const FETCH_MESSAGES_FAIL = 'FETCH_MESSAGES_FAIL'
@@ -28,12 +32,13 @@ export const SOCKET_LOGIN_SUCCESS = 'SOCKET_LOGIN_SUCCESS'
 // Tree
 export const SET_TREE_FILTER = 'SET_TREE_FILTER'
 export const SET_ACTIVE = 'SET_ACTIVE'
+export const SET_FORCED_ACTIVE = 'SET_FORCED_ACTIVE'
 export const SET_EXPANDED_IDS = 'SET_EXPANDED_IDS'
 export const SELECT_PRIVATE_GROUP = 'SELECT_PRIVATE_GROUP'
 
 // Groups
-export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS'
-export const FETCH_ALL_GROUPS_SUCCESS = 'FETCH_ALL_GROUPS_SUCCESS'
+export const FETCH_GROUPS = 'FETCH_GROUPS'
+export const FETCH_ALL_GROUPS = 'FETCH_ALL_GROUPS'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const DELETE_GROUP = 'DELETE_GROUP'

@@ -6,6 +6,7 @@ import { ITreeItem } from '../../../models'
 interface IProps {
     filteredTree: ITreeItem[]
     activeId: string | null
+    forcedActiveId: string | null
     expandedIds: string[]
     activeElementChanged: any
     expandedIdsChanged: any
@@ -34,10 +35,13 @@ class ChatTree extends React.Component<IProps, {}> {
         this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
     }
     shouldComponentUpdate(nextProps: IProps) {
-        return this.props.filteredTree !== nextProps.filteredTree
+        return (
+            (this.props.filteredTree !== nextProps.filteredTree) ||
+            (!!nextProps.forcedActiveId && (nextProps.forcedActiveId !== this.props.forcedActiveId))
+        )
     }
     componentDidUpdate() {
-        this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.activeId)
+        this.loadTree(this.props.filteredTree, this.props.expandedIds, this.props.forcedActiveId ||this.props.activeId)
     }
     componentWillUnmount() {
         this.chatTree.off('activeElementChanged', this.props.activeElementChanged)

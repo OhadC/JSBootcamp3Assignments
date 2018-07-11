@@ -5,8 +5,9 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 
 import { reducers } from './store/reducers'
-import { byActionType, api } from './store/middleware'
-import { watchGroups, watchMessages, watchUsers, watchSocket } from "./store/sagas"
+import { api } from './store/middleware'
+import { watchGroups, watchMessages, watchUsers, watchSocket, watchAuth } from "./store/sagas"
+import { watchGlobal } from "./store/sagas/global";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -21,11 +22,12 @@ export const store = createStore(connectRouter(history)(rootReducer), composeEnh
         routerMiddleware(history),
         ReduxThunk,
         sagaMiddleware,
-        byActionType,
         api
     )
 ))
 
+sagaMiddleware.run(watchGlobal)
+sagaMiddleware.run(watchAuth)
 sagaMiddleware.run(watchGroups)
 sagaMiddleware.run(watchUsers)
 sagaMiddleware.run(watchMessages)

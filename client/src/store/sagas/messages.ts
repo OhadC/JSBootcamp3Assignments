@@ -1,7 +1,9 @@
 import { AnyAction } from "redux"
-import { takeEvery, put, all } from 'redux-saga/effects'
+import { takeEvery, put, call, all, select } from 'redux-saga/effects'
 
-import { actionTypes, fetchMessages } from "../actions"
+import { actionTypes } from "../actions"
+import * as actions from "../actions"
+import { apiRequest } from "../../serverApi";
 
 export function* watchMessages() {
     yield all([
@@ -10,5 +12,11 @@ export function* watchMessages() {
 }
 
 function* fetchMessagesSaga(action: AnyAction) {
-    yield put(fetchMessages(action.payload.active._id))
+    const activeGroupId = action.payload.active._id
+    const { auth: { token } } = yield select()
+    const response = yield call(apiRequest, {
+        url: `/group/${activeGroupId}/messages`,
+        token
+    })
+    yield put(actions.fetchMessages(response.data, actionTypes.SUCCESS))
 }

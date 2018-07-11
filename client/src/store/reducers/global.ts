@@ -14,8 +14,12 @@ const initialState: IGlobalState = {
     loading: 0
 }
 
-const loginSuccess = (state: IGlobalState, action: AnyAction): IGlobalState =>
-    updateObject(state, { user: action.payload.user })
+const login = (state: IGlobalState, action: AnyAction): IGlobalState => {
+    if (action.status === actionTypes.SUCCESS) {
+        return updateObject(state, { user: action.payload.user })
+    }
+    return state
+}
 
 const startLoading = (state: IGlobalState, action: AnyAction): IGlobalState =>
     updateObject(state, { loading: state.loading + 1 })
@@ -26,7 +30,7 @@ const finishLoading = (state: IGlobalState, action: AnyAction): IGlobalState =>
 const logout = (): IGlobalState => initialState
 
 export const globalReducer = createReducer(initialState, {
-    [actionTypes.LOGIN_SUCCESS]: loginSuccess,
+    [actionTypes.LOGIN]: login,
     [actionTypes.START_LOADING]: startLoading,
     [actionTypes.FINISH_LOADING]: finishLoading,
     [actionTypes.LOGOUT]: logout

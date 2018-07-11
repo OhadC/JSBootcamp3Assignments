@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { toast } from 'react-toastify'
 
-import { actionTypes,  startLoading, finishLoading, setActive, setExpandedIds, apiRequest, addGroup } from "../actions"
+import { actionTypes,  startLoading, finishLoading, setActive, setExpandedIds, apiRequest, addGroup, setForcedActive } from "../actions"
 import { IClientGroup } from '../../models';
 
 export const byActionType = ({ dispatch, getState }: any) => (next: Function) => (action: any) => {
@@ -16,7 +16,7 @@ export const byActionType = ({ dispatch, getState }: any) => (next: Function) =>
                 dispatch(setExpandedIds([...expandedIds, groupId]))
             }
             if (!!group) {
-                dispatch(setActive(group))
+                dispatch(setForcedActive(group))
             }
             else {
                 dispatch(apiRequest({

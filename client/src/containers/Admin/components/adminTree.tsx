@@ -13,6 +13,7 @@ const chooseCombiner = (editMode: 'groups' | 'users') => {
 const mapStateToProps = (state: IAppState) => ({
     tree: chooseCombiner(state.admin.editMode)(state),
     activeId: state.admin.editedItem && state.admin.editedItem._id,
+    forcedActiveId: null as any,
     expandedIds: state.admin.expandedIds
 })
 

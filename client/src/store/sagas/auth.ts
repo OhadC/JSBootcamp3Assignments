@@ -1,18 +1,28 @@
-// import { AnyAction } from "redux"
-// import { takeEvery, put, all, select } from 'redux-saga/effects'
+import { AnyAction } from 'redux'
+import { takeEvery, put, all, call } from 'redux-saga/effects'
 
-// import { actionTypes, fetchAllUsers } from "../actions"
-// import { IAppState } from "../reducers";
+import { actionTypes } from "../actions"
+import * as actions from "../actions"
+import { apiRequest } from '../../serverApi'
 
-// export function* watchUsers() {
-//     yield all([
-//         takeEvery(actionTypes.SET_ADMIN_EDIT_MODE, getAllUsersSaga)
-//     ])
-// }
+export function* watchAuth() {
+    yield all([
+        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.REQUEST, loginSaga)
+    ])
+}
 
-// function* getAllUsersSaga(action: AnyAction) {
-//     const state: IAppState = yield select()
-//     if (!state.users.isComplete) {
-//         yield put(fetchAllUsers())
-//     }
-// }
+function* loginSaga(action: AnyAction) {
+    try {
+        const { name, password } = action.payload
+        const response = yield call(apiRequest, {
+            url: '/auth/login',
+            method: 'POST',
+            data: { name, password }
+        })
+        yield put(actions.login(response.data, actionTypes.SUCCESS))
+    } catch (error) {
+        const errorData = error.response.data
+        console.log(errorData)
+        yield put(actions.login(errorData, actionTypes.FAIL))
+    }
+}
