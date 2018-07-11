@@ -42,7 +42,15 @@ function* connectToSocketSaga(action: AnyAction) {
 }
 
 function* sendMessageSaga(action: AnyAction) {
-    yield socket.emit('message', action.payload.message)
+    const { tree: { active: { _id: groupId } }, auth: { userId } }: any = yield select()
+    const { content } = action.payload
+    const message = {
+        groupId,
+        userId,
+        content,
+        date: (new Date()).toISOString(),
+    }
+    yield socket.emit('message', message)
 }
 
 function* disconnectToSocketSaga(action: AnyAction) {

@@ -20,13 +20,9 @@ export const SET_EDITED_ITEM = 'SET_EDITED_ITEM'
 export const SET_ADMIN_EXPANDED_IDS = 'SET_ADMIN_EXPANDED_IDS'
 
 // Messages
-export const SET_MESSAGES = 'SET_MESSAGES'
+export const FETCH_MESSAGES = 'FETCH_MESSAGES'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
-export const FETCH_MESSAGES = 'FETCH_MESSAGES'
-export const FETCH_MESSAGES_START = 'FETCH_MESSAGES_START'
-export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS'
-export const FETCH_MESSAGES_FAIL = 'FETCH_MESSAGES_FAIL'
 export const SOCKET_LOGIN_SUCCESS = 'SOCKET_LOGIN_SUCCESS'
 
 // Tree
@@ -44,9 +40,18 @@ export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const DELETE_GROUP = 'DELETE_GROUP'
 
 // Users
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
-export const FETCH_ALL_USERS_SUCCESS = 'FETCH_ALL_USERS_SUCCESS'
-export const SET_USERS = 'SET_USERS'
+export const FETCH_ALL_USERS = 'FETCH_ALL_USERS'
+export const FETCH_USERS = 'FETCH_USERS'
 export const ADD_USER = 'ADD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const DELETE_USER = 'DELETE_USER'
+
+export const getStatus = (data: any, status?: string) => {
+    if (status) {
+        return status
+    } else if (data) {
+        return SUCCESS
+    } else {
+        return REQUEST
+    }
+}

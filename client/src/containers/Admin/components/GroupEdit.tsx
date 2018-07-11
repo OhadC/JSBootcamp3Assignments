@@ -57,7 +57,7 @@ class GroupEdit extends React.PureComponent<any, any> {
             })
         }
     }
-    onDelete = () => this.props.deleteGroup(this.props.editedItem)
+    onDelete = () => this.props.deleteGroup(this.props.editedItem._id)
 
     render() {
         return (
@@ -113,8 +113,8 @@ const mapStateToProps = (state: IAppState) => ({
 
 const mapDispatchToProps = {
     createNewGroup: actions.addGroupRequest,
-    updateGroup: actions.updateGroup,
-    deleteGroup: actions.deleteGroup,
+    updateGroup: actions.updateGroupRequest,
+    deleteGroup: actions.deleteGroupRequest,
 }
 
 

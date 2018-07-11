@@ -4,7 +4,7 @@ import { IGroup, IServerGroup } from '../models'
 import { messageService, userService } from '.'
 import { Group } from '../models/mongoose/models'
 
-export const getAllGroups = async () =>
+export const getAllPublicGroups = async () =>
     Group.find({ isPrivate: false }).populate('users', '-password').lean()
 
 export const getAllGroupsByUserId = async (userId) =>

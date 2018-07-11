@@ -5,7 +5,7 @@ import { groupController } from '../controllers'
 const router = express.Router()
 
 router.get('/', groupController.getAllGroupsByUserId)
-router.get('/all', groupController.getAllGroups)
+router.get('/all', groupController.getAllPublicGroups)
 router.get('/:id', groupController.getGroupById)
 router.get('/:id/private/:userId', groupController.getPrivateGroup)
 router.get('/:id/messages', groupController.getMessagesById)

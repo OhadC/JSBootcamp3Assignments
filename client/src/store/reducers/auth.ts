@@ -14,14 +14,13 @@ const initialState: IAuthState = {
 }
 
 const login = (state: IAuthState, action: AnyAction): IAuthState => {
-    if (action.status === actionTypes.SUCCESS) {
-        const newValues = {
-            userId: action.payload.user._id, // TODO: need to be user
-            token: action.payload.token
-        }
-        return updateObject(state, newValues)
+    if (action.status !== actionTypes.SUCCESS) return state
+    
+    const newValues = {
+        userId: action.payload.user._id, // TODO: need to be user
+        token: action.payload.token
     }
-    return state
+    return updateObject(state, newValues)
 }
 
 const logout = (state: IAuthState, action: AnyAction): IAuthState => initialState

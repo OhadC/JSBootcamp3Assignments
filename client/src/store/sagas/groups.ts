@@ -1,5 +1,5 @@
 import { AnyAction } from "redux"
-import { takeEvery, put, all, select, call } from 'redux-saga/effects'
+import { takeEvery, takeLatest, put, all, select, call } from 'redux-saga/effects'
 import * as _ from 'lodash'
 
 import { actionTypes } from "../actions"
@@ -11,8 +11,10 @@ export function* watchGroups() {
     yield all([
         takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.SUCCESS, fetchGroupsSaga),
         takeEvery((action: AnyAction) => action.type === actionTypes.ADD_GROUP && action.status === actionTypes.REQUEST, addGroupSaga),
-        takeEvery(actionTypes.SET_ADMIN_EDIT_MODE, fetchAllGroupsSaga),
-        takeEvery(actionTypes.SELECT_PRIVATE_GROUP, selectPrivateGroupSaga),
+        takeEvery((action: AnyAction) => action.type === actionTypes.UPDATE_GROUP && action.status === actionTypes.REQUEST, updateGroupSaga),
+        takeEvery((action: AnyAction) => action.type === actionTypes.DELETE_GROUP && action.status === actionTypes.REQUEST, deleteGroupSaga),
+        takeLatest(actionTypes.SET_ADMIN_EDIT_MODE, fetchAllGroupsSaga),
+        takeLatest(actionTypes.SELECT_PRIVATE_GROUP, selectPrivateGroupSaga),
     ])
 }
 
@@ -48,11 +50,47 @@ function* addGroupSaga(action: AnyAction) {
     }
 }
 
-function* fetchAllGroupsSaga(action: AnyAction) {
+function* updateGroupSaga(action: AnyAction) {
+    const { updatedGroupFields } = action.payload
     const { auth: { token } } = yield select()
     try {
         const response = yield apiRequest({
-            url: '/group',
+            url: `/group/${updatedGroupFields._id}`,
+            method: 'PUT',
+            data: updatedGroupFields,
+            token
+        })
+        yield put(actions.updateGroup(response.data, actionTypes.SUCCESS))
+    } catch (error) {
+        const errorData = error.response.data
+        console.log(errorData)
+        yield put(actions.updateGroup(errorData, actionTypes.FAIL))
+    }
+}
+
+function* deleteGroupSaga(action: AnyAction) {
+    const { id } = action.payload
+    const { auth: { token } } = yield select()
+    try {
+        const response = yield apiRequest({
+            url: `/group/${id}`,
+            method: 'DELETE',
+            token
+        })
+        yield put(actions.deleteGroup(response.data, actionTypes.SUCCESS))
+    } catch (error) {
+        const errorData = error.response.data
+        console.log(errorData)
+        yield put(actions.deleteGroup(errorData, actionTypes.FAIL))
+    }
+}
+
+function* fetchAllGroupsSaga(action: AnyAction) {
+    const { groups: { isComplete }, auth: { token } } = yield select()
+    if (isComplete) return
+    try {
+        const response = yield apiRequest({
+            url: '/group/all',
             token
         })
         yield put(actions.fetchAllGroups(response.data, actionTypes.SUCCESS))

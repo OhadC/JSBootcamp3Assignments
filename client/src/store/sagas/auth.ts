@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { takeEvery, put, all, call } from 'redux-saga/effects'
+import { takeLatest, put, all, call } from 'redux-saga/effects'
 
 import { actionTypes } from "../actions"
 import * as actions from "../actions"
@@ -7,7 +7,7 @@ import { apiRequest } from '../../serverApi'
 
 export function* watchAuth() {
     yield all([
-        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.REQUEST, loginSaga)
+        takeLatest((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.REQUEST, loginSaga)
     ])
 }
 

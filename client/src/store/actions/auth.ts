@@ -1,18 +1,12 @@
 import { AnyAction } from "redux"
-import { actionTypes } from ".";
-import { getStatus } from "./api";
+import { actionTypes } from "."
 
-export const loginRequest = (name: string, password: string) => ({
+export const login = (payload?: any, status?: string) => ({
     type: actionTypes.LOGIN,
-    status: actionTypes.REQUEST,
-    payload: { name, password }
-})
-
-export const login = (payload: any, status?: string) => ({
-    type: actionTypes.LOGIN,
-    status: getStatus(payload, status),
+    status: actionTypes.getStatus(payload, status),
     payload
 })
+export const loginRequest = (name: string, password: string) => login({ name, password }, actionTypes.REQUEST)
 
 export const logout = (): AnyAction => ({
     type: actionTypes.LOGOUT,

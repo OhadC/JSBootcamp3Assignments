@@ -1,55 +1,31 @@
-import * as actions from '../../store/actions'
-import { IClientUser, IUser } from "../../models"
-import { actionTypes, apiRequest } from "."
+import { IClientUser } from "../../models"
+import { actionTypes } from "."
 
 export const fetchUsers = () => fetchAllUsers()
 
-export const fetchAllUsers = () => apiRequest({
-    url: '/user',       // TODO: all
-    method: 'GET',
-    label: 'fetchAllUsers'
+export const fetchAllUsers = (payload?: any, status?: string) => ({
+    type: actionTypes.FETCH_ALL_USERS,
+    status: actionTypes.getStatus(payload, status),
+    payload
 })
 
-export const setUsers = (users: IClientUser[]) => ({
-    type: actionTypes.SET_USERS,
-    payload: users
-})
-
-export const addUser = (user: IUser) => ({
+export const addUser = (payload?: any, status?: string) => ({
     type: actionTypes.ADD_USER,
-    payload: user
+    status: actionTypes.getStatus(payload, status),
+    payload
 })
+export const addUserRequest = (user: IClientUser) => addUser({ user }, actionTypes.REQUEST)
 
-export const createNewUser = (userWithoutId: IClientUser) => (dispatch: any, getState: Function) => {
-    dispatch(actions.apiRequest({
-        url: `/user`,
-        method: 'POST',
-        data: userWithoutId,
-        success: (user: IClientUser) => dispatch(addUser(user)),
-    }))
-}
+export const updateUser = (payload?: any, status?: string) => ({
+    type: actionTypes.UPDATE_USER,
+    status: actionTypes.getStatus(payload, status),
+    payload
+})
+export const updateUserRequest = (updatedUserFields: IClientUser) => updateUser({ updatedUserFields }, actionTypes.REQUEST)
 
-export const updateUser = (updatedUserFields: IClientUser) => (dispatch: any, getState: Function) => {
-    const success = (user: IClientUser) => dispatch({
-        type: actionTypes.UPDATE_USER,
-        payload: { user }
-    })
-    dispatch(actions.apiRequest({
-        url: `/user/${updatedUserFields._id}`,
-        method: 'PUT',
-        data: updatedUserFields,
-        success,
-    }))
-}
-
-export const deleteUser = (user: IClientUser) => (dispatch: any, getState: Function) => {
-    const success = () => dispatch({
-        type: actionTypes.DELETE_USER,
-        payload: { user }
-    })
-    dispatch(actions.apiRequest({
-        url: `/user/${user._id}`,
-        method: 'DELETE',
-        success
-    }))
-}
+export const deleteUser = (payload?: any, status?: string) => ({
+    type: actionTypes.DELETE_USER,
+    status: actionTypes.getStatus(payload, status),
+    payload
+})
+export const deleteUserRequest = (userId: IClientUser) => deleteUser({ userId }, actionTypes.REQUEST)

@@ -16,27 +16,27 @@ const initialState: IGroupsState = {
 }
 
 const setGroups = (state: IGroupsState, action: AnyAction, isComplete?: boolean) => {
-    if (action.status === actionTypes.SUCCESS) {
-        let data: IClientGroup[] = action.payload
-        if (isComplete) {
-            const privateGroups = state.data.filter(group => group.isPrivate)
-            Array.prototype.push.apply(data, privateGroups)
-        }
-        return updateObject(state, { data, isComplete })
+    if (action.status !== actionTypes.SUCCESS) return state
+
+    let data: IClientGroup[] = action.payload
+    if (isComplete) {
+        const privateGroups = state.data.filter(group => group.isPrivate)
+        data = data.concat(privateGroups)
     }
-    return state
+    return updateObject(state, { data, isComplete })
 }
 
 const addGroup = (state: IGroupsState, action: AnyAction) => {
-    if (action.status === actionTypes.SUCCESS) {
-        const newData = state.data.slice()
-        newData.push(action.payload)
-        return updateObject(state, { data: newData })
-    }
-    return state
+    if (action.status !== actionTypes.SUCCESS) return state
+
+    const newData = state.data.slice()
+    newData.push(action.payload)
+    return updateObject(state, { data: newData })
 }
 
 const updateGroup = (state: IGroupsState, action: AnyAction) => {
+    if (action.status !== actionTypes.SUCCESS) return state
+
     const updatedGroup = action.payload.group
     const data = state.data.slice()
     const groupIndex = data.findIndex(group => group._id === updatedGroup._id)
@@ -45,6 +45,8 @@ const updateGroup = (state: IGroupsState, action: AnyAction) => {
 }
 
 const deleteGroup = (state: IGroupsState, action: AnyAction) => {
+    if (action.status !== actionTypes.SUCCESS) return state
+
     const deletedGroup = action.payload.group
     const dataMap = _.mapKeys(state.data, '_id')
     deleteGroupRecursively(deletedGroup)

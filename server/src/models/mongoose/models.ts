@@ -31,7 +31,8 @@ const MessageSchema = new Schema({
 MessageSchema.virtual('user', {
     ref: 'user',
     localField: 'userId',
-    foreignField: '_id'
+    foreignField: '_id',
+    justOne: true
 })
 
 export const Message = model('message', MessageSchema)

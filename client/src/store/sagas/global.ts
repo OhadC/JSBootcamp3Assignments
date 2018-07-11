@@ -8,11 +8,11 @@ import * as actions from '../actions'
 export function* watchGlobal() {
     yield all([
         takeEvery((action: AnyAction) => !!action.status, loadingSaga),
-        takeEvery((action: AnyAction) => !!action.status && action.status === actionTypes.FAIL, toasterSaga)
+        takeEvery((action: AnyAction) => !!action.status && action.status === actionTypes.FAIL, toastSaga)
     ])
 }
 
-export function* loadingSaga(action: AnyAction) {
+export function* loadingSaga(action: AnyAction) {       // TODO: fix this. it goes below 0
     switch (action.status) {
         case (actionTypes.REQUEST):
             yield put(actions.startLoading())
@@ -24,6 +24,6 @@ export function* loadingSaga(action: AnyAction) {
     }
 }
 
-export function* toasterSaga(action: AnyAction) {       // TODO: more generic - not only error
+export function* toastSaga(action: AnyAction) {       // TODO: more generic - not only error
     yield toast.error(action.payload.message)
 }

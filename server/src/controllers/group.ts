@@ -3,8 +3,8 @@ import { Request, Response } from 'express'
 import { groupService, messageService } from '../services'
 import { requestHandlerFactory } from './utils'
 
-export const getAllGroups = requestHandlerFactory(
-    groupService.getAllGroups
+export const getAllPublicGroups = requestHandlerFactory(
+    groupService.getAllPublicGroups
 )
 
 export const getGroupById = requestHandlerFactory(

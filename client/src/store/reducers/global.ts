@@ -15,10 +15,9 @@ const initialState: IGlobalState = {
 }
 
 const login = (state: IGlobalState, action: AnyAction): IGlobalState => {
-    if (action.status === actionTypes.SUCCESS) {
-        return updateObject(state, { user: action.payload.user })
-    }
-    return state
+    if (action.status !== actionTypes.SUCCESS) return state
+
+    return updateObject(state, { user: action.payload.user })
 }
 
 const startLoading = (state: IGlobalState, action: AnyAction): IGlobalState =>

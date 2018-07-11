@@ -5,7 +5,6 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 
 import { reducers } from './store/reducers'
-import { api } from './store/middleware'
 import { watchGroups, watchMessages, watchUsers, watchSocket, watchAuth } from "./store/sagas"
 import { watchGlobal } from "./store/sagas/global";
 
@@ -22,7 +21,6 @@ export const store = createStore(connectRouter(history)(rootReducer), composeEnh
         routerMiddleware(history),
         ReduxThunk,
         sagaMiddleware,
-        api
     )
 ))
 

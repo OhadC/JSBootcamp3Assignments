@@ -55,7 +55,7 @@ class UserEdit extends React.PureComponent<any, any> {
             })
         }
     }
-    onDelete = () => this.props.deleteUser(this.props.editedItem)
+    onDelete = () => this.props.deleteUser(this.props.editedItem._id)
 
     render() {
         return (
@@ -114,7 +114,7 @@ const mapStateToProps = (state: IAppState) => ({
 })
 
 const mapDispatchToProps = {
-    createNewUser: actions.createNewUser,
+    createNewUser: actions.addUserRequest,
     updateUser: actions.updateUser,
     deleteUser: actions.deleteUser,
 }

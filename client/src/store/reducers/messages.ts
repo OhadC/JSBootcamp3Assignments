@@ -13,10 +13,10 @@ const initialState: IMessagesState = {
 }
 
 const fetchMessage = (state: IMessagesState, action: AnyAction): IMessagesState => {
-    if (action.status === actionTypes.SUCCESS) {
-        return updateObject(state, { messages: action.payload })
-    }
-    return state
+    if (action.status !== actionTypes.SUCCESS) return state
+
+    return updateObject(state, { messages: action.payload })
+
 }
 const addMessage = (state: IMessagesState, action: AnyAction): IMessagesState => {
     const newMessages = [

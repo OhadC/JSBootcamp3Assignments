@@ -23,7 +23,7 @@ export const getUserByName = async (name: string) => {
 }
 
 export const addUser = async ({ name, password, age }) => {
-    if (!!(await getUserByName(name))) {
+    if (!!(await User.findOne({ name }))) {
         throw Error('User with that name already exists. ' + name)
     }
     password = await authService.getHashedPassword(password)
@@ -32,17 +32,15 @@ export const addUser = async ({ name, password, age }) => {
 }
 
 export const updateUser = async (id: string, updatedFields: IUser) => {
-    if (!(await getUserById(id))) {
-        throw Error('No user with that ID, ' + id)
-    }
+    await getUserById(id)
+
     return User.findByIdAndUpdate(id, updatedFields)
         .select({ password: 0 }).lean()
 }
 
 export const deleteUser = async (id: string) => {
-    if (!(await getUserById(id))) {
-        throw Error('No user with that ID, ' + id)
-    }
+    await getUserById(id)
+
     await Promise.all([messageService.deleteAllMessagesOfUser(id), groupService.removeUserFromAllGroups(id)])
     return User.findByIdAndRemove(id).select({ password: 0 }).lean()
 }
