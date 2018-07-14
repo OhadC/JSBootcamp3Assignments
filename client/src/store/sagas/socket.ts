@@ -5,7 +5,8 @@ import * as io from 'socket.io-client'
 
 import { actionTypes, addMessage } from "../actions"
 import { IClientMessage } from "../../models"
-import { IAppState } from "../reducers";
+import { IAppState } from "../reducers"
+import { checkTypeAndStatus } from "./utils"
 
 const socketUrl = 'http://localhost:4000'
 let socket: SocketIOClient.Socket
@@ -13,7 +14,7 @@ let channel: Channel<IClientMessage>
 
 export function* watchSocket() {
     yield all([
-        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.SUCCESS, connectToSocketSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.LOGIN,actionTypes.SUCCESS), connectToSocketSaga),
         takeEvery(actionTypes.SEND_MESSAGE, sendMessageSaga),
         takeEvery(actionTypes.LOGOUT, disconnectToSocketSaga),
     ])

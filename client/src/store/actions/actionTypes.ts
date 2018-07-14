@@ -3,8 +3,6 @@ export const REQUEST = 'REQUEST'
 export const SUCCESS = 'SUCCESS'
 export const FAIL = 'FAIL'
 
-export const API_REQUEST = 'API_REQUEST'
-
 // Global
 export const START_LOADING = 'START_LOADING'
 export const FINISH_LOADING = 'FINISH_LOADING'

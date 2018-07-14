@@ -4,10 +4,11 @@ import { takeLatest, put, all, call } from 'redux-saga/effects'
 import { actionTypes } from "../actions"
 import * as actions from "../actions"
 import { apiRequest } from '../../serverApi'
+import { checkTypeAndStatus } from './utils'
 
 export function* watchAuth() {
     yield all([
-        takeLatest((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.REQUEST, loginSaga)
+        takeLatest(checkTypeAndStatus(actionTypes.LOGIN, actionTypes.REQUEST), loginSaga)
     ])
 }
 

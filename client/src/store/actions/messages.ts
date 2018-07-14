@@ -8,6 +8,7 @@ export const fetchMessages = (payload?: any, status?: string) => ({
     status: actionTypes.getStatus(payload, status),
     payload
 })
+export const fetchMessagesRequest = (groupId: string) => fetchMessages({ groupId }, actionTypes.REQUEST)
 
 export const socketLoginSuccess = (): AnyAction => ({
     type: actionTypes.SOCKET_LOGIN_SUCCESS

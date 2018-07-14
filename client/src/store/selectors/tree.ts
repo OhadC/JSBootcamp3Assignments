@@ -4,8 +4,8 @@ import * as _ from 'lodash'
 import { IAppState } from '../reducers'
 import { IClientGroup } from '../../models'
 import { makeTree } from '../../common/makeTree'
+import { groupsSelector } from './groups';
 
-const groupsSelector = (state: IAppState) => state.groups.data
 const userIdSelector = (state: IAppState) => state.auth.userId
 const filterTextSelector = (state: IAppState) => state.tree.filterText
 

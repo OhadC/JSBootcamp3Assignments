@@ -3,25 +3,25 @@ import { createSelector } from 'reselect'
 import { IAppState } from '../reducers'
 import { IClientGroup, IClientUser } from '../../models'
 import { makeTree } from '../../common/makeTree'
+import { publicGroupsSelector } from './groups'
+import { usersSelector } from './users'
 
-const groupsSelector = (state: IAppState) => state.groups.data
-const usersSelector = (state: IAppState) => state.users.data
-const filterTextSelector = (state: IAppState) => state.tree.filterText
+const adminFilterTextSelector = (state: IAppState) => state.admin.filterText
 
 export const adminGroupsTreeSelector = createSelector(
-    groupsSelector,
-    filterTextSelector,
+    publicGroupsSelector,
+    adminFilterTextSelector,
     groupsTreeCombiner
 )
 
 export const adminUsersTreeSelector = createSelector(
     usersSelector,
-    filterTextSelector,
+    adminFilterTextSelector,
     usersTreeCombiner
 )
 
-function groupsTreeCombiner(groups: IClientGroup[], filterText?: string) {
-    return makeTree(onlyPublicGroups(groups), "", filterText)
+function groupsTreeCombiner(publicGroups: IClientGroup[], filterText?: string) {
+    return makeTree(publicGroups, "", filterText)
 }
 
 function usersTreeCombiner(users: IClientUser[], filterText?: string) {
@@ -32,8 +32,4 @@ function usersTreeCombiner(users: IClientUser[], filterText?: string) {
         age: user.age
     }))
     return makeTree((groupsFromUsers as any), "", filterText)
-}
-
-function onlyPublicGroups(groups: IClientGroup[]) {
-    return groups.filter(group => !group.isPrivate)
 }

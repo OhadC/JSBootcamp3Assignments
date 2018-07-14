@@ -4,9 +4,9 @@ import { Switch, Route, Redirect, withRouter } from 'react-router'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-
-import Chat from './containers/Chat/Chat'
 import { IAppState } from './store/reducers'
+import { isAuthenticatedSelector } from './store/selectors/auth'
+import Chat from './containers/Chat/Chat'
 import Admin from './containers/Admin/Admin'
 import Loading from './components/Loading'
 
@@ -54,7 +54,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: isAuthenticatedSelector(state)
 })
 
 export default (withRouter as any)(connect(mapStateToProps)(App))

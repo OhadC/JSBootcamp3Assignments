@@ -6,14 +6,17 @@ import { actionTypes } from "../actions"
 import { IClientGroup } from "../../models"
 import { apiRequest } from '../../serverApi'
 import * as actions from "../actions"
+import { checkTypeAndStatus } from "./utils"
 
 export function* watchGroups() {
     yield all([
-        takeEvery((action: AnyAction) => action.type === actionTypes.LOGIN && action.status === actionTypes.SUCCESS, fetchGroupsSaga),
-        takeEvery((action: AnyAction) => action.type === actionTypes.ADD_GROUP && action.status === actionTypes.REQUEST, addGroupSaga),
-        takeEvery((action: AnyAction) => action.type === actionTypes.UPDATE_GROUP && action.status === actionTypes.REQUEST, updateGroupSaga),
-        takeEvery((action: AnyAction) => action.type === actionTypes.DELETE_GROUP && action.status === actionTypes.REQUEST, deleteGroupSaga),
-        takeLatest(actionTypes.SET_ADMIN_EDIT_MODE, fetchAllGroupsSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.LOGIN, actionTypes.SUCCESS), onLoginSuccessSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.FETCH_GROUPS, actionTypes.REQUEST), fetchGroupsSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.FETCH_ALL_GROUPS, actionTypes.REQUEST), fetchAllGroupsSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.ADD_GROUP, actionTypes.REQUEST), addGroupSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.UPDATE_GROUP, actionTypes.REQUEST), updateGroupSaga),
+        takeEvery(checkTypeAndStatus(actionTypes.DELETE_GROUP, actionTypes.REQUEST), deleteGroupSaga),
+        takeLatest(actionTypes.SET_ADMIN_EDIT_MODE, onAdminEditModeChanged),
         takeLatest(actionTypes.SELECT_PRIVATE_GROUP, selectPrivateGroupSaga),
     ])
 }
@@ -86,8 +89,7 @@ function* deleteGroupSaga(action: AnyAction) {
 }
 
 function* fetchAllGroupsSaga(action: AnyAction) {
-    const { groups: { isComplete }, auth: { token } } = yield select()
-    if (isComplete) return
+    const { auth: { token } } = yield select()
     try {
         const response = yield apiRequest({
             url: '/group/all',
@@ -127,3 +129,19 @@ function* selectPrivateGroupSaga(action: AnyAction) {
         }
     }
 }
+
+function* onLoginSuccessSaga(action: AnyAction) {
+    const { groups: { isComplete } } = yield select()
+    if (isComplete) return
+
+    yield put(actions.fetchGroups())
+}
+
+function* onAdminEditModeChanged(action: AnyAction) {
+    const { groups: { isComplete } } = yield select()
+    if (isComplete) return
+
+    yield put(actions.fetchAllGroups())
+}
+
+

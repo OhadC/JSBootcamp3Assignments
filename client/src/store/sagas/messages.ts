@@ -3,20 +3,22 @@ import { put, call, all, select, takeLatest } from 'redux-saga/effects'
 
 import { actionTypes } from "../actions"
 import * as actions from "../actions"
-import { apiRequest } from "../../serverApi";
+import { apiRequest } from "../../serverApi"
+import { checkTypeAndStatus } from "./utils"
 
 export function* watchMessages() {
     yield all([
-        takeLatest(actionTypes.SET_ACTIVE, fetchMessagesSaga),
+        takeLatest(actionTypes.SET_ACTIVE, onActiveChangedSaga),
+        takeLatest(checkTypeAndStatus(actionTypes.FETCH_MESSAGES,actionTypes.REQUEST), fetchMessagesSaga),
     ])
 }
 
 function* fetchMessagesSaga(action: AnyAction) {
-    const activeGroupId = action.payload.active._id
+    const { groupId } = action.payload
     const { auth: { token } } = yield select()
     try {
         const response = yield call(apiRequest, {
-            url: `/group/${activeGroupId}/messages`,
+            url: `/group/${groupId}/messages`,
             token
         })
         yield put(actions.fetchMessages(response.data, actionTypes.SUCCESS))
@@ -25,4 +27,8 @@ function* fetchMessagesSaga(action: AnyAction) {
         console.log(errorData)
         yield put(actions.fetchMessages(errorData, actionTypes.FAIL))
     }
+}
+
+function* onActiveChangedSaga(action: AnyAction) {
+    yield put(actions.fetchMessagesRequest(action.payload.active._id))
 }

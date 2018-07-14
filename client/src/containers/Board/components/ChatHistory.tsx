@@ -36,14 +36,14 @@ class ChatHistory extends React.PureComponent<IProps, {}> {
 
     render() {
         const { messages, selfUserId } = this.props
-        const messagesElements = messages.map(message => (
+        const messagesElement = (message: IClientMessage) => (
             <Message key={message._id} message={message} selfMessage={message.userId === selfUserId} user={message.user} />
-        ))
+        )
 
         return (
             <ul style={{ ...this.props.style, ...styles.chatHistory }} ref={this.messagesList}>
                 <li style={{ flex: '1' }} />
-                {messagesElements}
+                {messages.map(messagesElement)}
                 <li style={{ float: "left", clear: "both" }} ref={this.messagesBottom} />
             </ul>
         )
