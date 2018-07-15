@@ -5,9 +5,12 @@ import { ConnectedRouter } from 'connected-react-router'
 
 import App from './App'
 import { store, history } from './store'
+import { loginFromLocalstorage } from './store/actions'
 
 import 'normalize.css/normalize.css'
 import './index.css'
+
+store.dispatch(loginFromLocalstorage())
 
 ReactDOM.render(
     <Provider store={store}>

@@ -12,8 +12,8 @@ const saltRounds = 10
 export const login = async (name: string, plaintextPassword: string) => {
     if (await userService.validateUser(name, plaintextPassword)) {
         const user = await userService.getUserByName(name)
-        const token = await jwtSignAsync(user, jwtSecret, {expiresIn: '1h'})
-        return { user, token }
+        const token = await jwtSignAsync(user, jwtSecret, { expiresIn: '1h' })
+        return { user, token, expiresIn: 1 * 60 * 60 }
     }
     throw Error('Invalid name or password')
 }

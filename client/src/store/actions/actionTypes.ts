@@ -9,6 +9,8 @@ export const FINISH_LOADING = 'FINISH_LOADING'
 
 // Auth
 export const LOGIN = 'LOGIN'
+export const LOGIN_FROM_LOCALSTORAGE = 'LOGIN_FROM_LOCALSTORAGE'
+export const CHECK_AUTH_TIMEOUT = 'CHECK_AUTH_TIMEOUT'
 export const LOGOUT = 'LOGOUT'
 
 // Admin
