@@ -8,8 +8,6 @@
     margin: 0;
 }
 
-.group-info p {
-    padding: 0;
-    margin: 0;
+.group-info li, .group-info button {
     color: rgba(255, 255, 255, 0.7);
 }

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import CheckboxList from '../../../components/CheckboxList'
-import { IAppState } from '../../../store/reducers'
 import * as actions from '../../../store/actions'
+import { IAppState } from '../../../store/reducers'
+import CheckboxList from '../../../components/CheckboxList'
 import Checkbox from '../../../components/Checkbox'
 
 class GroupEdit extends React.PureComponent<any, any> {
@@ -57,7 +57,7 @@ class GroupEdit extends React.PureComponent<any, any> {
             })
         }
     }
-    onDelete = () => this.props.deleteGroup(this.props.editedItem._id)
+    onDelete = () => this.props.deleteGroup(this.props.editedItem)
 
     render() {
         return (

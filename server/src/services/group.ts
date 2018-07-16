@@ -49,7 +49,7 @@ export const updateGroup = async (id: string, { name, userIds }: IGroup) => {
         throw Error('No group with that ID, ' + id)
     }
     if (group.userIds) {
-        const usersIdsRemoved = _.difference(group.userIds, userIds)
+        const usersIdsRemoved = _.differenceBy(group.userIds, userIds, x => x.toString())
         const deletedGroupIds = await Group.find({ parentId: id, isPrivate: true, userIds: { $in: usersIdsRemoved } }, { _id: 1 }).lean()
         await Promise.all([
             Group.deleteMany({ parentId: id, isPrivate: true, userIds: { $in: usersIdsRemoved } }),

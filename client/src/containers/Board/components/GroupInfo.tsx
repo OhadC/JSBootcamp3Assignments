@@ -10,19 +10,28 @@ interface IProps {
 }
 
 const GroupInfo = (props: IProps) => {
-    // const usersList = props.group.users && props.group.users.reduce((prev, user: IClientUser, idx: number) => {
-    //     return prev + (idx > 0 ? ", " : "") + <button> user.name </button>
-    // }, "")
     let toList
     if (props.group.isPrivate) {
         toList = (user: IClientUser) => {
-            return <span key={user._id}> {user.name} </span>
+            return (
+                <li key={user._id}>
+                    <span>{user.name}</span>
+                </li>
+            )
         }
     } else {
         toList = (user: IClientUser) => {
             if (props.selfUserId !== user._id)
-                return <button key={user._id} onClick={props.onUserClicked.bind(null, user._id)}> {user.name} </button>
-            else return <span key={user._id} > you </span>
+                return (
+                    <li key={user._id}>
+                        <button onClick={props.onUserClicked.bind(null, user._id)}>{user.name}</button>
+                    </li>
+                )
+            else return (
+                <li key={user._id}>
+                    <span>You</span>
+                </li>
+            )
         }
     }
 
@@ -32,9 +41,9 @@ const GroupInfo = (props: IProps) => {
                 {props.group.isPrivate && 'Private Chat with '}
                 {props.group.name || ''}
             </h2>
-            <p>
+            <ul className="inline-list">
                 {props.group.users && props.group.users.map(toList)}
-            </p>
+            </ul>
         </div>
     )
 }

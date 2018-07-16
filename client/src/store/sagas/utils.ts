@@ -1,4 +1,4 @@
-import { AnyAction } from "../../../node_modules/redux";
+import { AnyAction } from "redux"
 
 export const checkTypeAndStatus = (actionType: string, status: string) =>
     (action: AnyAction) =>

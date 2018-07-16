@@ -14,15 +14,13 @@ const SideHeader: React.SFC<IProps> = props => {
     const menu = () => {
         if (props.user) {
             return (
-                <ul>
+                <ul className="inline-list">
                     <li>
                         <Link to="/chat">Chat</Link>
                     </li>
-                    |
                     <li>
                         <Link to="/admin">Admin</Link>
                     </li>
-                    |
                     <li>
                         <button onClick={props.onLogout}>Logout</button>
                     </li>
@@ -31,7 +29,7 @@ const SideHeader: React.SFC<IProps> = props => {
         } else {
             return (
                 <ul>
-                    <li>
+                    <li className="list-item">
                         <Link to="/login">Login</Link>
                     </li>
                 </ul>

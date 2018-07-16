@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 
 import * as actions from '../../store/actions'
 import { IAppState } from "../../store/reducers"
+import { IClientUser } from "../../models"
 import Tree from "../Tree/Tree"
 import Board from "./../Board/Board"
 import LogIn from "../../components/LogIn"
-import { IClientUser } from "../../models"
 import SideHeader from "../../components/SideHeader"
 
 interface IProps {
@@ -24,13 +24,13 @@ const Chat: React.SFC<IProps> = props => {
         <>
             <Route path="/login" exact={true} render={login} />
 
-            <main style={styles.chat}>
+            <div style={styles.chat}>
                 <section style={styles.leftSection} >
                     <SideHeader user={props.user} onLogout={props.logout} />
                     <Tree />
                 </section>
                 <Board style={styles.rightSection} />
-            </main>
+            </div>
         </>
     )
 }
@@ -42,7 +42,6 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: "row"
     },
     leftSection: {
-        width: "25%",
         background: '#252839',
         color: 'white',
         overflow: 'hidden',
@@ -50,7 +49,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: 'column'
     },
     rightSection: {
-        width: "75%",
+        flex: '1',
         overflow: 'hidden'
     }
 }

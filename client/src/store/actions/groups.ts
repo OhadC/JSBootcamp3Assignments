@@ -32,4 +32,4 @@ export const deleteGroup = (payload?: any, status?: string) => ({
     status: actionTypes.getStatus(payload, status),
     payload
 })
-export const deleteGroupRequest = (groupId: IClientGroup) => deleteGroup({ groupId }, actionTypes.REQUEST)
+export const deleteGroupRequest = (group: IClientGroup) => deleteGroup({ group }, actionTypes.REQUEST)

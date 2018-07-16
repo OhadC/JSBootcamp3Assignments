@@ -2,13 +2,13 @@ import * as React from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
 
+import * as actions from "../../store/actions"
+import { IAppState } from "../../store/reducers"
+import { IClientUser, IClientGroup } from "../../models"
 import SideHeader from "../../components/SideHeader"
 import AdminTree from "./components/adminTree"
 import SmallAdminPanel from "./components/SmallAdminPanel"
 import AdminPanel from "./components/AdminPanel"
-import * as actions from "../../store/actions"
-import { IAppState } from "../../store/reducers"
-import { IClientUser, IClientGroup } from "../../models"
 import './Admin.css'
 
 interface IProps {
@@ -26,14 +26,14 @@ class Admin extends React.PureComponent<IProps, {}> {
     }
     render() {
         return (
-            <main style={styles.chat}>
+            <div style={styles.chat}>
                 <section style={styles.leftSection} >
                     <SideHeader user={this.props.user} onLogout={this.props.logout} />
                     <AdminTree />
                     <SmallAdminPanel editMode={this.props.editMode} onGroups={this.props.setEditMode.bind(this, 'groups')} onUsers={this.props.setEditMode.bind(this, 'users')} />
                 </section>
                 <AdminPanel style={styles.rightSection} editMode={this.props.editMode} editedItem={this.props.editedItem} />
-            </main>
+            </div>
         )
     }
 }
@@ -45,7 +45,6 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: "row"
     },
     leftSection: {
-        width: "25%",
         background: '#252839',
         color: 'white',
         overflow: 'hidden',
@@ -53,8 +52,8 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: 'column'
     },
     rightSection: {
-        width: "75%",
-        overflow: 'hidden'
+        overflow: 'hidden',
+        flex: '1'
     }
 }
 

@@ -72,15 +72,17 @@ function* updateGroupSaga(action: AnyAction) {
 }
 
 function* deleteGroupSaga(action: AnyAction) {
-    const { id } = action.payload
+    const { group } = action.payload
     const { auth: { token } } = yield select()
     try {
         const response = yield apiRequest({
-            url: `/group/${id}`,
+            url: `/group/${group._id}`,
             method: 'DELETE',
             token
         })
-        yield put(actions.deleteGroup(response.data, actionTypes.SUCCESS))
+        if (response.status === 'success') {
+            yield put(actions.deleteGroup({ group }, actionTypes.SUCCESS))
+        }
     } catch (error) {
         const errorData = error.response.data
         console.log(errorData)
